@@ -1,0 +1,53 @@
+{
+	"name": "arachne/forms",
+	"description": "Integration of symfony/form to Nette framework.",
+	"type": "library",
+	"keywords": [ "symfony", "forms", "nette", "arachne" ],
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Jáchym Toušek",
+			"homepage": "http://enumag.cz",
+			"email": "enumag@gmail.com"
+		}
+	],
+	"require": {
+		"php": ">=5.4.0",
+		"arachne/di-helpers": "~0.4.0",
+		"nette/application": "~2.3",
+		"nette/di": "~2.3",
+		"symfony/form": "~2.7"
+	},
+	"require-dev": {
+		"php": ">=5.5.0",
+		"arachne/codeception": "~0.6.3",
+		"arachne/coding-style": "~0.3.0",
+		"codeception/codeception": "~2.1.0",
+		"codeception/mockery-module": "~0.2.1",
+		"enumag/application": "~0.3.5",
+		"mockery/mockery": "~0.9",
+		"nette/application": "~2.3",
+		"nette/di": "~2.3",
+		"nette/utils": "~2.3",
+		"latte/latte": "~2.3",
+		"squizlabs/php_codesniffer": "~2.0",
+		"tracy/tracy": "~2.3"
+	},
+	"autoload": {
+		"psr-4": {
+			"Arachne\\": "src"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Tests\\Unit\\": "tests/unit/src",
+			"Tests\\Integration\\": "tests/integration/src"
+		}
+	},
+	"repositories": [
+		{
+			"type": "composer",
+			"url": "http://packages.m33.cz"
+		}
+	]
+}
