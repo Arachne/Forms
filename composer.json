@@ -16,7 +16,7 @@
 		"arachne/di-helpers": "~0.4.0",
 		"nette/application": "~2.3",
 		"nette/di": "~2.3",
-		"symfony/form": "~2.7"
+		"symfony/form": "~2.8@dev"
 	},
 	"require-dev": {
 		"php": ">=5.5.0",
