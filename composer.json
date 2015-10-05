@@ -16,6 +16,7 @@
 		"arachne/di-helpers": "~0.4.0",
 		"nette/application": "~2.3",
 		"nette/di": "~2.3",
+		"nette/utils": "~2.3",
 		"symfony/form": "~2.8@dev"
 	},
 	"require-dev": {
@@ -23,12 +24,9 @@
 		"arachne/codeception": "~0.6.3",
 		"arachne/coding-style": "~0.3.0",
 		"codeception/codeception": "~2.1.0",
-		"codeception/mockery-module": "~0.2.1",
+		"codeception/mockery-module": "~0.2.2",
 		"enumag/application": "~0.3.5",
 		"mockery/mockery": "~0.9",
-		"nette/application": "~2.3",
-		"nette/di": "~2.3",
-		"nette/utils": "~2.3",
 		"latte/latte": "~2.3",
 		"squizlabs/php_codesniffer": "~2.0",
 		"tracy/tracy": "~2.3"
