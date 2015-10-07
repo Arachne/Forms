@@ -48,7 +48,7 @@ class DIFormExtension implements FormExtensionInterface
 			throw new InvalidArgumentException(sprintf('The field type "%s" does not exist.', $name));
 		}
 
-		if ($type->getName() !== $name) {
+		if ($name !== get_class($type) && $type->getName() !== $name) {
 			throw new InvalidArgumentException(sprintf('The type name does not match the actual name. Expected "%s", given "%s"', $name, $type->getName()));
 		}
 

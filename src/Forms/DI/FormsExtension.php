@@ -64,7 +64,7 @@ class FormsExtension extends CompilerExtension
 		'Symfony\Component\Form\Extension\Core\Type\PasswordType',
 		'Symfony\Component\Form\Extension\Core\Type\PercentType',
 		'Symfony\Component\Form\Extension\Core\Type\RadioType',
-		'Symfony\Component\Form\Extension\Core\Type\Range',
+		'Symfony\Component\Form\Extension\Core\Type\RangeType',
 		'Symfony\Component\Form\Extension\Core\Type\RepeatedType',
 		'Symfony\Component\Form\Extension\Core\Type\ResetType',
 		'Symfony\Component\Form\Extension\Core\Type\SearchType',
@@ -159,16 +159,21 @@ class FormsExtension extends CompilerExtension
 			->setAutowired(false)
 			->addTag(ValidatorExtension::TAG_LOADER);
 
-		foreach ($this->types as $type => $class) {
-			$builder->addDefinition($this->prefix('type.' . $type))
+		foreach ($this->types as $class) {
+			$typeName = $this->createShortName($class);
+			$builder->addDefinition($this->prefix('type.' . $typeName))
 				->setClass($class)
-				->addTag(self::TAG_TYPE, $type)
+				->addTag(self::TAG_TYPE, [
+					$typeName,
+					$class,
+				])
 				->setAutowired(false);
 		}
 
 		foreach ($this->typeExtensions as $type => $classes) {
+			$typeName = $this->createShortName($type);
 			foreach ($classes as $name => $class) {
-				$builder->addDefinition($this->prefix('typeExtension.' . $type . '.' . $name))
+				$builder->addDefinition($this->prefix('typeExtension.' . $typeName . '.' . $name))
 					->setClass($class)
 					->addTag(self::TAG_TYPE_EXTENSION, $type)
 					->setAutowired(false);
@@ -216,6 +221,11 @@ class FormsExtension extends CompilerExtension
 			->setArguments([
 				'guessers' => '@' . $this->getExtension('Arachne\DIHelpers\DI\IteratorsExtension')->get(self::TAG_TYPE_GUESSER)
 			]);
+	}
+
+	private function createShortName($class)
+	{
+		return lcfirst(substr($class, strrpos($class, '\\') + 1, -4));
 	}
 
 }
