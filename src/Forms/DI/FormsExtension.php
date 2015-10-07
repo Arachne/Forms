@@ -94,9 +94,9 @@ class FormsExtension extends CompilerExtension
 	{
 		$this->validateConfig($this->defaults);
 
-		$this->getExtension(ResolversExtension::class)->add(self::TAG_TYPE, 'Symfony\Component\Form\FormTypeInterface');
-		$this->getExtension(IteratorResolversExtension::class)->add(self::TAG_TYPE_EXTENSION, 'Symfony\Component\Form\FormTypeExtensionInterface');
-		$this->getExtension(IteratorsExtension::class)->add(self::TAG_TYPE_GUESSER, 'Symfony\Component\Form\FormTypeGuesserInterface');
+		$this->getExtension('Arachne\DIHelpers\DI\ResolversExtension')->add(self::TAG_TYPE, 'Symfony\Component\Form\FormTypeInterface');
+		$this->getExtension('Arachne\DIHelpers\DI\IteratorResolversExtension')->add(self::TAG_TYPE_EXTENSION, 'Symfony\Component\Form\FormTypeExtensionInterface');
+		$this->getExtension('Arachne\DIHelpers\DI\IteratorsExtension')->add(self::TAG_TYPE_GUESSER, 'Symfony\Component\Form\FormTypeGuesserInterface');
 
 		$builder = $this->getContainerBuilder();
 
@@ -208,13 +208,13 @@ class FormsExtension extends CompilerExtension
 
 		$builder->getDefinition($this->prefix('extension.di'))
 			->setArguments([
-				'typeResolver' => '@' . $this->getExtension(ResolversExtension::class)->get(self::TAG_TYPE),
-				'typeExtensionResolver' => '@' . $this->getExtension(IteratorResolversExtension::class)->get(self::TAG_TYPE_EXTENSION),
+				'typeResolver' => '@' . $this->getExtension('Arachne\DIHelpers\DI\ResolversExtension')->get(self::TAG_TYPE),
+				'typeExtensionResolver' => '@' . $this->getExtension('Arachne\DIHelpers\DI\IteratorResolversExtension')->get(self::TAG_TYPE_EXTENSION),
 			]);
 
 		$builder->getDefinition($this->prefix('typeGuesser'))
 			->setArguments([
-				'guessers' => '@' . $this->getExtension(IteratorsExtension::class)->get(self::TAG_TYPE_GUESSER)
+				'guessers' => '@' . $this->getExtension('Arachne\DIHelpers\DI\IteratorsExtension')->get(self::TAG_TYPE_GUESSER)
 			]);
 	}
 
