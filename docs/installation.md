@@ -53,7 +53,7 @@ And also some additional extensions in config.neon.
 
 ```yml
 extensions:
-	arachne.doctrine: Arachne\Doctrine\DI\DoctrineExtension
+	arachne.doctrine: Arachne\Doctrine\DI\DoctrineExtension( %debugMode% )
 	kdyby.console: Kdyby\Console\DI\ConsoleExtension
 	kdyby.doctrine: Kdyby\Doctrine\DI\OrmExtension
 	kdyby.events: Kdyby\Events\DI\EventsExtension
