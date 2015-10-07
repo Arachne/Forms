@@ -64,12 +64,7 @@ class TwigExtension extends CompilerExtension
 			]);
 
 		$builder->addDefinition($this->prefix('loader'))
-			->setClass('Twig_Loader_Chain')
-			->setArguments([
-				'loaders' => array_map(function ($service) {
-					return '@' . $service;
-				}, $this->findByTag(self::TAG_LOADER)),
-			]);
+			->setClass('Twig_Loader_Chain');
 
 		$builder->addDefinition($this->prefix('loader.fileSystem'))
 			->setClass('Twig_Loader_Filesystem')
@@ -85,6 +80,13 @@ class TwigExtension extends CompilerExtension
 	public function beforeCompile()
 	{
 		$builder = $this->getContainerBuilder();
+
+		$builder->getDefinition($this->prefix('loader'))
+			->setArguments([
+				'loaders' => array_map(function ($service) {
+					return '@' . $service;
+				}, array_keys($builder->findByTag(self::TAG_LOADER))),
+			]);
 
 		$environment = $builder->getDefinition($this->prefix('environment'));
 		foreach ($builder->findByTag(self::TAG_EXTENSION) as $service => $attributes) {
