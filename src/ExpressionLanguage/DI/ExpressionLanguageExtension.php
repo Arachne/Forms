@@ -27,7 +27,7 @@ class ExpressionLanguageExtension extends CompilerExtension
 			->setArguments([
 				'providers' => array_map(function ($service) {
 					return '@' . $service;
-				}, $this->findByTag(self::TAG_FUNCTION_PROVIDER)),
+				}, array_keys($builder->findByTag(self::TAG_FUNCTION_PROVIDER))),
 			]);
 	}
 
