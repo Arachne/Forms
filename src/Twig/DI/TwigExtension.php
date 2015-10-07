@@ -41,7 +41,7 @@ class TwigExtension extends CompilerExtension
 	/**
 	 * @param string $path
 	 * @param string $namespace	 
-	 */	 	
+	 */
 	public function addPath($path, $namespace = null)
 	{
 		$loader = $this->getContainerBuilder()->getDefinition($this->prefix('loader.fileSystem'));
