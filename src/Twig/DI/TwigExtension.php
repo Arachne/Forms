@@ -66,7 +66,9 @@ class TwigExtension extends CompilerExtension
 		$builder->addDefinition($this->prefix('loader'))
 			->setClass('Twig_Loader_Chain')
 			->setArguments([
-				'loaders' => new Statement('array_map([ $this, "getService" ], array_keys($this->findByTag(?)))', [ self::TAG_LOADER ]),
+				'loaders' => array_map(function ($service) {
+					return '@' . $service;
+				}, $this->findByTag(self::TAG_LOADER)),
 			]);
 
 		$builder->addDefinition($this->prefix('loader.fileSystem'))
