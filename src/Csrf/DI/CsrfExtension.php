@@ -10,7 +10,7 @@
 
 namespace Arachne\Csrf\DI;
 
-use Arachne\DIHelpers\CompilerExtension;
+use Nette\DI\CompilerExtension;
 
 /**
  * @author Jáchym Toušek <enumag@gmail.com>
