@@ -28,6 +28,16 @@ extensions:
 	kdyby.validator: Kdyby\Validator\DI\ValidatorExtension
 ```
 
+Usage of ExpressionLanguage
+----
+
+If you want to use the [Expression](http://symfony.com/doc/current/reference/constraints/Expression.html) constraint, it is recommended to install one more extension.
+
+```yml
+extensions:
+	arachne.expressionlanguage: Arachne\ExpressionLanguage\DI\ExpressionLanguage
+```
+
 Usage with Doctrine ORM
 ----
 
