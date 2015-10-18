@@ -1,0 +1,19 @@
+extensions:
+	arachne.dihelpers.iteratorresolvers: Arachne\DIHelpers\DI\IteratorResolversExtension
+	arachne.dihelpers.iterators: Arachne\DIHelpers\DI\IteratorsExtension
+	arachne.dihelpers.resolvers: Arachne\DIHelpers\DI\ResolversExtension
+	arachne.csrf: Arachne\Csrf\DI\CsrfExtension
+	arachne.forms: Arachne\Forms\DI\FormsExtension
+	arachne.propertyaccess: Arachne\PropertyAccess\DI\PropertyAccessExtension
+	arachne.twig: Arachne\Twig\DI\TwigExtension( %debugMode% )
+	nette.http: Nette\Bridges\HttpDI\HttpExtension
+	nette.session: Nette\Bridges\HttpDI\SessionExtension( %debugMode% )
+	kdyby.annotations: Kdyby\Annotations\DI\AnnotationsExtension
+	kdyby.translation: Kdyby\Translation\DI\TranslationExtension
+	kdyby.validator: Kdyby\Validator\DI\ValidatorExtension
+
+kdyby.annotations:
+	cache: array
+
+kdyby.validator:
+	cache: array
