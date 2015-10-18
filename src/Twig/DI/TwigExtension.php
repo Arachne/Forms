@@ -11,7 +11,6 @@
 namespace Arachne\Twig\DI;
 
 use Nette\DI\CompilerExtension;
-use Nette\DI\Statement;
 
 /**
  * @author Jáchym Toušek <enumag@gmail.com>
@@ -29,7 +28,7 @@ class TwigExtension extends CompilerExtension
 		],
 		'paths' => [],
 	];
-	
+
 	/** @var array */
 	private $paths = [];
 
@@ -40,7 +39,7 @@ class TwigExtension extends CompilerExtension
 
 	/**
 	 * @param string $path
-	 * @param string $namespace	 
+	 * @param string $namespace
 	 */
 	public function addPath($path, $namespace = null)
 	{
