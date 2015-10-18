@@ -169,7 +169,7 @@ class FormComponent extends Container implements ISignalReceiver
 		$this->walkErrors($form->getErrors(true, false), $view, function ($view) use (& $errors) {
 			$errors[$view->vars['id']] = $this->renderer->searchAndRenderBlock($view, 'errors_content');
 		});
-		$this->getPresenter()->sendJson($errors);
+		$this->getPresenter()->sendJson((object) [ 'errors' => $errors ]);
 	}
 
 	private function walkErrors(FormErrorIterator $iterator, FormView $view, callable $callback)
