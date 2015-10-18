@@ -7,7 +7,6 @@ The best way to install Arachne/Forms is using [Composer](http://getcomposer.org
 composer require arachne/forms
 composer require kdyby/translation
 composer require kdyby/validator
-composer require nette/utils
 composer require symfony/security-csrf
 composer require symfony/twig-bridge
 ```

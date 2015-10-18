@@ -28,7 +28,7 @@ class CsrfExtension extends CompilerExtension
 
 		$builder->addDefinition($this->prefix('tokenGenerator'))
 			->setClass('Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface')
-			->setFactory('Arachne\Csrf\TokenGenerator\TokenGenerator');
+			->setFactory('Symfony\Component\Security\Csrf\TokenGenerator\UriSafeTokenGenerator');
 
 		$builder->addDefinition($this->prefix('tokenStorage'))
 			->setClass('Symfony\Component\Security\Csrf\TokenStorage\TokenStorageInterface')
