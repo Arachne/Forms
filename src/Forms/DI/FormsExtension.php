@@ -219,7 +219,7 @@ class FormsExtension extends CompilerExtension
 
 	private function createShortName($class)
 	{
-		return lcfirst(substr($class, strrpos($class, '\\') + 1, -4));
+		return strtolower(substr($class, strrpos($class, '\\') + 1, -4));
 	}
 
 }
