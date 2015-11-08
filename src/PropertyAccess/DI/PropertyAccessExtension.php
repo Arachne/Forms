@@ -10,6 +10,7 @@ use Nette\DI\CompilerExtension;
 class PropertyAccessExtension extends CompilerExtension
 {
 
+	/** @var array */
 	public $defaults = [
 		'magicCall' => false,
 		'throwExceptionOnInvalidIndex' => false,
@@ -23,11 +24,13 @@ class PropertyAccessExtension extends CompilerExtension
 
 		$definition = $builder->addDefinition($this->prefix('propertyAccessorBuilder'));
 		$definition->setClass('Symfony\Component\PropertyAccess\PropertyAccessorBuilder');
+
 		if ($this->config['magicCall']) {
 			$definition->addSetup('enableMagicCall');
 		} else {
 			$definition->addSetup('disableMagicCall');
 		}
+
 		if ($this->config['throwExceptionOnInvalidIndex']) {
 			$definition->addSetup('enableExceptionOnInvalidIndex');
 		} else {

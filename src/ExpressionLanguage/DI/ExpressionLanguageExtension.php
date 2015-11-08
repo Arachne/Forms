@@ -3,7 +3,6 @@
 namespace Arachne\ExpressionLanguage\DI;
 
 use Nette\DI\CompilerExtension;
-use Nette\DI\Statement;
 
 /**
  * @author Jáchym Toušek <enumag@gmail.com>

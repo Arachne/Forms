@@ -16,7 +16,6 @@ use Nette\Application\UI\ISignalReceiver;
 use Nette\Application\UI\Presenter;
 use Nette\ComponentModel\Container;
 use Symfony\Bridge\Twig\Form\TwigRendererInterface;
-use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormErrorIterator;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;

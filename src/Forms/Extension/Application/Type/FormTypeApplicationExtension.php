@@ -20,9 +20,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 class FormTypeApplicationExtension extends AbstractTypeExtension
 {
 
-	/**
-	 * @var ApplicationRequestHandler
-	 */
+	/** @var ApplicationRequestHandler */
 	private $requestHandler;
 
 	public function __construct()
