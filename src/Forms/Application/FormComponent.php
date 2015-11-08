@@ -15,6 +15,7 @@ use Nette\Application\UI\BadSignalException;
 use Nette\Application\UI\ISignalReceiver;
 use Nette\Application\UI\Presenter;
 use Nette\ComponentModel\Container;
+use Nette\ComponentModel\IContainer;
 use Symfony\Bridge\Twig\Form\TwigRendererInterface;
 use Symfony\Component\Form\FormErrorIterator;
 use Symfony\Component\Form\FormInterface;
@@ -94,15 +95,32 @@ class FormComponent extends Container implements ISignalReceiver
 	public function getView()
 	{
 		if (!$this->view) {
-			$this->view = $this->getForm()->createView();
+			$this->view = $this->form->createView();
 			$this->onCreateView($this->view, $this);
 		}
 		return $this->view;
 	}
 
+	protected function validateParent(IContainer $parent)
+	{
+		parent::validateParent($parent);
+		$this->monitor('Nette\Application\UI\Presenter');
+	}
+
+	protected function attached($presenter)
+	{
+		if ($presenter instanceof Presenter) {
+			$this->form->add('_signal', 'Arachne\Forms\Extension\Application\Type\SignalType', [
+				'mapped' => false,
+				'data' => $this->lookupPath('Nette\Application\UI\Presenter') . self::NAME_SEPARATOR . 'submit',
+			]);
+		}
+
+		parent::attached($presenter);
+	}
+
 	public function render(array $variables = [])
 	{
-		$variables['component'] = $this->lookupPath('Nette\Application\UI\Presenter');
 		echo $this->renderer->renderBlock($this->getView(), 'form', $variables);
 	}
 

@@ -66,6 +66,7 @@ class FormsExtension extends CompilerExtension
 		'Symfony\Component\Form\Extension\Core\Type\TimeType',
 		'Symfony\Component\Form\Extension\Core\Type\TimezoneType',
 		'Symfony\Component\Form\Extension\Core\Type\UrlType',
+		'Arachne\Forms\Extension\Application\Type\SignalType',
 	];
 
 	private $typeExtensions = [
