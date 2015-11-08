@@ -24,13 +24,11 @@
 		"arachne/codeception": "~0.6.3",
 		"arachne/coding-style": "~0.3.0",
 		"codeception/codeception": "~2.1.0",
-		"codeception/mockery-module": "~0.2.2",
 		"enumag/application": "~0.3.5",
 		"kdyby/annotations": "^2.2.0",
 		"kdyby/translation": "dev-master",
 		"kdyby/validator": "dev-master",
 		"latte/latte": "^2.3.0",
-		"mockery/mockery": "~0.9",
 		"nette/http": "^2.3.0",
 		"squizlabs/php_codesniffer": "~2.0",
 		"symfony/security-csrf": "^2.8.0@dev",
@@ -44,8 +42,8 @@
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"Tests\\Unit\\": "tests/unit/src",
-			"Tests\\Integration\\": "tests/integration/src"
+			"Tests\\Integration\\": "tests/integration/src",
+			"Tests\\Functional\\": "tests/functional/src"
 		}
 	},
 	"repositories": [
