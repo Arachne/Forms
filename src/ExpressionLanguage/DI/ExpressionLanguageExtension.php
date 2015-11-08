@@ -22,6 +22,8 @@ class ExpressionLanguageExtension extends CompilerExtension
 
 	public function beforeCompile()
 	{
+		$builder = $this->getContainerBuilder();
+
 		$builder->getDefinition($this->prefix('expressionLanguage'))
 			->setArguments([
 				'providers' => array_map(function ($service) {
