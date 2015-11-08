@@ -21,7 +21,7 @@ class FormTypeGuesserChain implements FormTypeGuesserInterface
 {
 
 	/** @var Traversable */
-	private $guessers = array();
+	private $guessers;
 
 	public function __construct(Traversable $guessers)
 	{

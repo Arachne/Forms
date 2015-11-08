@@ -23,7 +23,7 @@ class DumpNode extends Twig_Node
 
 	public function __construct($varPrefix, Twig_Node $values = null, $lineno = 0, $tag = null)
 	{
-		parent::__construct(array('values' => $values), array(), $lineno, $tag);
+		parent::__construct([ 'values' => $values ], [], $lineno, $tag);
 		$this->varPrefix = $varPrefix;
 	}
 
@@ -41,7 +41,7 @@ class DumpNode extends Twig_Node
 		if (null === $values) {
 			// remove embedded templates (macros) from the context
 			$compiler
-				->write(sprintf('$%svars = array();'."\n", $this->varPrefix))
+				->write(sprintf('$%svars = [];'."\n", $this->varPrefix))
 				->write(sprintf('foreach ($context as $%1$skey => $%1$sval) {'."\n", $this->varPrefix))
 				->indent()
 				->write(sprintf('if (!$%sval instanceof \Twig_Template) {'."\n", $this->varPrefix))
@@ -62,7 +62,7 @@ class DumpNode extends Twig_Node
 		} else {
 			$compiler
 				->addDebugInfo($this)
-				->write('\Tracy\Debugger::barDump(array('."\n")
+				->write('\Tracy\Debugger::barDump(['."\n")
 				->indent();
 			foreach ($values as $node) {
 				$compiler->addIndentation();
@@ -77,7 +77,7 @@ class DumpNode extends Twig_Node
 			}
 			$compiler
 				->outdent()
-				->write("));\n");
+				->write("]);\n");
 		}
 
 		$compiler

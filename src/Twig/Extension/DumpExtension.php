@@ -26,7 +26,7 @@ class DumpExtension extends Twig_Extension
 	public function getFunctions()
 	{
 		return [
-			new Twig_SimpleFunction('dump', array($this, 'dump'), array('is_safe' => array('html'), 'needs_context' => true, 'needs_environment' => true)),
+			new Twig_SimpleFunction('dump', [ $this, 'dump' ], [ 'is_safe' => array('html'), 'needs_context' => true, 'needs_environment' => true ]),
 		];
 	}
 
