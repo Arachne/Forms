@@ -27,6 +27,14 @@ extensions:
 	kdyby.validator: Kdyby\Validator\DI\ValidatorExtension
 ```
 
+Also add the cache option for twig.
+
+```yml
+arachne.twig:
+	options:
+		cache: %tempDir%/cache/twig
+```
+
 Usage of ExpressionLanguage
 ----
 
