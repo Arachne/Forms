@@ -136,7 +136,7 @@ class FormsExtension extends CompilerExtension
 
 		$builder->addDefinition($this->prefix('validator.typeGuesser'))
 			->setClass('Symfony\Component\Form\FormTypeGuesserInterface')
-			->setFactory('Symfony\Component\Form\Extension\Validator\ValidatorTypeGuesser', [
+			->setFactory('Arachne\Forms\Extension\Validator\ValidatorTypeGuesser', [
 				'metadataFactory' => new Statement('?->getMetadataFactory()', [ '@Symfony\Component\Validator\Validator\ValidatorInterface' ]),
 			])
 			->addTag(self::TAG_TYPE_GUESSER)
