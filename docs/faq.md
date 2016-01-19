@@ -1,6 +1,11 @@
 FAQ
 ====
 
+Why the installation requires so many DI extensions?
+----
+
+First not all of them are exactly required. The installation shows the recommended configuration. You can actually ommit PropertyAccess, CSRF protection and even Validator. But do you really want to? Second while I could have put the rest into one giant extension most of the stuff is general and not directly related to forms so I decided to split it. Besides most of the extensions are actually very very simple.
+
 Why Twig instead of Latte?
 ----
 
