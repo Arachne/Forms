@@ -38,7 +38,7 @@ arachne.twig:
 Usage of ExpressionLanguage
 ----
 
-If you want to use the [Expression](http://symfony.com/doc/current/reference/constraints/Expression.html) constraint, it is recommended to install one more extension.
+If you want to use the [Expression](http://symfony.com/doc/current/reference/constraints/Expression.html) constraint, it is recommended to add one more extension.
 
 ```yml
 extensions:
