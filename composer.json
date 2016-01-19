@@ -16,7 +16,7 @@
 		"arachne/di-helpers": "~0.4.0",
 		"nette/application": "^2.3.0",
 		"nette/di": "^2.3.0",
-		"symfony/form": "^2.8.0@dev"
+		"symfony/form": "^2.8.0"
 	},
 	"require-dev": {
 		"php": ">=5.5.0",
@@ -31,8 +31,8 @@
 		"latte/latte": "^2.3.0",
 		"nette/http": "^2.3.0",
 		"squizlabs/php_codesniffer": "~2.0",
-		"symfony/security-csrf": "^2.8.0@dev",
-		"symfony/twig-bridge": "^2.8.0@dev",
+		"symfony/security-csrf": "^2.8.0",
+		"symfony/twig-bridge": "^2.8.0",
 		"tracy/tracy": "^2.3.0"
 	},
 	"autoload": {
