@@ -135,21 +135,8 @@ class FormsExtension extends CompilerExtension
 				'decoratedFactory' => $this->prefix('@choiceList.propertyAccessDecorator'),
 			]);
 
-		$builder->addDefinition($this->prefix('validator.typeGuesser'))
-			->setClass('Symfony\Component\Form\FormTypeGuesserInterface')
-			->setFactory('Arachne\Forms\Extension\Validator\ValidatorTypeGuesser')
-			->addTag(self::TAG_TYPE_GUESSER)
-			->setAutowired(false);
-
 		$builder->addDefinition($this->prefix('application.componentFactory'))
 			->setImplement('Arachne\Forms\Application\FormComponentFactory');
-
-		$builder->addDefinition($this->prefix('validationLoader'))
-			->setFactory('Symfony\Component\Validator\Mapping\Loader\XmlFileLoader', [
-				'file' => dirname((new ReflectionClass('Symfony\Component\Form\FormInterface'))->getFileName()) . '/Resources/config/validation.xml',
-			])
-			->setAutowired(false)
-			->addTag(ValidatorExtension::TAG_LOADER);
 
 		foreach ($this->types as $class) {
 			$typeName = $this->createShortName($class);
@@ -171,7 +158,7 @@ class FormsExtension extends CompilerExtension
 					->setAutowired(false);
 			}
 		}
-		
+
 		if ($this->config['supportReadOnlyCollections']) {
 			$builder->addDefinition($this->prefix('typeExtension.collection.readOnlyCollection'))
 				->setClass('Arachne\Forms\Extension\ReadOnlyCollection\Type\ReadOnlyCollectionExtension')
@@ -179,34 +166,57 @@ class FormsExtension extends CompilerExtension
 				->setAutowired(false);
 		}
 
-		$builder->getDefinition($this->prefix('typeExtension.form.csrf'))
-			->setArguments([
-				'translationDomain' => $this->config['csrfTranslationDomain'],
-			]);
+		if ($this->getExtension('Arachne\Csrf\DI\CsrfExtension', false)) {
+			$builder->getDefinition($this->prefix('typeExtension.form.csrf'))
+				->setArguments([
+					'translationDomain' => $this->config['csrfTranslationDomain'],
+				]);
+		} else {
+			$builder->removeDefinition($this->prefix('typeExtension.form.csrf'));
+		}
 
-		$builder->addDefinition($this->prefix('twig.extension.translation'))
-			->setClass('Symfony\Bridge\Twig\Extension\TranslationExtension')
-			->addTag(TwigExtension::TAG_EXTENSION);
+		if ($this->getExtension('Kdyby\Validator\DI\ValidatorExtension', false)) {
+			$builder->addDefinition($this->prefix('validator.typeGuesser'))
+				->setClass('Symfony\Component\Form\FormTypeGuesserInterface')
+				->setFactory('Arachne\Forms\Extension\Validator\ValidatorTypeGuesser')
+				->addTag(self::TAG_TYPE_GUESSER)
+				->setAutowired(false);
 
-		$builder->addDefinition($this->prefix('twig.extension.form'))
-			->setClass('Symfony\Bridge\Twig\Extension\FormExtension')
-			->addTag(TwigExtension::TAG_EXTENSION);
+			$builder->addDefinition($this->prefix('validationLoader'))
+				->setFactory('Symfony\Component\Validator\Mapping\Loader\XmlFileLoader', [
+					'file' => dirname((new ReflectionClass('Symfony\Component\Form\FormInterface'))->getFileName()) . '/Resources/config/validation.xml',
+				])
+				->setAutowired(false)
+				->addTag(ValidatorExtension::TAG_LOADER);
+		}
 
-		$builder->addDefinition($this->prefix('twig.renderer'))
-			->setClass('Symfony\Bridge\Twig\Form\TwigRendererInterface')
-			->setFactory('Arachne\Forms\Twig\TwigRenderer');
+		if ($this->getExtension('Arachne\Twig\DI\TwigExtension', false)) {
+			$builder->addDefinition($this->prefix('twig.extension.translation'))
+				->setClass('Symfony\Bridge\Twig\Extension\TranslationExtension')
+				->addTag(TwigExtension::TAG_EXTENSION);
 
-		$builder->addDefinition($this->prefix('twig.engine'))
-			->setClass('Symfony\Bridge\Twig\Form\TwigRendererEngineInterface')
-			->setFactory('Symfony\Bridge\Twig\Form\TwigRendererEngine', [
-				'defaultThemes' => $this->config['defaultThemes'],
-			]);
+			$builder->addDefinition($this->prefix('twig.extension.form'))
+				->setClass('Symfony\Bridge\Twig\Extension\FormExtension')
+				->addTag(TwigExtension::TAG_EXTENSION);
+
+			$builder->addDefinition($this->prefix('twig.renderer'))
+				->setClass('Symfony\Bridge\Twig\Form\TwigRendererInterface')
+				->setFactory('Arachne\Forms\Twig\TwigRenderer');
+
+			$builder->addDefinition($this->prefix('twig.engine'))
+				->setClass('Symfony\Bridge\Twig\Form\TwigRendererEngineInterface')
+				->setFactory('Symfony\Bridge\Twig\Form\TwigRendererEngine', [
+					'defaultThemes' => $this->config['defaultThemes'],
+				]);
+		}
 	}
 
 	public function beforeCompile()
 	{
-		$this->getExtension('Arachne\Twig\DI\TwigExtension')
-			->addPath(dirname((new ReflectionClass('Symfony\Bridge\Twig\AppVariable'))->getFileName()) . '/Resources/views/Form');
+		$twigExtension = $this->getExtension('Arachne\Twig\DI\TwigExtension', false);
+		if ($twigExtension) {
+			$twigExtension->addPath(dirname((new ReflectionClass('Symfony\Bridge\Twig\AppVariable'))->getFileName()) . '/Resources/views/Form');
+		}
 
 		$builder = $this->getContainerBuilder();
 
