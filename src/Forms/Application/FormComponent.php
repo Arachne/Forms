@@ -14,7 +14,7 @@ use Nette\Application\Request;
 use Nette\Application\UI\BadSignalException;
 use Nette\Application\UI\ISignalReceiver;
 use Nette\Application\UI\Presenter;
-use Nette\ComponentModel\Container;
+use Nette\ComponentModel\Component;
 use Nette\ComponentModel\IContainer;
 use Symfony\Bridge\Twig\Form\TwigRendererInterface;
 use Symfony\Component\Form\FormErrorIterator;
@@ -25,7 +25,7 @@ use Twig_Environment;
 /**
  * @author Jáchym Toušek <enumag@gmail.com>
  */
-class FormComponent extends Container implements ISignalReceiver
+class FormComponent extends Component implements ISignalReceiver
 {
 
 	/**
