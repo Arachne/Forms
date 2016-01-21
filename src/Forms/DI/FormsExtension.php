@@ -70,20 +70,6 @@ class FormsExtension extends CompilerExtension
 		'Arachne\Forms\Extension\Application\Type\SignalType',
 	];
 
-	private $typeExtensions = [
-		'Symfony\Component\Form\Extension\Core\Type\FormType' => [
-			'application' => 'Arachne\Forms\Extension\Application\Type\FormTypeApplicationExtension',
-			'validator' => 'Arachne\Forms\Extension\Validator\Type\FormTypeValidatorExtension',
-			'csrf' => 'Arachne\Forms\Extension\Csrf\Type\FormTypeCsrfExtension',
-		],
-		'Symfony\Component\Form\Extension\Core\Type\RepeatedType' => [
-			'validator' => 'Symfony\Component\Form\Extension\Validator\Type\RepeatedTypeValidatorExtension',
-		],
-		'Symfony\Component\Form\Extension\Core\Type\SubmitType' => [
-			'validator' => 'Symfony\Component\Form\Extension\Validator\Type\SubmitTypeValidatorExtension',
-		],
-	];
-
 	public function loadConfiguration()
 	{
 		$this->validateConfig($this->defaults);
@@ -135,11 +121,8 @@ class FormsExtension extends CompilerExtension
 				'decoratedFactory' => $this->prefix('@choiceList.propertyAccessDecorator'),
 			]);
 
-		$builder->addDefinition($this->prefix('application.componentFactory'))
-			->setImplement('Arachne\Forms\Application\FormComponentFactory');
-
 		foreach ($this->types as $class) {
-			$typeName = $this->createShortName($class);
+			$typeName = strtolower(substr($class, strrpos($class, '\\') + 1, -4));
 			$builder->addDefinition($this->prefix('type.' . $typeName))
 				->setClass($class)
 				->addTag(self::TAG_TYPE, [
@@ -149,15 +132,13 @@ class FormsExtension extends CompilerExtension
 				->setAutowired(false);
 		}
 
-		foreach ($this->typeExtensions as $type => $classes) {
-			$typeName = $this->createShortName($type);
-			foreach ($classes as $name => $class) {
-				$builder->addDefinition($this->prefix('typeExtension.' . $typeName . '.' . $name))
-					->setClass($class)
-					->addTag(self::TAG_TYPE_EXTENSION, $type)
-					->setAutowired(false);
-			}
-		}
+		$builder->addDefinition($this->prefix('application.componentFactory'))
+			->setImplement('Arachne\Forms\Application\FormComponentFactory');
+
+		$builder->addDefinition($this->prefix('typeExtension.form.application'))
+			->setClass('Arachne\Forms\Extension\Application\Type\FormTypeApplicationExtension')
+			->addTag(self::TAG_TYPE_EXTENSION, 'Symfony\Component\Form\Extension\Core\Type\FormType')
+			->setAutowired(false);
 
 		if ($this->config['supportReadOnlyCollections']) {
 			$builder->addDefinition($this->prefix('typeExtension.collection.readOnlyCollection'))
@@ -167,15 +148,31 @@ class FormsExtension extends CompilerExtension
 		}
 
 		if ($this->getExtension('Arachne\Csrf\DI\CsrfExtension', false)) {
-			$builder->getDefinition($this->prefix('typeExtension.form.csrf'))
+			$builder->addDefinition($this->prefix('typeExtension.form.csrf'))
+				->setClass('Arachne\Forms\Extension\Csrf\Type\FormTypeCsrfExtension')
 				->setArguments([
 					'translationDomain' => $this->config['csrfTranslationDomain'],
-				]);
-		} else {
-			$builder->removeDefinition($this->prefix('typeExtension.form.csrf'));
+				])
+				->addTag(self::TAG_TYPE_EXTENSION, 'Symfony\Component\Form\Extension\Core\Type\FormType')
+				->setAutowired(false);
 		}
 
 		if ($this->getExtension('Kdyby\Validator\DI\ValidatorExtension', false)) {
+			$builder->addDefinition($this->prefix('typeExtension.form.validator'))
+				->setClass('Arachne\Forms\Extension\Validator\Type\FormTypeValidatorExtension')
+				->addTag(self::TAG_TYPE_EXTENSION, 'Symfony\Component\Form\Extension\Core\Type\FormType')
+				->setAutowired(false);
+
+			$builder->addDefinition($this->prefix('typeExtension.repeated.validator'))
+				->setClass('Symfony\Component\Form\Extension\Validator\Type\RepeatedTypeValidatorExtension')
+				->addTag(self::TAG_TYPE_EXTENSION, 'Symfony\Component\Form\Extension\Core\Type\RepeatedType')
+				->setAutowired(false);
+
+			$builder->addDefinition($this->prefix('typeExtension.submit.validator'))
+				->setClass('Symfony\Component\Form\Extension\Validator\Type\SubmitTypeValidatorExtension')
+				->addTag(self::TAG_TYPE_EXTENSION, 'Symfony\Component\Form\Extension\Core\Type\SubmitType')
+				->setAutowired(false);
+
 			$builder->addDefinition($this->prefix('validator.typeGuesser'))
 				->setClass('Symfony\Component\Form\FormTypeGuesserInterface')
 				->setFactory('Arachne\Forms\Extension\Validator\ValidatorTypeGuesser')
@@ -230,11 +227,6 @@ class FormsExtension extends CompilerExtension
 			->setArguments([
 				'guessers' => '@' . $this->getExtension('Arachne\DIHelpers\DI\IteratorsExtension')->get(self::TAG_TYPE_GUESSER),
 			]);
-	}
-
-	private function createShortName($class)
-	{
-		return strtolower(substr($class, strrpos($class, '\\') + 1, -4));
 	}
 
 }
