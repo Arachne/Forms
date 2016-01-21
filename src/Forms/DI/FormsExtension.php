@@ -135,20 +135,20 @@ class FormsExtension extends CompilerExtension
 		$builder->addDefinition($this->prefix('application.componentFactory'))
 			->setImplement('Arachne\Forms\Application\FormComponentFactory');
 
-		$builder->addDefinition($this->prefix('typeExtension.form.application'))
+		$builder->addDefinition($this->prefix('application.typeExtension.form'))
 			->setClass('Arachne\Forms\Extension\Application\Type\FormTypeApplicationExtension')
 			->addTag(self::TAG_TYPE_EXTENSION, 'Symfony\Component\Form\Extension\Core\Type\FormType')
 			->setAutowired(false);
 
 		if ($this->config['supportReadOnlyCollections']) {
-			$builder->addDefinition($this->prefix('typeExtension.collection.readOnlyCollection'))
+			$builder->addDefinition($this->prefix('readOnlyCollection.typeExtension.collection'))
 				->setClass('Arachne\Forms\Extension\ReadOnlyCollection\Type\ReadOnlyCollectionExtension')
 				->addTag(self::TAG_TYPE_EXTENSION, 'Symfony\Component\Form\Extension\Core\Type\CollectionType')
 				->setAutowired(false);
 		}
 
 		if ($this->getExtension('Arachne\Csrf\DI\CsrfExtension', false)) {
-			$builder->addDefinition($this->prefix('typeExtension.form.csrf'))
+			$builder->addDefinition($this->prefix('csrf.typeExtension.form'))
 				->setClass('Arachne\Forms\Extension\Csrf\Type\FormTypeCsrfExtension')
 				->setArguments([
 					'translationDomain' => $this->config['csrfTranslationDomain'],
@@ -158,17 +158,17 @@ class FormsExtension extends CompilerExtension
 		}
 
 		if ($this->getExtension('Kdyby\Validator\DI\ValidatorExtension', false)) {
-			$builder->addDefinition($this->prefix('typeExtension.form.validator'))
+			$builder->addDefinition($this->prefix('validator.typeExtension.form'))
 				->setClass('Arachne\Forms\Extension\Validator\Type\FormTypeValidatorExtension')
 				->addTag(self::TAG_TYPE_EXTENSION, 'Symfony\Component\Form\Extension\Core\Type\FormType')
 				->setAutowired(false);
 
-			$builder->addDefinition($this->prefix('typeExtension.repeated.validator'))
+			$builder->addDefinition($this->prefix('validator.typeExtension.repeated'))
 				->setClass('Symfony\Component\Form\Extension\Validator\Type\RepeatedTypeValidatorExtension')
 				->addTag(self::TAG_TYPE_EXTENSION, 'Symfony\Component\Form\Extension\Core\Type\RepeatedType')
 				->setAutowired(false);
 
-			$builder->addDefinition($this->prefix('typeExtension.submit.validator'))
+			$builder->addDefinition($this->prefix('validator.typeExtension.submit'))
 				->setClass('Symfony\Component\Form\Extension\Validator\Type\SubmitTypeValidatorExtension')
 				->addTag(self::TAG_TYPE_EXTENSION, 'Symfony\Component\Form\Extension\Core\Type\SubmitType')
 				->setAutowired(false);
