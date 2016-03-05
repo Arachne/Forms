@@ -1,12 +1,19 @@
 language: php
 
 php:
-  - 5.3.3
-  - 5.4
   - 5.5
+  - 5.6
+  - 7.0
+  - hhvm
+
+before_install:
+  - composer self-update
+
+install:
+  - composer update --no-interaction --prefer-source
 
 before_script:
-  - composer self-update
-  - composer install -n -o --prefer-source --dev
+  - vendor/bin/phpcs -p --standard=vendor/arachne/coding-style/ruleset.xml --ignore=_* src tests
+  - vendor/bin/codecept build
 
-script: VERBOSE=true ./tests/runtests.sh
+script: vendor/bin/codecept run
