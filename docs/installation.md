@@ -27,22 +27,12 @@ extensions:
 	kdyby.validator: Kdyby\Validator\DI\ValidatorExtension
 ```
 
-Also add the cache option for twig.
+Also add the cache option for Twig.
 
 ```yml
 arachne.twig:
 	options:
 		cache: %tempDir%/cache/twig
-```
-
-Usage of ExpressionLanguage
-----
-
-If you want to use the [Expression](http://symfony.com/doc/current/reference/constraints/Expression.html) constraint, it is recommended to add one more extension.
-
-```yml
-extensions:
-	arachne.expressionlanguage: Arachne\ExpressionLanguage\DI\ExpressionLanguage
 ```
 
 Usage with Doctrine ORM
@@ -64,4 +54,14 @@ extensions:
 	kdyby.console: Kdyby\Console\DI\ConsoleExtension
 	kdyby.doctrine: Kdyby\Doctrine\DI\OrmExtension
 	kdyby.events: Kdyby\Events\DI\EventsExtension
+```
+
+Usage of ExpressionLanguage
+----
+
+If you want to use the [Expression](http://symfony.com/doc/current/reference/constraints/Expression.html) constraint, it is recommended to add one more extension.
+
+```yml
+extensions:
+	arachne.expressionlanguage: Arachne\ExpressionLanguage\DI\ExpressionLanguage
 ```
