@@ -11,6 +11,7 @@
 namespace Arachne\Csrf\TokenStorage;
 
 use Nette\Http\Session;
+use Nette\Http\SessionSection;
 use Symfony\Component\Security\Csrf\Exception\TokenNotFoundException;
 use Symfony\Component\Security\Csrf\TokenStorage\TokenStorageInterface;
 
@@ -22,7 +23,7 @@ class SessionTokenStorage implements TokenStorageInterface
 
 	const SESSION_NAMESPACE = 'Arachne.Csrf.SessionTokenStorage';
 
-	/** @var Session */
+	/** @var SessionSection */
 	private $session;
 
 	/** @var string */
