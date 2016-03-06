@@ -32,7 +32,6 @@ class FormsExtension extends CompilerExtension
 			'form_div_layout.html.twig',
 		],
 		'csrfTranslationDomain' => null,
-		'supportReadOnlyCollections' => false,
 	];
 
 	private $types = [
@@ -139,13 +138,6 @@ class FormsExtension extends CompilerExtension
 			->setClass('Arachne\Forms\Extension\Application\Type\FormTypeApplicationExtension')
 			->addTag(self::TAG_TYPE_EXTENSION, 'Symfony\Component\Form\Extension\Core\Type\FormType')
 			->setAutowired(false);
-
-		if ($this->config['supportReadOnlyCollections']) {
-			$builder->addDefinition($this->prefix('readOnlyCollection.typeExtension.collection'))
-				->setClass('Arachne\Forms\Extension\ReadOnlyCollection\Type\ReadOnlyCollectionExtension')
-				->addTag(self::TAG_TYPE_EXTENSION, 'Symfony\Component\Form\Extension\Core\Type\CollectionType')
-				->setAutowired(false);
-		}
 
 		if ($this->getExtension('Arachne\Csrf\DI\CsrfExtension', false)) {
 			$builder->addDefinition($this->prefix('csrf.typeExtension.form'))
