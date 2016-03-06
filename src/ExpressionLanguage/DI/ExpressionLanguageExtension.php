@@ -10,26 +10,25 @@ use Nette\DI\CompilerExtension;
 class ExpressionLanguageExtension extends CompilerExtension
 {
 
-	const TAG_FUNCTION_PROVIDER = 'arachne.expressionLanguage.functionProvider';
+    const TAG_FUNCTION_PROVIDER = 'arachne.expressionLanguage.functionProvider';
 
-	public function loadConfiguration()
-	{
-		$builder = $this->getContainerBuilder();
+    public function loadConfiguration()
+    {
+        $builder = $this->getContainerBuilder();
 
-		$builder->addDefinition($this->prefix('expressionLanguage'))
-			->setClass('Symfony\Component\ExpressionLanguage\ExpressionLanguage');
-	}
+        $builder->addDefinition($this->prefix('expressionLanguage'))
+            ->setClass('Symfony\Component\ExpressionLanguage\ExpressionLanguage');
+    }
 
-	public function beforeCompile()
-	{
-		$builder = $this->getContainerBuilder();
+    public function beforeCompile()
+    {
+        $builder = $this->getContainerBuilder();
 
-		$builder->getDefinition($this->prefix('expressionLanguage'))
-			->setArguments([
-				'providers' => array_map(function ($service) {
-					return '@' . $service;
-				}, array_keys($builder->findByTag(self::TAG_FUNCTION_PROVIDER))),
-			]);
-	}
-
+        $builder->getDefinition($this->prefix('expressionLanguage'))
+            ->setArguments([
+                'providers' => array_map(function ($service) {
+                    return '@' . $service;
+                }, array_keys($builder->findByTag(self::TAG_FUNCTION_PROVIDER))),
+            ]);
+    }
 }

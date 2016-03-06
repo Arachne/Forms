@@ -20,64 +20,64 @@ use Traversable;
 class FormTypeGuesserChain implements FormTypeGuesserInterface
 {
 
-	/** @var Traversable */
-	private $guessers;
+    /** @var Traversable */
+    private $guessers;
 
-	public function __construct(Traversable $guessers)
-	{
-		$this->guessers = $guessers;
-	}
+    public function __construct(Traversable $guessers)
+    {
+        $this->guessers = $guessers;
+    }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function guessType($class, $property)
-	{
-		return $this->guess(function ($guesser) use ($class, $property) {
-			return $guesser->guessType($class, $property);
-		});
-	}
+    /**
+     * {@inheritdoc}
+     */
+    public function guessType($class, $property)
+    {
+        return $this->guess(function ($guesser) use ($class, $property) {
+            return $guesser->guessType($class, $property);
+        });
+    }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function guessRequired($class, $property)
-	{
-		return $this->guess(function ($guesser) use ($class, $property) {
-			return $guesser->guessRequired($class, $property);
-		});
-	}
+    /**
+     * {@inheritdoc}
+     */
+    public function guessRequired($class, $property)
+    {
+        return $this->guess(function ($guesser) use ($class, $property) {
+            return $guesser->guessRequired($class, $property);
+        });
+    }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function guessMaxLength($class, $property)
-	{
-		return $this->guess(function ($guesser) use ($class, $property) {
-			return $guesser->guessMaxLength($class, $property);
-		});
-	}
+    /**
+     * {@inheritdoc}
+     */
+    public function guessMaxLength($class, $property)
+    {
+        return $this->guess(function ($guesser) use ($class, $property) {
+            return $guesser->guessMaxLength($class, $property);
+        });
+    }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function guessPattern($class, $property)
-	{
-		return $this->guess(function ($guesser) use ($class, $property) {
-			return $guesser->guessPattern($class, $property);
-		});
-	}
+    /**
+     * {@inheritdoc}
+     */
+    public function guessPattern($class, $property)
+    {
+        return $this->guess(function ($guesser) use ($class, $property) {
+            return $guesser->guessPattern($class, $property);
+        });
+    }
 
-	private function guess(callable $closure)
-	{
-		$guesses = [];
+    private function guess(callable $closure)
+    {
+        $guesses = [];
 
-		foreach ($this->guessers as $guesser) {
-			if ($guess = $closure($guesser)) {
-				$guesses[] = $guess;
-			}
-		}
+        foreach ($this->guessers as $guesser) {
+            if ($guess = $closure($guesser)) {
+                $guesses[] = $guess;
+            }
+        }
 
-		return Guess::getBestGuess($guesses);
-	}
+        return Guess::getBestGuess($guesses);
+    }
 }

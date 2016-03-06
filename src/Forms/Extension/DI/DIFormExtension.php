@@ -21,84 +21,83 @@ use Symfony\Component\Form\FormTypeGuesserInterface;
 class DIFormExtension implements FormExtensionInterface
 {
 
-	/** @var ResolverInterface */
-	private $typeResolver;
+    /** @var ResolverInterface */
+    private $typeResolver;
 
-	/** @var ResolverInterface */
-	private $typeExtensionResolver;
+    /** @var ResolverInterface */
+    private $typeExtensionResolver;
 
-	/** @var FormTypeGuesserInterface */
-	private $guesser;
+    /** @var FormTypeGuesserInterface */
+    private $guesser;
 
-	public function __construct(ResolverInterface $typeResolver, ResolverInterface $typeExtensionResolver, FormTypeGuesserInterface $guesser)
-	{
-		$this->typeResolver = $typeResolver;
-		$this->typeExtensionResolver = $typeExtensionResolver;
-		$this->guesser = $guesser;
-	}
+    public function __construct(ResolverInterface $typeResolver, ResolverInterface $typeExtensionResolver, FormTypeGuesserInterface $guesser)
+    {
+        $this->typeResolver = $typeResolver;
+        $this->typeExtensionResolver = $typeExtensionResolver;
+        $this->guesser = $guesser;
+    }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getType($name)
-	{
-		$type = $this->typeResolver->resolve($name);
+    /**
+     * {@inheritdoc}
+     */
+    public function getType($name)
+    {
+        $type = $this->typeResolver->resolve($name);
 
-		if (!$type) {
-			throw new InvalidArgumentException(sprintf('The field type "%s" does not exist.', $name));
-		}
+        if (!$type) {
+            throw new InvalidArgumentException(sprintf('The field type "%s" does not exist.', $name));
+        }
 
-		if ($name !== get_class($type) && $type->getName() !== $name) {
-			throw new InvalidArgumentException(sprintf('The type name does not match the actual name. Expected "%s", given "%s"', $name, $type->getName()));
-		}
+        if ($name !== get_class($type) && $type->getName() !== $name) {
+            throw new InvalidArgumentException(sprintf('The type name does not match the actual name. Expected "%s", given "%s"', $name, $type->getName()));
+        }
 
-		return $type;
-	}
+        return $type;
+    }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function hasType($name)
-	{
-		return (bool) $this->typeResolver->resolve($name);
-	}
+    /**
+     * {@inheritdoc}
+     */
+    public function hasType($name)
+    {
+        return (bool) $this->typeResolver->resolve($name);
+    }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getTypeExtensions($name)
-	{
-		$iterator = $this->typeExtensionResolver->resolve($name);
+    /**
+     * {@inheritdoc}
+     */
+    public function getTypeExtensions($name)
+    {
+        $iterator = $this->typeExtensionResolver->resolve($name);
 
-		if (!$iterator) {
-			return [];
-		}
+        if (!$iterator) {
+            return [];
+        }
 
-		$extensions = [];
-		foreach ($iterator as $extension) {
-			if ($extension->getExtendedType() !== $name) {
-				throw new InvalidArgumentException(sprintf('The extended type does not match the actual extended type. Expected "%s", given "%s".', $name, $extension->getExtendedType()));
-			}
-			$extensions[] = $extension;
-		}
+        $extensions = [];
+        foreach ($iterator as $extension) {
+            if ($extension->getExtendedType() !== $name) {
+                throw new InvalidArgumentException(sprintf('The extended type does not match the actual extended type. Expected "%s", given "%s".', $name, $extension->getExtendedType()));
+            }
+            $extensions[] = $extension;
+        }
 
-		return $extensions;
-	}
+        return $extensions;
+    }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function hasTypeExtensions($name)
-	{
-		return (bool) $this->typeExtensionResolver->resolve($name);
-	}
+    /**
+     * {@inheritdoc}
+     */
+    public function hasTypeExtensions($name)
+    {
+        return (bool) $this->typeExtensionResolver->resolve($name);
+    }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getTypeGuesser()
-	{
-		return $this->guesser;
-	}
-
+    /**
+     * {@inheritdoc}
+     */
+    public function getTypeGuesser()
+    {
+        return $this->guesser;
+    }
 }

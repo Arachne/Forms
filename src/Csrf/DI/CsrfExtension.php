@@ -18,21 +18,20 @@ use Nette\DI\CompilerExtension;
 class CsrfExtension extends CompilerExtension
 {
 
-	public function loadConfiguration()
-	{
-		$builder = $this->getContainerBuilder();
+    public function loadConfiguration()
+    {
+        $builder = $this->getContainerBuilder();
 
-		$builder->addDefinition($this->prefix('tokenManager'))
-			->setClass('Symfony\Component\Security\Csrf\CsrfTokenManagerInterface')
-			->setFactory('Symfony\Component\Security\Csrf\CsrfTokenManager');
+        $builder->addDefinition($this->prefix('tokenManager'))
+            ->setClass('Symfony\Component\Security\Csrf\CsrfTokenManagerInterface')
+            ->setFactory('Symfony\Component\Security\Csrf\CsrfTokenManager');
 
-		$builder->addDefinition($this->prefix('tokenGenerator'))
-			->setClass('Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface')
-			->setFactory('Symfony\Component\Security\Csrf\TokenGenerator\UriSafeTokenGenerator');
+        $builder->addDefinition($this->prefix('tokenGenerator'))
+            ->setClass('Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface')
+            ->setFactory('Symfony\Component\Security\Csrf\TokenGenerator\UriSafeTokenGenerator');
 
-		$builder->addDefinition($this->prefix('tokenStorage'))
-			->setClass('Symfony\Component\Security\Csrf\TokenStorage\TokenStorageInterface')
-			->setFactory('Arachne\Csrf\TokenStorage\SessionTokenStorage');
-	}
-
+        $builder->addDefinition($this->prefix('tokenStorage'))
+            ->setClass('Symfony\Component\Security\Csrf\TokenStorage\TokenStorageInterface')
+            ->setFactory('Arachne\Csrf\TokenStorage\SessionTokenStorage');
+    }
 }

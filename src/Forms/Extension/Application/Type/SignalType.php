@@ -21,31 +21,30 @@ use Nette\Application\UI\Presenter;
 class SignalType extends HiddenType
 {
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function buildView(FormView $view, FormInterface $form, array $options)
-	{
-		parent::buildView($view, $form, $options);
+    /**
+     * {@inheritdoc}
+     */
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        parent::buildView($view, $form, $options);
 
-		$view->vars['full_name'] = Presenter::SIGNAL_KEY;
-		$view->vars['value'] = $options['data'];
-	}
+        $view->vars['full_name'] = Presenter::SIGNAL_KEY;
+        $view->vars['value'] = $options['data'];
+    }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getBlockPrefix()
-	{
-		return 'signal';
-	}
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockPrefix()
+    {
+        return 'signal';
+    }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getParent()
-	{
-		return 'Symfony\Component\Form\Extension\Core\Type\HiddenType';
-	}
-
+    /**
+     * {@inheritdoc}
+     */
+    public function getParent()
+    {
+        return 'Symfony\Component\Form\Extension\Core\Type\HiddenType';
+    }
 }

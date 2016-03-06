@@ -28,178 +28,175 @@ use Twig_Environment;
 class FormComponent extends Component implements ISignalReceiver
 {
 
-	/**
-	 * Array of function(mixed $data, FormComponent $form); Occurs when the form is submitted and successfully validated.
-	 * @var callable[]
-	 */
-	public $onSuccess;
+    /**
+     * Array of function(mixed $data, FormComponent $form); Occurs when the form is submitted and successfully validated.
+     * @var callable[]
+     */
+    public $onSuccess;
 
-	/**
-	 * Array of function(mixed $data, FormComponent $form); Occurs when the form is submitted and is not valid.
-	 * @var callable[]
-	 */
-	public $onError;
+    /**
+     * Array of function(mixed $data, FormComponent $form); Occurs when the form is submitted and is not valid.
+     * @var callable[]
+     */
+    public $onError;
 
-	/**
-	 * Array of function(mixed $data, FormComponent $form); Occurs when the form is submitted.
-	 * @var callable[]
-	 */
-	public $onSubmit;
+    /**
+     * Array of function(mixed $data, FormComponent $form); Occurs when the form is submitted.
+     * @var callable[]
+     */
+    public $onSubmit;
 
-	/**
-	 * Array of function(FormView $view, FormComponent $form); Occurs when the form is rendered.
-	 * @var callable[]
-	 */
-	public $onCreateView;
+    /**
+     * Array of function(FormView $view, FormComponent $form); Occurs when the form is rendered.
+     * @var callable[]
+     */
+    public $onCreateView;
 
-	/** @var FormInterface */
-	protected $form;
+    /** @var FormInterface */
+    protected $form;
 
-	/** @var FormView */
-	protected $view;
+    /** @var FormView */
+    protected $view;
 
-	/** @var TwigRendererInterface */
-	protected $renderer;
+    /** @var TwigRendererInterface */
+    protected $renderer;
 
-	/**
-	 * @param TwigRendererInterface $renderer
-	 * @param Twig_Environment $twig
-	 * @param FormInterface $form
-	 */
-	public function __construct(TwigRendererInterface $renderer, Twig_Environment $twig, FormInterface $form)
-	{
-		$this->renderer = $renderer;
-		$renderer->setEnvironment($twig); // Cannot be in DIC setup because of cyclic reference.
-		$this->form = $form;
-	}
+    /**
+     * @param TwigRendererInterface $renderer
+     * @param Twig_Environment $twig
+     * @param FormInterface $form
+     */
+    public function __construct(TwigRendererInterface $renderer, Twig_Environment $twig, FormInterface $form)
+    {
+        $this->renderer = $renderer;
+        $renderer->setEnvironment($twig); // Cannot be in DIC setup because of cyclic reference.
+        $this->form = $form;
+    }
 
-	/**
-	 * @return TwigRendererInterface
-	 */
-	public function getRenderer()
-	{
-		return $this->renderer;
-	}
+    /**
+     * @return TwigRendererInterface
+     */
+    public function getRenderer()
+    {
+        return $this->renderer;
+    }
 
-	/**
-	 * @return FormInterface
-	 */
-	public function getForm()
-	{
-		return $this->form;
-	}
+    /**
+     * @return FormInterface
+     */
+    public function getForm()
+    {
+        return $this->form;
+    }
 
-	/**
-	 * @return FormView
-	 */
-	public function getView()
-	{
-		if (!$this->view) {
-			$this->view = $this->form->createView();
-			$this->onCreateView($this->view, $this);
-		}
-		return $this->view;
-	}
+    /**
+     * @return FormView
+     */
+    public function getView()
+    {
+        if (!$this->view) {
+            $this->view = $this->form->createView();
+            $this->onCreateView($this->view, $this);
+        }
+        return $this->view;
+    }
 
-	protected function validateParent(IContainer $parent)
-	{
-		parent::validateParent($parent);
-		$this->monitor('Nette\Application\UI\Presenter');
-	}
+    protected function validateParent(IContainer $parent)
+    {
+        parent::validateParent($parent);
+        $this->monitor('Nette\Application\UI\Presenter');
+    }
 
-	protected function attached($presenter)
-	{
-		if ($presenter instanceof Presenter) {
-			$this->form->add('_signal', 'Arachne\Forms\Extension\Application\Type\SignalType', [
-				'mapped' => false,
-				'data' => $this->lookupPath('Nette\Application\UI\Presenter') . self::NAME_SEPARATOR . 'submit',
-			]);
-		}
+    protected function attached($presenter)
+    {
+        if ($presenter instanceof Presenter) {
+            $this->form->add('_signal', 'Arachne\Forms\Extension\Application\Type\SignalType', [
+                'mapped' => false,
+                'data' => $this->lookupPath('Nette\Application\UI\Presenter') . self::NAME_SEPARATOR . 'submit',
+            ]);
+        }
 
-		parent::attached($presenter);
-	}
+        parent::attached($presenter);
+    }
 
-	public function render(array $variables = [])
-	{
-		echo $this->renderer->renderBlock($this->getView(), 'form', $variables);
-	}
+    public function render(array $variables = [])
+    {
+        echo $this->renderer->renderBlock($this->getView(), 'form', $variables);
+    }
 
-	/**
-	 * Returns the presenter where this component belongs to.
-	 * @param bool $need
-	 * @return Presenter|null
-	 */
-	public function getPresenter($need = true)
-	{
-		return $this->lookup('Nette\Application\UI\Presenter', $need);
-	}
+    /**
+     * Returns the presenter where this component belongs to.
+     * @param bool $need
+     * @return Presenter|null
+     */
+    public function getPresenter($need = true)
+    {
+        return $this->lookup('Nette\Application\UI\Presenter', $need);
+    }
 
-	/**
-	 * @param string $signal
-	 * @throws BadSignalException
-	 */
-	public function signalReceived($signal)
-	{
-		$form = $this->getForm();
-		$request = $this->getPresenter()->getRequest();
+    /**
+     * @param string $signal
+     * @throws BadSignalException
+     */
+    public function signalReceived($signal)
+    {
+        $form = $this->getForm();
+        $request = $this->getPresenter()->getRequest();
 
-		if ($signal === 'submit') {
-			$this->processSubmit($form, $request);
+        if ($signal === 'submit') {
+            $this->processSubmit($form, $request);
+        } elseif ($signal === 'validate') {
+            $this->processValidate($form, $request);
+        } else {
+            throw new BadSignalException("Missing handler for signal '$signal' in " . get_class($this) . ".");
+        }
+    }
 
-		} elseif ($signal === 'validate') {
-			$this->processValidate($form, $request);
+    protected function processSubmit(FormInterface $form, Request $request)
+    {
+        if ($request->hasFlag(Request::RESTORED)) {
+            return;
+        }
 
-		} else {
-			throw new BadSignalException("Missing handler for signal '$signal' in " . get_class($this) . ".");
-		}
-	}
+        $form->handleRequest($request);
+        if (!$form->isSubmitted()) {
+            return;
+        }
 
-	protected function processSubmit(FormInterface $form, Request $request)
-	{
-		if ($request->hasFlag(Request::RESTORED)) {
-			return;
-		}
+        $data = $form->getData();
+        if ($form->isValid()) {
+            $this->onSuccess($data, $this);
+        } else {
+            $this->onError($data, $this);
+        }
+        $this->onSubmit($data, $this);
+    }
 
-		$form->handleRequest($request);
-		if (!$form->isSubmitted()) {
-			return;
-		}
+    protected function processValidate(FormInterface $form, Request $request)
+    {
+        $form->handleRequest($request);
+        if (!$form->isSubmitted() || !$this->getPresenter()->isAjax()) {
+            return;
+        }
 
-		$data = $form->getData();
-		if ($form->isValid()) {
-			$this->onSuccess($data, $this);
-		} else {
-			$this->onError($data, $this);
-		}
-		$this->onSubmit($data, $this);
-	}
+        $view = $this->getView();
+        $errors = [];
+        $this->walkErrors($form->getErrors(true, false), $view, function ($view) use (& $errors) {
+            $errors[$view->vars['id']] = $this->renderer->searchAndRenderBlock($view, 'errors_content');
+        });
+        $this->getPresenter()->sendJson((object) [ 'errors' => $errors ]);
+    }
 
-	protected function processValidate(FormInterface $form, Request $request)
-	{
-		$form->handleRequest($request);
-		if (!$form->isSubmitted() || !$this->getPresenter()->isAjax()) {
-			return;
-		}
-
-		$view = $this->getView();
-		$errors = [];
-		$this->walkErrors($form->getErrors(true, false), $view, function ($view) use (& $errors) {
-			$errors[$view->vars['id']] = $this->renderer->searchAndRenderBlock($view, 'errors_content');
-		});
-		$this->getPresenter()->sendJson((object) [ 'errors' => $errors ]);
-	}
-
-	private function walkErrors(FormErrorIterator $iterator, FormView $view, callable $callback)
-	{
-		$new = true;
-		foreach ($iterator as $error) {
-			if ($error instanceof FormErrorIterator) {
-				$this->walkErrors($error, $view[$error->getForm()->getName()], $callback);
-			} elseif ($new) {
-				$callback($view);
-				$new = false;
-			}
-		}
-	}
-
+    private function walkErrors(FormErrorIterator $iterator, FormView $view, callable $callback)
+    {
+        $new = true;
+        foreach ($iterator as $error) {
+            if ($error instanceof FormErrorIterator) {
+                $this->walkErrors($error, $view[$error->getForm()->getName()], $callback);
+            } elseif ($new) {
+                $callback($view);
+                $new = false;
+            }
+        }
+    }
 }

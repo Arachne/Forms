@@ -20,28 +20,27 @@ use Symfony\Component\Form\FormBuilderInterface;
 class FormTypeApplicationExtension extends AbstractTypeExtension
 {
 
-	/** @var ApplicationRequestHandler */
-	private $requestHandler;
+    /** @var ApplicationRequestHandler */
+    private $requestHandler;
 
-	public function __construct()
-	{
-		$this->requestHandler = new ApplicationRequestHandler();
-	}
+    public function __construct()
+    {
+        $this->requestHandler = new ApplicationRequestHandler();
+    }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function buildForm(FormBuilderInterface $builder, array $options)
-	{
-		$builder->setRequestHandler($this->requestHandler);
-	}
+    /**
+     * {@inheritdoc}
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->setRequestHandler($this->requestHandler);
+    }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getExtendedType()
-	{
-		return 'Symfony\Component\Form\Extension\Core\Type\FormType';
-	}
-
+    /**
+     * {@inheritdoc}
+     */
+    public function getExtendedType()
+    {
+        return 'Symfony\Component\Form\Extension\Core\Type\FormType';
+    }
 }

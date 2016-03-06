@@ -21,55 +21,54 @@ use Symfony\Component\Security\Csrf\TokenStorage\TokenStorageInterface;
 class SessionTokenStorage implements TokenStorageInterface
 {
 
-	const SESSION_NAMESPACE = 'Arachne.Csrf.SessionTokenStorage';
+    const SESSION_NAMESPACE = 'Arachne.Csrf.SessionTokenStorage';
 
-	/** @var SessionSection */
-	private $session;
+    /** @var SessionSection */
+    private $session;
 
-	/** @var string */
-	private $namespace;
+    /** @var string */
+    private $namespace;
 
-	public function __construct(Session $session, $namespace = self::SESSION_NAMESPACE)
-	{
-		$this->session = $session->getSection($namespace);
-	}
+    public function __construct(Session $session, $namespace = self::SESSION_NAMESPACE)
+    {
+        $this->session = $session->getSection($namespace);
+    }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getToken($tokenId)
-	{
-		if (!isset($this->session[$tokenId])) {
-			throw new TokenNotFoundException('The CSRF token with ID ' . $tokenId . ' does not exist.');
-		}
+    /**
+     * {@inheritdoc}
+     */
+    public function getToken($tokenId)
+    {
+        if (!isset($this->session[$tokenId])) {
+            throw new TokenNotFoundException('The CSRF token with ID ' . $tokenId . ' does not exist.');
+        }
 
-		return (string) $this->session[$tokenId];
-	}
+        return (string) $this->session[$tokenId];
+    }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function setToken($tokenId, $token)
-	{
-		$this->session[$tokenId] = (string) $token;
-	}
+    /**
+     * {@inheritdoc}
+     */
+    public function setToken($tokenId, $token)
+    {
+        $this->session[$tokenId] = (string) $token;
+    }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function hasToken($tokenId)
-	{
-		return isset($this->session[$tokenId]);
-	}
+    /**
+     * {@inheritdoc}
+     */
+    public function hasToken($tokenId)
+    {
+        return isset($this->session[$tokenId]);
+    }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function removeToken($tokenId)
-	{
-		$token = isset($this->session[$tokenId]) ? (string) $this->session[$tokenId] : null;
-		unset($this->session[$tokenId]);
-		return $token;
-	}
-
+    /**
+     * {@inheritdoc}
+     */
+    public function removeToken($tokenId)
+    {
+        $token = isset($this->session[$tokenId]) ? (string) $this->session[$tokenId] : null;
+        unset($this->session[$tokenId]);
+        return $token;
+    }
 }

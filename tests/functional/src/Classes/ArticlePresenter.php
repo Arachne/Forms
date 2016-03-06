@@ -12,44 +12,43 @@ use Symfony\Component\Form\FormFactoryInterface;
 class ArticlePresenter extends Presenter
 {
 
-	/**
-	 * @var FormComponentFactory
-	 * @inject
-	 */
-	public $formComponentFactory;
+    /**
+     * @var FormComponentFactory
+     * @inject
+     */
+    public $formComponentFactory;
 
-	/**
-	 * @var FormFactoryInterface
-	 * @inject
-	 */
-	public $formFactory;
+    /**
+     * @var FormFactoryInterface
+     * @inject
+     */
+    public $formFactory;
 
-	public function actionDefault()
-	{
-	}
+    public function actionDefault()
+    {
+    }
 
-	protected function createComponentForm()
-	{
-		$builder = $this->formFactory->createBuilder('form', new Task());
-		$builder->add('text', 'text');
-		$builder->add('save', 'submit');
+    protected function createComponentForm()
+    {
+        $builder = $this->formFactory->createBuilder('form', new Task());
+        $builder->add('text', 'text');
+        $builder->add('save', 'submit');
 
-		$component = $this->formComponentFactory->create($builder->getForm());
-		$component->onSuccess[] = function () {
-			$this->getTemplate()->state = 'success';
-		};
-		$component->onError[] = function () {
-			$this->getTemplate()->state = 'error';
-		};
+        $component = $this->formComponentFactory->create($builder->getForm());
+        $component->onSuccess[] = function () {
+            $this->getTemplate()->state = 'success';
+        };
+        $component->onError[] = function () {
+            $this->getTemplate()->state = 'error';
+        };
 
-		return $component;
-	}
+        return $component;
+    }
 
-	public function formatTemplateFiles()
-	{
-		$name = $this->getName();
-		$presenter = substr($name, strrpos(':' . $name, ':'));
-		return [ __DIR__ . "/../../templates/$presenter.$this->view.latte" ];
-	}
-
+    public function formatTemplateFiles()
+    {
+        $name = $this->getName();
+        $presenter = substr($name, strrpos(':' . $name, ':'));
+        return [ __DIR__ . "/../../templates/$presenter.$this->view.latte" ];
+    }
 }

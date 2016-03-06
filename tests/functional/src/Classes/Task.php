@@ -10,20 +10,19 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class Task
 {
 
-	/**
-	 * @NotBlank()
-	 * @var string
-	 */
-	private $text;
+    /**
+     * @NotBlank()
+     * @var string
+     */
+    private $text;
 
-	public function getText()
-	{
-		return $this->text;
-	}
+    public function getText()
+    {
+        return $this->text;
+    }
 
-	public function setText($text)
-	{
-		$this->text = $text;
-	}
-
+    public function setText($text)
+    {
+        $this->text = $text;
+    }
 }

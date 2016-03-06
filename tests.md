@@ -2,17 +2,23 @@ How to run tests
 ====
 
 ```
+# install php-cs-fixer
+composer global require fabpot/php-cs-fixer dev-master
+
 # go to the project's root directory, but NOT the tests subdirectory 
 cd <project_dir>
 
 # install dependencies
 composer update
 
-# run the coding style checker and all tests
-sh ./tests/run.sh
+# check coding style
+php-cs-fixer fix --dry-run
 
-# fix coding style problems automatically
-sh ./tests/fix.sh
+# fix coding style
+php-cs-fixer fix
+
+# run tests
+sh ./tests/run.sh
 ```
 
 Advanced usage

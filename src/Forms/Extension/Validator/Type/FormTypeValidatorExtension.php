@@ -19,9 +19,8 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class FormTypeValidatorExtension extends BaseFormTypeValidatorExtension
 {
 
-	public function __construct(ValidatorInterface $validator)
-	{
-		parent::__construct($validator);
-	}
-
+    public function __construct(ValidatorInterface $validator)
+    {
+        parent::__construct($validator);
+    }
 }

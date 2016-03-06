@@ -22,7 +22,6 @@
 		"php": ">=5.5.0",
 		"arachne/bootstrap": "~0.2.0",
 		"arachne/codeception": "~0.6.3",
-		"arachne/coding-style": "~0.3.0",
 		"codeception/codeception": "~2.1.0",
 		"enumag/application": "~0.3.5",
 		"kdyby/annotations": "^2.2.0",
@@ -30,7 +29,6 @@
 		"kdyby/validator": "dev-master",
 		"latte/latte": "^2.3.0",
 		"nette/http": "^2.3.0",
-		"squizlabs/php_codesniffer": "~2.0",
 		"symfony/security-csrf": "^2.8.0",
 		"symfony/twig-bridge": "^2.8.0",
 		"tracy/tracy": "^2.3.0"

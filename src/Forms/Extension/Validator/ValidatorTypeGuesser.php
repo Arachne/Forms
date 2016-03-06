@@ -21,17 +21,16 @@ use Symfony\Component\Validator\Constraint;
 class ValidatorTypeGuesser extends BaseValidatorTypeGuesser
 {
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function guessRequiredForConstraint(Constraint $constraint)
-	{
-		// Fix guessing of required option for checkboxes with NotNull constraint.
-		if (get_class($constraint) === 'Symfony\Component\Validator\Constraints\NotNull') {
-			return new ValueGuess(true, Guess::MEDIUM_CONFIDENCE);
-		}
+    /**
+     * {@inheritdoc}
+     */
+    public function guessRequiredForConstraint(Constraint $constraint)
+    {
+        // Fix guessing of required option for checkboxes with NotNull constraint.
+        if (get_class($constraint) === 'Symfony\Component\Validator\Constraints\NotNull') {
+            return new ValueGuess(true, Guess::MEDIUM_CONFIDENCE);
+        }
 
-		return parent::guessRequiredForConstraint($constraint);
-	}
-
+        return parent::guessRequiredForConstraint($constraint);
+    }
 }
