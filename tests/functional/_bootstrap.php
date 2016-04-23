@@ -5,8 +5,8 @@ use Arachne\Codeception\Module\Nette;
 
 $configurator = new Configurator;
 $configurator->enableDebugger(__DIR__ . '/../_log');
-$tempDir = __DIR__ . '/../_temp/functional';
-@mkdir($tempDir);
+$tempDir = __DIR__ . '/../_temp/functional_' . md5(time());
+mkdir($tempDir);
 $configurator->setTempDirectory($tempDir);
 $configurator->setDebugMode(true);
 

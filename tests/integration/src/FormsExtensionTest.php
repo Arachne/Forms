@@ -62,7 +62,6 @@ class FormsExtensionTest extends Test
     {
         $config = new Configurator();
         $config->setTempDirectory(TEMP_DIR);
-        $config->addParameters([ 'container' => [ 'class' => 'SystemContainer_' . md5(time()) ] ]);
         $config->addConfig(__DIR__ . '/../config/' . $file, false);
         return $config->createContainer();
     }

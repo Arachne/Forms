@@ -1,5 +1,5 @@
 <?php
 
-define('TEMP_DIR', __DIR__ . '/../_temp/integration');
+define('TEMP_DIR', __DIR__ . '/../_temp/integration_' . md5(time()));
 
-@mkdir(TEMP_DIR);
+mkdir(TEMP_DIR);
