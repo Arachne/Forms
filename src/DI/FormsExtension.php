@@ -20,7 +20,6 @@ use ReflectionClass;
  */
 class FormsExtension extends CompilerExtension
 {
-
     const TAG_TYPE = 'arachne.forms.type';
     const TAG_TYPE_EXTENSION = 'arachne.forms.type_extension';
     const TAG_TYPE_GUESSER = 'arachne.forms.type_guesser';

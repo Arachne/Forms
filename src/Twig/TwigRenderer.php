@@ -19,7 +19,6 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
  */
 class TwigRenderer extends BaseTwigRenderer
 {
-
     public function __construct(TwigRendererEngineInterface $engine, CsrfTokenManagerInterface $csrfTokenManager)
     {
         parent::__construct($engine, $csrfTokenManager);

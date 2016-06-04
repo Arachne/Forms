@@ -27,7 +27,6 @@ use Twig_Environment;
  */
 class FormComponent extends Component implements ISignalReceiver
 {
-
     /**
      * Array of function(mixed $data, FormComponent $form); Occurs when the form is submitted and successfully validated.
      * @var callable[]

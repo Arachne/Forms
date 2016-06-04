@@ -20,7 +20,6 @@ use Symfony\Component\Form\FormTypeGuesserInterface;
  */
 class DIFormExtension implements FormExtensionInterface
 {
-
     /**
      * @var ResolverInterface
      */

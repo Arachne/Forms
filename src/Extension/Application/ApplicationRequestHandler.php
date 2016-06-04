@@ -21,7 +21,6 @@ use Symfony\Component\Form\RequestHandlerInterface;
  */
 class ApplicationRequestHandler implements RequestHandlerInterface
 {
-
     /**
      * @param FormInterface $form
      * @param Request $request

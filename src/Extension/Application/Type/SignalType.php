@@ -20,7 +20,6 @@ use Nette\Application\UI\Presenter;
  */
 class SignalType extends HiddenType
 {
-
     /**
      * {@inheritdoc}
      */

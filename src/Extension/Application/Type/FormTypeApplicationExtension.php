@@ -19,7 +19,6 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class FormTypeApplicationExtension extends AbstractTypeExtension
 {
-
     /**
      * @var ApplicationRequestHandler
      */

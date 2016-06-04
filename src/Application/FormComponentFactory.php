@@ -17,7 +17,6 @@ use Symfony\Component\Form\FormInterface;
  */
 interface FormComponentFactory
 {
-
     /**
      * @return FormComponent
      */

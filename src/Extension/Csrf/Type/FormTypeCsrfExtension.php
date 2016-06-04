@@ -19,7 +19,6 @@ use Symfony\Component\Translation\TranslatorInterface;
  */
 class FormTypeCsrfExtension extends BaseFormTypeCsrfExtension
 {
-
     public function __construct(CsrfTokenManagerInterface $defaultTokenManager, $defaultEnabled = true, $defaultFieldName = '_token', TranslatorInterface $translator = null, $translationDomain = null)
     {
         parent::__construct($defaultTokenManager, $defaultEnabled, $defaultFieldName, $translator, $translationDomain);

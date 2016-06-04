@@ -19,7 +19,6 @@ use Traversable;
  */
 class FormTypeGuesserChain implements FormTypeGuesserInterface
 {
-
     /**
      * @var Traversable
      */

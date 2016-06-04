@@ -20,7 +20,6 @@ use Symfony\Component\Validator\Constraint;
  */
 class ValidatorTypeGuesser extends BaseValidatorTypeGuesser
 {
-
     /**
      * {@inheritdoc}
      */
