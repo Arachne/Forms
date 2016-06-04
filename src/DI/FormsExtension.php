@@ -13,7 +13,6 @@ namespace Arachne\Forms\DI;
 use Arachne\DIHelpers\CompilerExtension;
 use Arachne\Twig\DI\TwigExtension;
 use Kdyby\Validator\DI\ValidatorExtension;
-use Nette\DI\Statement;
 use ReflectionClass;
 
 /**
@@ -93,7 +92,9 @@ class FormsExtension extends CompilerExtension
         $builder->addDefinition($this->prefix('formRegistry'))
             ->setClass('Symfony\Component\Form\FormRegistryInterface')
             ->setFactory('Symfony\Component\Form\FormRegistry', [
-                'extensions' => [ $this->prefix('@extension.di') ],
+                'extensions' => [
+                    $this->prefix('@extension.di'),
+                ],
             ]);
 
         $builder->addDefinition($this->prefix('formFactory'))
