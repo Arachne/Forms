@@ -20,7 +20,9 @@ use Traversable;
 class FormTypeGuesserChain implements FormTypeGuesserInterface
 {
 
-    /** @var Traversable */
+    /**
+     * @var Traversable
+     */
     private $guessers;
 
     public function __construct(Traversable $guessers)

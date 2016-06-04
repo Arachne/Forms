@@ -26,7 +26,9 @@ class FormsExtension extends CompilerExtension
     const TAG_TYPE_EXTENSION = 'arachne.forms.type_extension';
     const TAG_TYPE_GUESSER = 'arachne.forms.type_guesser';
 
-    /** @var array */
+    /**
+     * @var array
+     */
     public $defaults = [
         'defaultThemes' => [
             'form_div_layout.html.twig',

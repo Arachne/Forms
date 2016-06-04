@@ -22,6 +22,9 @@
 		"php": ">=5.5.0",
 		"arachne/bootstrap": "~0.2.0",
 		"arachne/codeception": "~0.6.3",
+		"arachne/csrf": "@dev",
+		"arachne/property-access": "@dev",
+		"arachne/twig": "@dev",
 		"codeception/codeception": "~2.1.0",
 		"enumag/application": "~0.3.5",
 		"kdyby/annotations": "^2.2.0",
@@ -35,7 +38,7 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"Arachne\\": "src"
+			"Arachne\\Forms\\": "src"
 		}
 	},
 	"autoload-dev": {

@@ -21,13 +21,19 @@ use Symfony\Component\Form\FormTypeGuesserInterface;
 class DIFormExtension implements FormExtensionInterface
 {
 
-    /** @var ResolverInterface */
+    /**
+     * @var ResolverInterface
+     */
     private $typeResolver;
 
-    /** @var ResolverInterface */
+    /**
+     * @var ResolverInterface
+     */
     private $typeExtensionResolver;
 
-    /** @var FormTypeGuesserInterface */
+    /**
+     * @var FormTypeGuesserInterface
+     */
     private $guesser;
 
     public function __construct(ResolverInterface $typeResolver, ResolverInterface $typeExtensionResolver, FormTypeGuesserInterface $guesser)

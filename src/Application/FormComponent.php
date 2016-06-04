@@ -52,13 +52,19 @@ class FormComponent extends Component implements ISignalReceiver
      */
     public $onCreateView;
 
-    /** @var FormInterface */
+    /**
+     * @var FormInterface
+     */
     protected $form;
 
-    /** @var FormView */
+    /**
+     * @var FormView
+     */
     protected $view;
 
-    /** @var TwigRendererInterface */
+    /**
+     * @var TwigRendererInterface
+     */
     protected $renderer;
 
     /**
