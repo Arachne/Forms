@@ -34,7 +34,7 @@ class FormTypeGuesserChain implements FormTypeGuesserInterface
      */
     public function guessType($class, $property)
     {
-        return $this->guess(function ($guesser) use ($class, $property) {
+        return $this->guess(function (FormTypeGuesserInterface $guesser) use ($class, $property) {
             return $guesser->guessType($class, $property);
         });
     }
@@ -44,7 +44,7 @@ class FormTypeGuesserChain implements FormTypeGuesserInterface
      */
     public function guessRequired($class, $property)
     {
-        return $this->guess(function ($guesser) use ($class, $property) {
+        return $this->guess(function (FormTypeGuesserInterface $guesser) use ($class, $property) {
             return $guesser->guessRequired($class, $property);
         });
     }
@@ -54,7 +54,7 @@ class FormTypeGuesserChain implements FormTypeGuesserInterface
      */
     public function guessMaxLength($class, $property)
     {
-        return $this->guess(function ($guesser) use ($class, $property) {
+        return $this->guess(function (FormTypeGuesserInterface $guesser) use ($class, $property) {
             return $guesser->guessMaxLength($class, $property);
         });
     }
@@ -64,7 +64,7 @@ class FormTypeGuesserChain implements FormTypeGuesserInterface
      */
     public function guessPattern($class, $property)
     {
-        return $this->guess(function ($guesser) use ($class, $property) {
+        return $this->guess(function (FormTypeGuesserInterface $guesser) use ($class, $property) {
             return $guesser->guessPattern($class, $property);
         });
     }
