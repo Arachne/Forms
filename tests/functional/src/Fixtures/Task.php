@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Functional\Classes;
+namespace Tests\Functional\Fixtures;
 
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -9,7 +9,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class Task
 {
-
     /**
      * @NotBlank()
      * @var string

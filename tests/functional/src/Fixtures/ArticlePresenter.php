@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Functional\Classes;
+namespace Tests\Functional\Fixtures;
 
 use Arachne\Forms\Application\FormComponentFactory;
 use Nette\Application\UI\Presenter;
@@ -11,7 +11,6 @@ use Symfony\Component\Form\FormFactoryInterface;
  */
 class ArticlePresenter extends Presenter
 {
-
     /**
      * @var FormComponentFactory
      * @inject
@@ -49,6 +48,8 @@ class ArticlePresenter extends Presenter
     {
         $name = $this->getName();
         $presenter = substr($name, strrpos(':' . $name, ':'));
-        return [ __DIR__ . "/../../templates/$presenter.$this->view.latte" ];
+        return [
+            __DIR__ . "/../../templates/$presenter.$this->view.latte",
+        ];
     }
 }

@@ -3,14 +3,13 @@
 namespace Tests\Integration;
 
 use Arachne\Bootstrap\Configurator;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 
 /**
  * @author Jáchym Toušek <enumag@gmail.com>
  */
-class FormsExtensionTest extends Test
+class FormsExtensionTest extends Unit
 {
-
     public function testFormTypes()
     {
         $types = [

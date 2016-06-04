@@ -26,10 +26,10 @@ kdyby.validator:
     cache: array
 
 services:
-    routerFactory: Tests\Functional\Classes\RouterFactory
+    routerFactory: Tests\Functional\Fixtures\RouterFactory
     router: @routerFactory::create()
 
 nette.application:
     catchExceptions: null
     mapping:
-        *: Tests\Functional\Classes\*Presenter
+        *: Tests\Functional\Fixtures\*Presenter

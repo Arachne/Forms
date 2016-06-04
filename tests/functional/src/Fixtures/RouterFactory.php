@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Functional\Classes;
+namespace Tests\Functional\Fixtures;
 
 use Nette\Application\IRouter;
 use Nette\Application\Routers\Route;
@@ -12,7 +12,6 @@ use Nette\Object;
  */
 class RouterFactory extends Object
 {
-
     /**
      * @return IRouter
      */
