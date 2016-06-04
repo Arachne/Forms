@@ -3,7 +3,6 @@
 $finder = PhpCsFixer\Finder::create()
     ->in(__DIR__ . '/src')
     ->in(__DIR__ . '/tests/integration')
-    ->in(__DIR__ . '/tests/functional')
 ;
 
 return PhpCsFixer\Config::create()
