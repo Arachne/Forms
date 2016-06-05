@@ -20,8 +20,19 @@ use ReflectionClass;
  */
 class FormsExtension extends CompilerExtension
 {
+    /**
+     * Form types with this tag can be found by the FormRegistry service.
+     */
     const TAG_TYPE = 'arachne.forms.type';
+
+    /**
+     * Form type extensions with this tag can be found by the FormRegistry service.
+     */
     const TAG_TYPE_EXTENSION = 'arachne.forms.type_extension';
+
+    /**
+     * Form type guessers with this tag are added to the FormTypeGuesserChain service.
+     */
     const TAG_TYPE_GUESSER = 'arachne.forms.type_guesser';
 
     /**
