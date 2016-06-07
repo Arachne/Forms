@@ -7,12 +7,12 @@ extensions:
     arachne.csrf: Arachne\Csrf\DI\CsrfExtension
     arachne.forms: Arachne\Forms\DI\FormsExtension
     arachne.propertyaccess: Arachne\PropertyAccess\DI\PropertyAccessExtension
-    arachne.twig: Arachne\Twig\DI\TwigExtension( %debugMode% )
-    nette.application: Nette\Bridges\ApplicationDI\ApplicationExtension( %debugMode%, null, %tempDir% )
-    nette.cache: Nette\Bridges\CacheDI\CacheExtension( %tempDir% )
+    arachne.twig: Arachne\Twig\DI\TwigExtension(%tempDir%/cache/twig, %debugMode%)
+    nette.application: Nette\Bridges\ApplicationDI\ApplicationExtension(%debugMode%, null, %tempDir%)
+    nette.cache: Nette\Bridges\CacheDI\CacheExtension(%tempDir%)
     nette.http: Nette\Bridges\HttpDI\HttpExtension
-    nette.latte: Nette\Bridges\ApplicationDI\LatteExtension( %tempDir%/cache/latte, %debugMode% )
-    nette.session: Nette\Bridges\HttpDI\SessionExtension( %debugMode% )
+    nette.latte: Nette\Bridges\ApplicationDI\LatteExtension(%tempDir%/cache/latte, %debugMode%)
+    nette.session: Nette\Bridges\HttpDI\SessionExtension(%debugMode%)
     kdyby.annotations: Kdyby\Annotations\DI\AnnotationsExtension
     kdyby.translation: Kdyby\Translation\DI\TranslationExtension
     kdyby.validator: Kdyby\Validator\DI\ValidatorExtension
@@ -29,10 +29,6 @@ nette.application:
     catchExceptions: null
     mapping:
         *: Tests\Functional\Fixtures\*Presenter
-
-arachne.twig:
-	options:
-		cache: %tempDir%/Twig
 
 services:
     routerFactory: Tests\Functional\Fixtures\RouterFactory
