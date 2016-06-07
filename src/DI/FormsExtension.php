@@ -56,7 +56,6 @@ class FormsExtension extends CompilerExtension
         'Symfony\Component\Form\Extension\Core\Type\DateType',
         'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
         'Symfony\Component\Form\Extension\Core\Type\EmailType',
-        'Symfony\Component\Form\Extension\Core\Type\FileType',
         'Symfony\Component\Form\Extension\Core\Type\FormType',
         'Symfony\Component\Form\Extension\Core\Type\HiddenType',
         'Symfony\Component\Form\Extension\Core\Type\IntegerType',

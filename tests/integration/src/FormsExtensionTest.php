@@ -14,7 +14,6 @@ use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -54,7 +53,6 @@ class FormsExtensionTest extends Unit
             'date' => DateType::class,
             'datetime' => DateTimeType::class,
             'email' => EmailType::class,
-            'file' => FileType::class,
             'form' => FormType::class,
             'hidden' => HiddenType::class,
             'integer' => IntegerType::class,
