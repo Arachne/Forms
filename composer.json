@@ -31,7 +31,7 @@
         "kdyby/translation": "^2.3.0",
         "kdyby/validator": "^0.4.0",
         "latte/latte": "^2.3.0",
-        "nette/http": "^2.3.0",
+        "nette/http": "^2.3.7@dev",
         "symfony/security-csrf": "^2.8.0",
         "symfony/twig-bridge": "^2.8.0",
         "tracy/tracy": "^2.3.0"

@@ -25,11 +25,15 @@ kdyby.annotations:
 kdyby.validator:
     cache: array
 
-services:
-    routerFactory: Tests\Functional\Fixtures\RouterFactory
-    router: @routerFactory::create()
-
 nette.application:
     catchExceptions: null
     mapping:
         *: Tests\Functional\Fixtures\*Presenter
+
+arachne.twig:
+	options:
+		cache: %tempDir%/Twig
+
+services:
+    routerFactory: Tests\Functional\Fixtures\RouterFactory
+    router: @routerFactory::create()

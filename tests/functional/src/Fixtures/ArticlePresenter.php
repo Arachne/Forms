@@ -4,6 +4,9 @@ namespace Tests\Functional\Fixtures;
 
 use Arachne\Forms\Application\FormComponentFactory;
 use Nette\Application\UI\Presenter;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormFactoryInterface;
 
 /**
@@ -29,9 +32,9 @@ class ArticlePresenter extends Presenter
 
     protected function createComponentForm()
     {
-        $builder = $this->formFactory->createBuilder('form', new Task());
-        $builder->add('text', 'text');
-        $builder->add('save', 'submit');
+        $builder = $this->formFactory->createBuilder(FormType::class, new Task());
+        $builder->add('text', TextType::class);
+        $builder->add('save', SubmitType::class);
 
         $component = $this->formComponentFactory->create($builder->getForm());
         $component->onSuccess[] = function () {
