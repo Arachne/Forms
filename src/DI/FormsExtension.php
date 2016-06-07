@@ -217,7 +217,9 @@ class FormsExtension extends CompilerExtension
     {
         $twigExtension = $this->getExtension('Arachne\Twig\DI\TwigExtension', false);
         if ($twigExtension) {
-            $twigExtension->addPath(dirname((new ReflectionClass('Symfony\Bridge\Twig\AppVariable'))->getFileName()) . '/Resources/views/Form');
+            $twigExtension->addPaths([
+                dirname((new ReflectionClass('Symfony\Bridge\Twig\AppVariable'))->getFileName()) . '/Resources/views/Form',
+            ]);
         }
 
         $builder = $this->getContainerBuilder();
