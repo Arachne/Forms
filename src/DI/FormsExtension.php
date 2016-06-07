@@ -133,14 +133,17 @@ class FormsExtension extends CompilerExtension
                 'decoratedFactory' => $this->prefix('@choiceList.propertyAccessDecorator'),
             ]);
 
+        $sf28 = method_exists('Symfony\Component\Form\AbstractType', 'getName');
+
         foreach ($this->types as $class) {
             $typeName = strtolower(substr($class, strrpos($class, '\\') + 1, -4));
+            $names = [$class];
+            if ($sf28) {
+                $names[] = $typeName;
+            }
             $builder->addDefinition($this->prefix('type.' . $typeName))
                 ->setClass($class)
-                ->addTag(self::TAG_TYPE, [
-                    $typeName,
-                    $class,
-                ])
+                ->addTag(self::TAG_TYPE, $names)
                 ->setAutowired(false);
         }
 

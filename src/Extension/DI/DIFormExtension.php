@@ -35,11 +35,17 @@ class DIFormExtension implements FormExtensionInterface
      */
     private $guesser;
 
+    /**
+     * @var bool
+     */
+    private $sf28;
+
     public function __construct(ResolverInterface $typeResolver, ResolverInterface $typeExtensionResolver, FormTypeGuesserInterface $guesser)
     {
         $this->typeResolver = $typeResolver;
         $this->typeExtensionResolver = $typeExtensionResolver;
         $this->guesser = $guesser;
+        $this->sf28 = method_exists('Symfony\Component\Form\AbstractType', 'getName');
     }
 
     /**
@@ -53,7 +59,7 @@ class DIFormExtension implements FormExtensionInterface
             throw new InvalidArgumentException(sprintf('The field type "%s" does not exist.', $name));
         }
 
-        if ($name !== get_class($type) && $type->getName() !== $name) {
+        if ($this->sf28 && $name !== get_class($type) && $type->getName() !== $name) {
             throw new InvalidArgumentException(sprintf('The type name does not match the actual name. Expected "%s", given "%s"', $name, $type->getName()));
         }
 
