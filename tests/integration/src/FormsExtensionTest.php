@@ -4,6 +4,37 @@ namespace Tests\Integration;
 
 use Arachne\Bootstrap\Configurator;
 use Codeception\Test\Unit;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
+use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\LanguageType;
+use Symfony\Component\Form\Extension\Core\Type\LocaleType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\PercentType;
+use Symfony\Component\Form\Extension\Core\Type\RadioType;
+use Symfony\Component\Form\Extension\Core\Type\RangeType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
+use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 
 /**
  * @author Jáchym Toušek <enumag@gmail.com>
@@ -13,47 +44,50 @@ class FormsExtensionTest extends Unit
     public function testFormTypes()
     {
         $types = [
-            'birthday' => 'Symfony\Component\Form\Extension\Core\Type\BirthdayType',
-            'button' => 'Symfony\Component\Form\Extension\Core\Type\ButtonType',
-            'checkbox' => 'Symfony\Component\Form\Extension\Core\Type\CheckboxType',
-            'choice' => 'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
-            'collection' => 'Symfony\Component\Form\Extension\Core\Type\CollectionType',
-            'country' => 'Symfony\Component\Form\Extension\Core\Type\CountryType',
-            'currency' => 'Symfony\Component\Form\Extension\Core\Type\CurrencyType',
-            'date' => 'Symfony\Component\Form\Extension\Core\Type\DateType',
-            'datetime' => 'Symfony\Component\Form\Extension\Core\Type\DateTimeType',
-            'email' => 'Symfony\Component\Form\Extension\Core\Type\EmailType',
-            'file' => 'Symfony\Component\Form\Extension\Core\Type\FileType',
-            'form' => 'Symfony\Component\Form\Extension\Core\Type\FormType',
-            'hidden' => 'Symfony\Component\Form\Extension\Core\Type\HiddenType',
-            'integer' => 'Symfony\Component\Form\Extension\Core\Type\IntegerType',
-            'language' => 'Symfony\Component\Form\Extension\Core\Type\LanguageType',
-            'locale' => 'Symfony\Component\Form\Extension\Core\Type\LocaleType',
-            'money' => 'Symfony\Component\Form\Extension\Core\Type\MoneyType',
-            'number' => 'Symfony\Component\Form\Extension\Core\Type\NumberType',
-            'password' => 'Symfony\Component\Form\Extension\Core\Type\PasswordType',
-            'percent' => 'Symfony\Component\Form\Extension\Core\Type\PercentType',
-            'radio' => 'Symfony\Component\Form\Extension\Core\Type\RadioType',
-            'range' => 'Symfony\Component\Form\Extension\Core\Type\RangeType',
-            'repeated' => 'Symfony\Component\Form\Extension\Core\Type\RepeatedType',
-            'reset' => 'Symfony\Component\Form\Extension\Core\Type\ResetType',
-            'search' => 'Symfony\Component\Form\Extension\Core\Type\SearchType',
-            'submit' => 'Symfony\Component\Form\Extension\Core\Type\SubmitType',
-            'text' => 'Symfony\Component\Form\Extension\Core\Type\TextType',
-            'textarea' => 'Symfony\Component\Form\Extension\Core\Type\TextareaType',
-            'time' => 'Symfony\Component\Form\Extension\Core\Type\TimeType',
-            'timezone' => 'Symfony\Component\Form\Extension\Core\Type\TimezoneType',
-            'url' => 'Symfony\Component\Form\Extension\Core\Type\UrlType',
+            'birthday' => BirthdayType::class,
+            'button' => ButtonType::class,
+            'checkbox' => CheckboxType::class,
+            'choice' => ChoiceType::class,
+            'collection' => CollectionType::class,
+            'country' => CountryType::class,
+            'currency' => CurrencyType::class,
+            'date' => DateType::class,
+            'datetime' => DateTimeType::class,
+            'email' => EmailType::class,
+            'file' => FileType::class,
+            'form' => FormType::class,
+            'hidden' => HiddenType::class,
+            'integer' => IntegerType::class,
+            'language' => LanguageType::class,
+            'locale' => LocaleType::class,
+            'money' => MoneyType::class,
+            'number' => NumberType::class,
+            'password' => PasswordType::class,
+            'percent' => PercentType::class,
+            'radio' => RadioType::class,
+            'range' => RangeType::class,
+            'repeated' => RepeatedType::class,
+            'reset' => ResetType::class,
+            'search' => SearchType::class,
+            'submit' => SubmitType::class,
+            'text' => TextType::class,
+            'textarea' => TextareaType::class,
+            'time' => TimeType::class,
+            'timezone' => TimezoneType::class,
+            'url' => UrlType::class,
         ];
 
         $container = $this->createContainer('config.neon');
         $registry = $container->getByType('Symfony\Component\Form\FormRegistryInterface');
+        $sf28 = method_exists('Symfony\Component\Form\AbstractType', 'getName');
 
         foreach ($types as $name => $type) {
-            $this->assertInstanceOf($type, $type1 = $registry->getType($name)->getInnerType());
-            $this->assertInstanceOf($type, $type2 = $registry->getType($type)->getInnerType());
-            $this->assertSame($type1, $type2);
+            $this->assertInstanceOf($type, $type1 = $registry->getType($type)->getInnerType());
             $this->assertSame($name, $type1->getBlockPrefix());
+            if ($sf28) {
+                $this->assertInstanceOf($type, $type2 = $registry->getType($name)->getInnerType());
+                $this->assertSame($type2, $type1);
+            }
         }
     }
 
