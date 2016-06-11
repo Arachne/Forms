@@ -18,11 +18,12 @@
         "nette/di": "^2.3.0|^3.0.0",
         "symfony/form": "^2.8.0|^3.0.0"
     },
-	"suggest": {
-		"arachne/csrf": "Adds CSRF protection to forms.",
-		"arachne/twig": "Enables forms rendering using Twig templates.",
-		"kdyby/validator": "Enables forms validation using symfony/form."
-	},
+    "suggest": {
+        "arachne/csrf": "Adds CSRF protection to forms.",
+        "arachne/twig": "Enables forms rendering using Twig templates.",
+        "arachne/upload": "Adds upload capability using nette/http.",
+        "kdyby/validator": "Enables forms validation using symfony/form."
+    },
     "require-dev": {
         "php": "^5.5.0|^7.0.0",
         "arachne/bootstrap": "^0.2.1",
