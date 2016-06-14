@@ -146,9 +146,6 @@ class FormsExtension extends CompilerExtension
                 ->setAutowired(false);
         }
 
-        $builder->addDefinition($this->prefix('application.componentFactory'))
-            ->setImplement('Arachne\Forms\Application\FormComponentFactory');
-
         $builder->addDefinition($this->prefix('application.typeExtension.form'))
             ->setClass('Arachne\Forms\Extension\Application\Type\FormTypeApplicationExtension')
             ->addTag(self::TAG_TYPE_EXTENSION, 'Symfony\Component\Form\Extension\Core\Type\FormType')
@@ -212,6 +209,9 @@ class FormsExtension extends CompilerExtension
                 ->setFactory('Symfony\Bridge\Twig\Form\TwigRendererEngine', [
                     'defaultThemes' => $this->config['defaultThemes'],
                 ]);
+
+            $builder->addDefinition($this->prefix('application.componentFactory'))
+                ->setImplement('Arachne\Forms\Application\FormComponentFactory');
         }
     }
 
