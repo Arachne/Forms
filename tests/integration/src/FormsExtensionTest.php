@@ -79,15 +79,11 @@ class FormsExtensionTest extends Unit
 
         $container = $this->createContainer('config.neon');
         $registry = $container->getByType(FormRegistryInterface::class);
-        $sf28 = method_exists(AbstractType::class, 'getName');
 
-        foreach ($types as $name => $type) {
-            $this->assertInstanceOf($type, $type1 = $registry->getType($type)->getInnerType());
-            $this->assertSame($name, $type1->getBlockPrefix());
-            if ($sf28) {
-                $this->assertInstanceOf($type, $type2 = $registry->getType($name)->getInnerType());
-                $this->assertSame($type2, $type1);
-            }
+        foreach ($types as $name => $class) {
+            $type = $registry->getType($class)->getInnerType();
+            $this->assertInstanceOf($class, $type);
+            $this->assertSame($name, $type->getBlockPrefix());
         }
     }
 

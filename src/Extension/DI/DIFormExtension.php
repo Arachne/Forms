@@ -45,7 +45,6 @@ class DIFormExtension implements FormExtensionInterface
         $this->typeResolver = $typeResolver;
         $this->typeExtensionResolver = $typeExtensionResolver;
         $this->guesser = $guesser;
-        $this->sf28 = method_exists('Symfony\Component\Form\AbstractType', 'getName');
     }
 
     /**
@@ -57,10 +56,6 @@ class DIFormExtension implements FormExtensionInterface
 
         if (!$type) {
             throw new InvalidArgumentException(sprintf('The field type "%s" does not exist.', $name));
-        }
-
-        if ($this->sf28 && $name !== get_class($type) && $type->getName() !== $name) {
-            throw new InvalidArgumentException(sprintf('The type name does not match the actual name. Expected "%s", given "%s"', $name, $type->getName()));
         }
 
         return $type;
