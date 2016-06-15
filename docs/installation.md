@@ -22,18 +22,18 @@ It is recommended to add all of the following extensions into your config.neon. 
 
 ```yml
 extensions:
-	# Always required.
-	arachne.dihelpers.iteratorresolvers: Arachne\DIHelpers\DI\IteratorResolversExtension
-	arachne.dihelpers.iterators: Arachne\DIHelpers\DI\IteratorsExtension
-	arachne.dihelpers.resolvers: Arachne\DIHelpers\DI\ResolversExtension
-	arachne.forms: Arachne\Forms\DI\FormsExtension
+    # Always required.
+    arachne.dihelpers.iteratorresolvers: Arachne\DIHelpers\DI\IteratorResolversExtension
+    arachne.dihelpers.iterators: Arachne\DIHelpers\DI\IteratorsExtension
+    arachne.dihelpers.resolvers: Arachne\DIHelpers\DI\ResolversExtension
+    arachne.forms: Arachne\Forms\DI\FormsExtension
 
-	# Technically optional but do you really want forms without CSRF protection, validation, files upload and a way to render them?
-	arachne.csrf: Arachne\Csrf\DI\CsrfExtension
-	arachne.twig: Arachne\Twig\DI\TwigExtension(%tempDir%/cache/twig, %debugMode%)
-	kdyby.annotations: Kdyby\Annotations\DI\AnnotationsExtension
-	kdyby.translation: Kdyby\Translation\DI\TranslationExtension
-	kdyby.validator: Kdyby\Validator\DI\ValidatorExtension
+    # Technically optional but do you really want forms without CSRF protection, validation, files upload and a way to render them?
+    arachne.csrf: Arachne\Csrf\DI\CsrfExtension
+    arachne.twig: Arachne\Twig\DI\TwigExtension(%tempDir%/cache/twig, %debugMode%)
+    kdyby.annotations: Kdyby\Annotations\DI\AnnotationsExtension
+    kdyby.translation: Kdyby\Translation\DI\TranslationExtension
+    kdyby.validator: Kdyby\Validator\DI\ValidatorExtension
 ```
 
 Usage with Doctrine ORM
@@ -51,9 +51,9 @@ And also some additional extensions in config.neon.
 
 ```yml
 extensions:
-	arachne.doctrine: Arachne\Doctrine\DI\DoctrineExtension(%debugMode%)
-	kdyby.console: Kdyby\Console\DI\ConsoleExtension
-	kdyby.doctrine: Kdyby\Doctrine\DI\OrmExtension
+    arachne.doctrine: Arachne\Doctrine\DI\DoctrineExtension(%debugMode%)
+    kdyby.console: Kdyby\Console\DI\ConsoleExtension
+    kdyby.doctrine: Kdyby\Doctrine\DI\OrmExtension
 ```
 
 PropertyAccess configuration
@@ -67,7 +67,7 @@ composer require arachne/property-access
 
 ```yml
 extensions:
-	arachne.propertyaccess: Arachne\PropertyAccess\DI\PropertyAccessExtension
+    arachne.propertyaccess: Arachne\PropertyAccess\DI\PropertyAccessExtension
 ```
 
 Usage of ExpressionLanguage
@@ -81,5 +81,5 @@ composer require arachne/expression-language
 
 ```yml
 extensions:
-	arachne.expressionlanguage: Arachne\ExpressionLanguage\DI\ExpressionLanguageExtension
+    arachne.expressionlanguage: Arachne\ExpressionLanguage\DI\ExpressionLanguageExtension
 ```

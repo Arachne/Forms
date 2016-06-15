@@ -16,41 +16,41 @@ use Symfony\Component\Form\FormFactoryInterface;
 class CustomForm extends PresenterComponent
 {
 
-	/** @var FormComponentFactory */
-	private $formComponentFactory;
+    /** @var FormComponentFactory */
+    private $formComponentFactory;
 
-	/** @var FormFactoryInterface */
-	private $formFactory;
+    /** @var FormFactoryInterface */
+    private $formFactory;
 
-	public function __construct(FormComponentFactory $formComponentFactory, FormFactoryInterface $formFactory)
-	{
-		$this->formComponentFactory = $formComponentFactory;
-		$this->formFactory = $formFactory;
-	}
+    public function __construct(FormComponentFactory $formComponentFactory, FormFactoryInterface $formFactory)
+    {
+        $this->formComponentFactory = $formComponentFactory;
+        $this->formFactory = $formFactory;
+    }
 
-	/**
-	 * @return FormComponent
-	 */
-	protected function createComponentForm()
-	{
-		// Create a symfony form using the FormFactory from symfony. There are several ways to do that. Look into symfony documentation for details.
-		$builder = $this->formFactory->createNamedBuilder($this->lookupPath('Nette\Application\UI\Presenter'), 'form', null, []);
+    /**
+     * @return FormComponent
+     */
+    protected function createComponentForm()
+    {
+        // Create a symfony form using the FormFactory from symfony. There are several ways to do that. Look into symfony documentation for details.
+        $builder = $this->formFactory->createNamedBuilder($this->lookupPath('Nette\Application\UI\Presenter'), 'form', null, []);
 
-		$builder->add('firstname');
-		$builder->add('lastname');
-		$builder->add('email');
-		$builder->add('text');
+        $builder->add('firstname');
+        $builder->add('lastname');
+        $builder->add('email');
+        $builder->add('text');
 
-		// Then you need to attach the form to a newly created FormComponent.
-		$component = $this->formComponentFactory->create($builder->getForm());
-		
-		// FormComponent provides some events which you can use as you need.
-		$component->onSuccess[] = function (array $data) {
-			$this->redirect('this');
-		};
+        // Then you need to attach the form to a newly created FormComponent.
+        $component = $this->formComponentFactory->create($builder->getForm());
+        
+        // FormComponent provides some events which you can use as you need.
+        $component->onSuccess[] = function (array $data) {
+            $this->redirect('this');
+        };
 
-		return $component;
-	}
+        return $component;
+    }
 
 }
 ```
