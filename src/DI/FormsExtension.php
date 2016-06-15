@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Arachne
  *
  * Copyright (c) Jáchym Toušek (enumag@gmail.com)
@@ -140,7 +140,7 @@ class FormsExtension extends CompilerExtension
             if ($sf28) {
                 $names[] = $typeName;
             }
-            $builder->addDefinition($this->prefix('type.' . $typeName))
+            $builder->addDefinition($this->prefix('type.'.$typeName))
                 ->setClass($class)
                 ->addTag(self::TAG_TYPE, $names)
                 ->setAutowired(false);
@@ -185,7 +185,7 @@ class FormsExtension extends CompilerExtension
 
             $builder->addDefinition($this->prefix('validationLoader'))
                 ->setFactory('Symfony\Component\Validator\Mapping\Loader\XmlFileLoader', [
-                    'file' => dirname((new ReflectionClass('Symfony\Component\Form\FormInterface'))->getFileName()) . '/Resources/config/validation.xml',
+                    'file' => dirname((new ReflectionClass('Symfony\Component\Form\FormInterface'))->getFileName()).'/Resources/config/validation.xml',
                 ])
                 ->setAutowired(false)
                 ->addTag(ValidatorExtension::TAG_LOADER);
@@ -220,7 +220,7 @@ class FormsExtension extends CompilerExtension
         $twigExtension = $this->getExtension('Arachne\Twig\DI\TwigExtension', false);
         if ($twigExtension) {
             $twigExtension->addPaths([
-                dirname((new ReflectionClass('Symfony\Bridge\Twig\AppVariable'))->getFileName()) . '/Resources/views/Form',
+                dirname((new ReflectionClass('Symfony\Bridge\Twig\AppVariable'))->getFileName()).'/Resources/views/Form',
             ]);
         }
 
@@ -228,13 +228,13 @@ class FormsExtension extends CompilerExtension
 
         $builder->getDefinition($this->prefix('extension.di'))
             ->setArguments([
-                'typeResolver' => '@' . $this->getExtension('Arachne\DIHelpers\DI\ResolversExtension')->get(self::TAG_TYPE),
-                'typeExtensionResolver' => '@' . $this->getExtension('Arachne\DIHelpers\DI\IteratorResolversExtension')->get(self::TAG_TYPE_EXTENSION),
+                'typeResolver' => '@'.$this->getExtension('Arachne\DIHelpers\DI\ResolversExtension')->get(self::TAG_TYPE),
+                'typeExtensionResolver' => '@'.$this->getExtension('Arachne\DIHelpers\DI\IteratorResolversExtension')->get(self::TAG_TYPE_EXTENSION),
             ]);
 
         $builder->getDefinition($this->prefix('typeGuesser'))
             ->setArguments([
-                'guessers' => '@' . $this->getExtension('Arachne\DIHelpers\DI\IteratorsExtension')->get(self::TAG_TYPE_GUESSER),
+                'guessers' => '@'.$this->getExtension('Arachne\DIHelpers\DI\IteratorsExtension')->get(self::TAG_TYPE_GUESSER),
             ]);
     }
 }

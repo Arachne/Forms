@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Arachne
  *
  * Copyright (c) Jáchym Toušek (enumag@gmail.com)
@@ -29,24 +29,28 @@ class FormComponent extends Component implements ISignalReceiver
 {
     /**
      * Array of function(mixed $data, FormComponent $form); Occurs when the form is submitted and successfully validated.
+     *
      * @var callable[]
      */
     public $onSuccess;
 
     /**
      * Array of function(mixed $data, FormComponent $form); Occurs when the form is submitted and is not valid.
+     *
      * @var callable[]
      */
     public $onError;
 
     /**
      * Array of function(mixed $data, FormComponent $form); Occurs when the form is submitted.
+     *
      * @var callable[]
      */
     public $onSubmit;
 
     /**
      * Array of function(FormView $view, FormComponent $form); Occurs when the form is rendered.
+     *
      * @var callable[]
      */
     public $onCreateView;
@@ -68,8 +72,8 @@ class FormComponent extends Component implements ISignalReceiver
 
     /**
      * @param TwigRendererInterface $renderer
-     * @param Twig_Environment $twig
-     * @param FormInterface $form
+     * @param Twig_Environment      $twig
+     * @param FormInterface         $form
      */
     public function __construct(TwigRendererInterface $renderer, Twig_Environment $twig, FormInterface $form)
     {
@@ -103,6 +107,7 @@ class FormComponent extends Component implements ISignalReceiver
             $this->view = $this->form->createView();
             $this->onCreateView($this->view, $this);
         }
+
         return $this->view;
     }
 
@@ -117,7 +122,7 @@ class FormComponent extends Component implements ISignalReceiver
         if ($presenter instanceof Presenter) {
             $this->form->add('_signal', 'Arachne\Forms\Extension\Application\Type\SignalType', [
                 'mapped' => false,
-                'data' => $this->lookupPath('Nette\Application\UI\Presenter') . self::NAME_SEPARATOR . 'submit',
+                'data' => $this->lookupPath('Nette\Application\UI\Presenter').self::NAME_SEPARATOR.'submit',
             ]);
         }
 
@@ -131,7 +136,9 @@ class FormComponent extends Component implements ISignalReceiver
 
     /**
      * Returns the presenter where this component belongs to.
+     *
      * @param bool $need
+     *
      * @return Presenter|null
      */
     public function getPresenter($need = true)
@@ -141,6 +148,7 @@ class FormComponent extends Component implements ISignalReceiver
 
     /**
      * @param string $signal
+     *
      * @throws BadSignalException
      */
     public function signalReceived($signal)
@@ -153,7 +161,7 @@ class FormComponent extends Component implements ISignalReceiver
         } elseif ($signal === 'validate') {
             $this->processValidate($form, $request);
         } else {
-            throw new BadSignalException("Missing handler for signal '$signal' in " . get_class($this) . ".");
+            throw new BadSignalException("Missing handler for signal '$signal' in ".get_class($this).'.');
         }
     }
 
@@ -186,7 +194,7 @@ class FormComponent extends Component implements ISignalReceiver
 
         $view = $this->getView();
         $errors = [];
-        $this->walkErrors($form->getErrors(true, false), $view, function (FormView $view) use (& $errors) {
+        $this->walkErrors($form->getErrors(true, false), $view, function (FormView $view) use (&$errors) {
             $errors[$view->vars['id']] = $this->renderer->searchAndRenderBlock($view, 'errors_content');
         });
         $this->getPresenter()->sendJson((object) ['errors' => $errors]);

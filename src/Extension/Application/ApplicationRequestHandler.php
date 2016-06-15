@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Arachne
  *
  * Copyright (c) Jáchym Toušek (enumag@gmail.com)
@@ -23,7 +23,7 @@ class ApplicationRequestHandler implements RequestHandlerInterface
 {
     /**
      * @param FormInterface $form
-     * @param Request $request
+     * @param Request       $request
      */
     public function handleRequest(FormInterface $form, $request = null)
     {

@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the Arachne
  *
  * Copyright (c) Jáchym Toušek (enumag@gmail.com)
@@ -10,10 +10,10 @@
 
 namespace Arachne\Forms\Extension\Application\Type;
 
+use Nette\Application\UI\Presenter;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Nette\Application\UI\Presenter;
 
 /**
  * @author Jáchym Toušek <enumag@gmail.com>

@@ -11,6 +11,7 @@ class Task
 {
     /**
      * @NotBlank()
+     *
      * @var string
      */
     private $text;
