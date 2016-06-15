@@ -4,6 +4,7 @@ namespace Tests\Integration;
 
 use Arachne\Bootstrap\Configurator;
 use Codeception\Test\Unit;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -34,6 +35,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
+use Symfony\Component\Form\FormRegistryInterface;
 
 /**
  * @author Jáchym Toušek <enumag@gmail.com>
@@ -76,8 +78,8 @@ class FormsExtensionTest extends Unit
         ];
 
         $container = $this->createContainer('config.neon');
-        $registry = $container->getByType('Symfony\Component\Form\FormRegistryInterface');
-        $sf28 = method_exists('Symfony\Component\Form\AbstractType', 'getName');
+        $registry = $container->getByType(FormRegistryInterface::class);
+        $sf28 = method_exists(AbstractType::class, 'getName');
 
         foreach ($types as $name => $type) {
             $this->assertInstanceOf($type, $type1 = $registry->getType($type)->getInnerType());
