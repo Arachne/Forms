@@ -11,14 +11,14 @@
 namespace Arachne\Forms\Extension\Application\Type;
 
 use Nette\Application\UI\Presenter;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 
 /**
  * @author Jáchym Toušek <enumag@gmail.com>
  */
-class SignalType extends HiddenType
+class SignalType extends AbstractType
 {
     /**
      * {@inheritdoc}
