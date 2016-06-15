@@ -31,7 +31,6 @@ extensions:
 	# Technically optional but do you really want forms without CSRF protection, validation, files upload and a way to render them?
 	arachne.csrf: Arachne\Csrf\DI\CsrfExtension
 	arachne.twig: Arachne\Twig\DI\TwigExtension(%tempDir%/cache/twig, %debugMode%)
-	arachne.upload: Arachne\Upload\DI\UploadExtension
 	kdyby.annotations: Kdyby\Annotations\DI\AnnotationsExtension
 	kdyby.translation: Kdyby\Translation\DI\TranslationExtension
 	kdyby.validator: Kdyby\Validator\DI\ValidatorExtension
