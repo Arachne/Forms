@@ -1,3 +1,7 @@
 error_level: "E_ALL"
 
 class_name: IntegrationSuiteTester
+
+modules:
+    enabled:
+        - Tests\ContainerModule

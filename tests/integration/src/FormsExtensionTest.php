@@ -2,7 +2,6 @@
 
 namespace Tests\Integration;
 
-use Arachne\Bootstrap\Configurator;
 use Codeception\Test\Unit;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
@@ -76,7 +75,7 @@ class FormsExtensionTest extends Unit
             'url' => UrlType::class,
         ];
 
-        $container = $this->createContainer('config.neon');
+        $container = $this->tester->createContainer(__DIR__.'/../config/config.neon');
         $registry = $container->getByType(FormRegistryInterface::class);
 
         foreach ($types as $name => $class) {
@@ -84,14 +83,5 @@ class FormsExtensionTest extends Unit
             $this->assertInstanceOf($class, $type);
             $this->assertSame($name, $type->getBlockPrefix());
         }
-    }
-
-    private function createContainer($file)
-    {
-        $config = new Configurator();
-        $config->setTempDirectory(TEMP_DIR);
-        $config->addConfig(__DIR__.'/../config/'.$file, false);
-
-        return $config->createContainer();
     }
 }
