@@ -17,7 +17,7 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 /**
  * @author Jáchym Toušek <enumag@gmail.com>
  *
- * @todo Remove this class after upgrading to Symfony 3 if https://github.com/symfony/symfony/pull/19065 is merged.
+ * @todo Remove this class after upgrading to Symfony 3. Requires symfony/twig-bridge 3.0.8+ or 3.1.2+ (see https://github.com/symfony/symfony/pull/19065).
  */
 class TwigRenderer extends BaseTwigRenderer
 {
