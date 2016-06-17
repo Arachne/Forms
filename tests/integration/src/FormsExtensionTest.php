@@ -75,7 +75,7 @@ class FormsExtensionTest extends Unit
             'url' => UrlType::class,
         ];
 
-        $container = $this->tester->createContainer(__DIR__.'/../config/config.neon');
+        $container = $this->tester->createContainer();
         $registry = $container->getByType(FormRegistryInterface::class);
 
         foreach ($types as $name => $class) {

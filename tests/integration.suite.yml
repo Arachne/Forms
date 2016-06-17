@@ -4,4 +4,8 @@ class_name: IntegrationSuiteTester
 
 modules:
     enabled:
-        - Tests\ContainerModule
+        - Arachne\Codeception\Module\Container:
+            tempDir: ../_temp/integration
+            configurator: Arachne\Bootstrap\Configurator
+            configFiles:
+                - config/config.neon
