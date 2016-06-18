@@ -175,13 +175,14 @@ class FormComponent extends Component implements ISignalReceiver
 
     protected function processSubmit(FormInterface $form, Request $request)
     {
+        // Restored request should only render the form, not immediately submit it.
         if ($request->hasFlag(Request::RESTORED)) {
             return;
         }
 
         $form->handleRequest($request);
         if (!$form->isSubmitted()) {
-            return;
+            throw new BadRequestException("The form was not submitted.");
         }
 
         $data = $form->getData();
@@ -195,9 +196,14 @@ class FormComponent extends Component implements ISignalReceiver
 
     protected function processValidate(FormInterface $form, Request $request)
     {
+        $presenter = $this->getPresenter();
+        if (!$presenter->isAjax()) {
+            throw new BadRequestException("The validate signal is only allowed in ajax mode.");
+        }
+
         $form->handleRequest($request);
-        if (!$form->isSubmitted() || !$this->getPresenter()->isAjax()) {
-            return;
+        if (!$form->isSubmitted()) {
+            throw new BadRequestException("The form was not submitted.");
         }
 
         $view = $this->getView();
@@ -206,7 +212,7 @@ class FormComponent extends Component implements ISignalReceiver
             $errors[$view->vars['id']] = $this->renderer->searchAndRenderBlock($view, 'errors_content');
         });
 
-        $this->getPresenter()->sendJson((object) ['errors' => $errors]);
+        $presenter->sendJson((object) ['errors' => $errors]);
     }
 
     private function walkErrors(FormErrorIterator $iterator, FormView $view, callable $callback)
@@ -224,10 +230,19 @@ class FormComponent extends Component implements ISignalReceiver
 
     protected function processRender(FormInterface $form, Request $request)
     {
+        $presenter = $this->getPresenter();
+        if (!$presenter->isAjax()) {
+            throw new BadRequestException("The render signal is only allowed in ajax mode.");
+        }
+
         $fields = $request->getPost($this->lookupPath('Nette\Application\UI\Presenter', true).'-fields');
+        if (!$fields) {
+            throw new BadRequestException("No fields specified for rendering.");
+        }
+
         $form->handleRequest($request);
-        if (!$fields || !$form->isSubmitted() || !$this->getPresenter()->isAjax()) {
-            return;
+        if (!$form->isSubmitted()) {
+            throw new BadRequestException("The form was not submitted.");
         }
 
         $view = $this->getView();
