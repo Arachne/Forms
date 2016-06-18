@@ -27,7 +27,7 @@
     "require-dev": {
         "php": "^5.5.0|^7.0.0",
         "arachne/bootstrap": "^0.2.1",
-        "arachne/codeception": "dev-refactoring",
+        "arachne/codeception": "@dev",
         "arachne/csrf": "@dev",
         "arachne/property-access": "@dev",
         "arachne/twig": "@dev",

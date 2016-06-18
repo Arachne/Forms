@@ -75,8 +75,7 @@ class FormsExtensionTest extends Unit
             'url' => UrlType::class,
         ];
 
-        $container = $this->tester->createContainer();
-        $registry = $container->getByType(FormRegistryInterface::class);
+        $registry = $this->tester->grabService(FormRegistryInterface::class);
 
         foreach ($types as $name => $class) {
             $type = $registry->getType($class)->getInnerType();

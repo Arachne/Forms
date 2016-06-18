@@ -1,5 +1,5 @@
 extensions:
-    arachne.codeception: Arachne\Codeception\DI\CodeceptionExtension
+    codeception.http: Arachne\Codeception\DI\HttpExtension
     enumag.application: Enumag\Application\DI\ApplicationExtension
     arachne.dihelpers.iteratorresolvers: Arachne\DIHelpers\DI\IteratorResolversExtension
     arachne.dihelpers.iterators: Arachne\DIHelpers\DI\IteratorsExtension

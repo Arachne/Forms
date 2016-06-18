@@ -4,7 +4,7 @@ class_name: IntegrationSuiteTester
 
 modules:
     enabled:
-        - Arachne\Codeception\Module\Container:
+        - Arachne\Codeception\Module\NetteDIModule:
             tempDir: ../_temp/integration
             configurator: Arachne\Bootstrap\Configurator
             configFiles:
