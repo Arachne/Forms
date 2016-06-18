@@ -173,6 +173,9 @@ class FormComponent extends Component implements ISignalReceiver
         }
     }
 
+    /**
+     * Submits the form.
+     */
     protected function processSubmit(FormInterface $form, Request $request)
     {
         // Restored request should only render the form, not immediately submit it.
@@ -194,6 +197,9 @@ class FormComponent extends Component implements ISignalReceiver
         $this->onSubmit($data, $this);
     }
 
+    /**
+     * Provides ajax validation.
+     */
     protected function processValidate(FormInterface $form, Request $request)
     {
         $presenter = $this->getPresenter();
@@ -228,6 +234,9 @@ class FormComponent extends Component implements ISignalReceiver
         }
     }
 
+    /**
+     * Renders only specified fields. Useful for dynamic ajax forms.
+     */
     protected function processRender(FormInterface $form, Request $request)
     {
         $presenter = $this->getPresenter();
