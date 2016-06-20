@@ -35,11 +35,6 @@ class DIFormExtension implements FormExtensionInterface
      */
     private $guesser;
 
-    /**
-     * @var bool
-     */
-    private $sf28;
-
     public function __construct(ResolverInterface $typeResolver, ResolverInterface $typeExtensionResolver, FormTypeGuesserInterface $guesser)
     {
         $this->typeResolver = $typeResolver;
