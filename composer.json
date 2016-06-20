@@ -27,7 +27,7 @@
     "require-dev": {
         "php": "^5.5.0|^7.0.0",
         "arachne/bootstrap": "^0.2.1",
-        "arachne/codeception": "@dev",
+        "arachne/codeception": "^0.7.1",
         "arachne/csrf": "@dev",
         "arachne/property-access": "@dev",
         "arachne/twig": "@dev",
@@ -37,7 +37,7 @@
         "kdyby/translation": "^2.3.0",
         "kdyby/validator": "^0.4.0",
         "latte/latte": "^2.3.0",
-        "nette/http": "^2.3.7@dev",
+        "nette/http": "^2.3.7",
         "symfony/security-csrf": "^2.8.0|^3.0.0",
         "symfony/twig-bridge": "^2.8.0|^3.0.0",
         "tracy/tracy": "^2.3.0"
