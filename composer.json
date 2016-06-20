@@ -1,47 +1,56 @@
 {
-	"name": "arachne/forms",
-	"description": "Integration of symfony/form to Nette framework.",
-	"type": "library",
-	"keywords": [ "symfony", "forms", "nette", "arachne" ],
-	"license": "MIT",
-	"authors": [
-		{
-			"name": "Jáchym Toušek",
-			"homepage": "http://enumag.cz",
-			"email": "enumag@gmail.com"
-		}
-	],
-	"require": {
-		"php": ">=5.4.0",
-		"arachne/di-helpers": "~0.4.0",
-		"nette/application": "^2.3.0",
-		"nette/di": "^2.3.0",
-		"symfony/form": "^2.8.0"
-	},
-	"require-dev": {
-		"php": ">=5.5.0",
-		"arachne/bootstrap": "~0.2.0",
-		"arachne/codeception": "~0.6.3",
-		"codeception/codeception": "~2.1.0",
-		"enumag/application": "~0.3.5",
-		"kdyby/annotations": "^2.2.0",
-		"kdyby/translation": "^2.3.0",
-		"kdyby/validator": "^0.4.0",
-		"latte/latte": "^2.3.0",
-		"nette/http": "^2.3.0",
-		"symfony/security-csrf": "^2.8.0",
-		"symfony/twig-bridge": "^2.8.0",
-		"tracy/tracy": "^2.3.0"
-	},
-	"autoload": {
-		"psr-4": {
-			"Arachne\\": "src"
-		}
-	},
-	"autoload-dev": {
-		"psr-4": {
-			"Tests\\Integration\\": "tests/integration/src",
-			"Tests\\Functional\\": "tests/functional/src"
-		}
-	}
+    "name": "arachne/forms",
+    "description": "Integration of symfony/form to Nette framework.",
+    "type": "library",
+    "keywords": [ "symfony", "forms", "nette", "arachne" ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jáchym Toušek",
+            "homepage": "http://enumag.cz",
+            "email": "enumag@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^5.4.0|^7.0.0",
+        "arachne/di-helpers": "^0.4.0",
+        "nette/application": "^2.3.0",
+        "nette/di": "^2.3.0|^3.0.0",
+        "symfony/form": "^2.8.0|^3.0.0"
+    },
+    "suggest": {
+        "arachne/csrf": "Adds CSRF protection to forms.",
+        "arachne/twig": "Enables forms rendering using Twig templates.",
+        "arachne/upload": "Adds upload capability using nette/http.",
+        "kdyby/validator": "Enables forms validation using symfony/form."
+    },
+    "require-dev": {
+        "php": "^5.5.0|^7.0.0",
+        "arachne/bootstrap": "^0.2.1",
+        "arachne/codeception": "@dev",
+        "arachne/csrf": "@dev",
+        "arachne/property-access": "@dev",
+        "arachne/twig": "@dev",
+        "codeception/codeception": "~2.2.0",
+        "enumag/application": "^0.3.5",
+        "kdyby/annotations": "^2.2.0",
+        "kdyby/translation": "^2.3.0",
+        "kdyby/validator": "^0.4.0",
+        "latte/latte": "^2.3.0",
+        "nette/http": "^2.3.7@dev",
+        "symfony/security-csrf": "^2.8.0|^3.0.0",
+        "symfony/twig-bridge": "^2.8.0|^3.0.0",
+        "tracy/tracy": "^2.3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Arachne\\Forms\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\Integration\\": "tests/integration/src",
+            "Tests\\Functional\\": "tests/functional/src"
+        }
+    }
 }

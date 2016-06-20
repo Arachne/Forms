@@ -13,23 +13,23 @@ You'll need to add some blocks to your form theme:
 
 {# Wrap errors by a placeholder element. #}
 {% block form_errors -%}
-	<div id="error__{{ id }}" class="error-container">
-		{{- block('form_errors_content') -}}
-	</div>
+    <div id="error__{{ id }}" class="error-container">
+        {{- block('form_errors_content') -}}
+    </div>
 {%- endblock form_errors %}
 
 {# Only show one error for each field. #}
 {% block form_errors_content -%}
-	{% if errors|length > 0 -%}
-		{%- if form.parent -%}
-			<span class="error-message">{{ errors[0].message }}</span>
-		{%- else -%}
-			<div class="alert alert-danger">
-				<i class="fa fa-ban"></i>
-				{{ errors[0].message }}
-			</div>
-		{%- endif -%}
-	{%- endif -%}
+    {% if errors|length > 0 -%}
+        {%- if form.parent -%}
+            <span class="error-message">{{ errors[0].message }}</span>
+        {%- else -%}
+            <div class="alert alert-danger">
+                <i class="fa fa-ban"></i>
+                {{ errors[0].message }}
+            </div>
+        {%- endif -%}
+    {%- endif -%}
 {%- endblock form_errors_content %}
 ```
 
@@ -40,6 +40,6 @@ You'll also need some custom javascript to send the ajax requests and render the
 
 ```js
 $(function () {
-	$('form').ajaxValidation();
+    $('form').ajaxValidation();
 });
 ```

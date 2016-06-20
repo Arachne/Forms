@@ -3,7 +3,7 @@ How to run tests
 
 ```
 # install php-cs-fixer
-composer global require fabpot/php-cs-fixer dev-master
+composer global require fabpot/php-cs-fixer "^2.0.0@dev"
 
 # go to the project's root directory, but NOT the tests subdirectory 
 cd <project_dir>
@@ -30,12 +30,12 @@ You can use these commands to do more specific tasks.
 # generate necessary files to run the tests
 ./vendor/bin/codecept build
 
-# run the unit suite
-./vendor/bin/codecept run unit
+# run all tests
+./vendor/bin/codecept run
 
-# run the integration suite
-./vendor/bin/codecept run integration
+# run the specific suite
+./vendor/bin/codecept run <suite>
 
 # run specific test
-./vendor/bin/codecept run tests/unit/src/FooTest.php
+./vendor/bin/codecept run <file>
 ```
