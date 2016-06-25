@@ -1,26 +1,33 @@
 language: php
-
-env:
-  matrix:
-    - NETTE=nette-2.3
+sudo: required
+dist: trusty
+group: edge
 
 php:
-  - 5.5
-  - 5.6
-  - 7.0
-  - hhvm
+    - 5.5
+    - 5.6
+    - 7.0
+    - nightly
+    - hhvm-3.12
+    - hhvm-nightly
 
 before_install:
-  - composer self-update
+    - echo $TRAVIS_PHP_VERSION
+    - travis_retry composer self-update
 
 install:
-  - export PATH="$PATH:$HOME/.composer/vendor/bin"
-  - composer global require fabpot/php-cs-fixer dev-master
-  - composer update --no-interaction --prefer-source
+    - export PATH="$PATH:$HOME/.composer/vendor/bin"
+    - travis_retry composer global require friendsofphp/php-cs-fixer "^2.0.0@dev"
+    - travis_retry composer global require satooshi/php-coveralls "^1.0.0"
+    - travis_retry composer update --no-interaction --prefer-source
 
 before_script:
-  - vendor/bin/codecept build
+    - if [[ $TRAVIS_PHP_VERSION != hhvm* ]]; then coverage="--coverage-xml"; fi
+    - vendor/bin/codecept build
 
 script:
-  - php-cs-fixer fix --dry-run
-  - vendor/bin/codecept run
+    - php-cs-fixer fix --dry-run
+    - vendor/bin/codecept run $coverage
+
+after_success:
+    - if [ $coverage != "" ]; then coveralls --verbose; fi
