@@ -20,7 +20,6 @@ use Symfony\Component\Security\Csrf\TokenStorage\TokenStorageInterface;
  */
 class SessionTokenStorage implements TokenStorageInterface
 {
-
     const SESSION_NAMESPACE = 'Arachne.Csrf.SessionTokenStorage';
 
     /** @var SessionSection */

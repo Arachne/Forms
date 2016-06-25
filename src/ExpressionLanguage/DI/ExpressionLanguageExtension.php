@@ -9,7 +9,6 @@ use Nette\DI\CompilerExtension;
  */
 class ExpressionLanguageExtension extends CompilerExtension
 {
-
     const TAG_FUNCTION_PROVIDER = 'arachne.expressionLanguage.functionProvider';
 
     public function loadConfiguration()

@@ -18,7 +18,6 @@ use Twig_Node;
  */
 class DumpNode extends Twig_Node
 {
-
     private $varPrefix;
 
     public function __construct($varPrefix, Twig_Node $values = null, $lineno = 0, $tag = null)

@@ -9,7 +9,6 @@ use Codeception\TestCase\Test;
  */
 class SimpleFormTest extends Test
 {
-
     public function testRendering()
     {
         $this->guy->amOnPage('/article/');

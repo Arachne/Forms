@@ -10,7 +10,6 @@ use Codeception\TestCase\Test;
  */
 class FormsExtensionTest extends Test
 {
-
     public function testFormTypes()
     {
         $types = [

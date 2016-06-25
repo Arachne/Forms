@@ -22,7 +22,6 @@ use Twig_Template;
  */
 class DumpExtension extends Twig_Extension
 {
-
     public function getFunctions()
     {
         return [

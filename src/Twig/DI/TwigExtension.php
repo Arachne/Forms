@@ -17,7 +17,6 @@ use Nette\DI\CompilerExtension;
  */
 class TwigExtension extends CompilerExtension
 {
-
     const TAG_EXTENSION = 'arachne.twig.extension';
     const TAG_LOADER = 'arachne.twig.loader';
 
