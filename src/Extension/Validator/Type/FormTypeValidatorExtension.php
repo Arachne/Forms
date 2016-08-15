@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 /**
  * @author Jáchym Toušek <enumag@gmail.com>
  *
- * @todo Remove this class after upgrading to Symfony 3.
+ * @todo remove this class after upgrading to Symfony 3
  */
 class FormTypeValidatorExtension extends BaseFormTypeValidatorExtension
 {
