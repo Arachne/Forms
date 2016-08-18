@@ -18,7 +18,7 @@ class RouterFactory extends Object
     public function create()
     {
         $router = new RouteList();
-        $router[] = new Route('<presenter>/<action>[/<id>]', 'Homepage:default');
+        $router[] = new Route('<presenter>[/useget/<useget>]', 'Homepage:default');
 
         return $router;
     }

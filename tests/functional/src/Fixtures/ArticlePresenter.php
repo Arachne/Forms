@@ -33,6 +33,9 @@ class ArticlePresenter extends Presenter
     protected function createComponentForm()
     {
         $builder = $this->formFactory->createBuilder(FormType::class, new Task());
+        if ($this->getRequest()->getParameter('useget')) {
+            $builder->setMethod('GET');
+        }
         $builder->add('text', TextType::class);
         $builder->add('save', SubmitType::class);
 

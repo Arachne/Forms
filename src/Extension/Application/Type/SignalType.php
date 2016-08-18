@@ -27,7 +27,9 @@ class SignalType extends AbstractType
     {
         parent::buildView($view, $form, $options);
 
-        $view->vars['full_name'] = Presenter::SIGNAL_KEY;
+        // Detect nette/application v2.4+.
+        $prefix = property_exists('Nette\Application\UI\Component', 'onAnchor') && $form->getRoot()->getConfig()->getMethod() === 'POST';
+        $view->vars['full_name'] = ($prefix ? '_' : '').Presenter::SIGNAL_KEY;
         $view->vars['value'] = $options['data'];
     }
 
