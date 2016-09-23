@@ -126,10 +126,14 @@ class FormComponent extends Component implements ISignalReceiver
     protected function attached($presenter)
     {
         if ($presenter instanceof Presenter) {
-            $this->form->add('_signal', 'Arachne\Forms\Extension\Application\Type\SignalType', [
-                'mapped' => false,
-                'data' => $this->lookupPath('Nette\Application\UI\Presenter').self::NAME_SEPARATOR.'submit',
-            ]);
+            $this->form->add(
+                '_signal',
+                'Arachne\Forms\Extension\Application\Type\SignalType',
+                [
+                    'mapped' => false,
+                    'data' => $this->lookupPath('Nette\Application\UI\Presenter').self::NAME_SEPARATOR.'submit',
+                ]
+            );
         }
 
         parent::attached($presenter);
@@ -162,14 +166,20 @@ class FormComponent extends Component implements ISignalReceiver
         $form = $this->getForm();
         $request = $this->getPresenter()->getRequest();
 
-        if ($signal === 'submit') {
-            $this->processSubmit($form, $request);
-        } elseif ($signal === 'validate') {
-            $this->processValidate($form, $request);
-        } elseif ($signal === 'render') {
-            $this->processRender($form, $request);
-        } else {
-            throw new BadSignalException("Missing handler for signal '$signal' in ".get_class($this).'.');
+        switch ($signal) {
+            case 'submit':
+                $this->processSubmit($form, $request);
+                break;
+            case 'validate':
+                $this->processValidate($form, $request);
+                break;
+            case 'render':
+                $this->processRender($form, $request);
+                break;
+            default:
+                throw new BadSignalException(
+                    sprintf('Missing handler for signal "%s" in %s.', $signal, get_class($this))
+                );
         }
     }
 
@@ -214,9 +224,13 @@ class FormComponent extends Component implements ISignalReceiver
 
         $view = $this->getView();
         $errors = [];
-        $this->walkErrors($form->getErrors(true, false), $view, function (FormView $view) use (&$errors) {
-            $errors[$view->vars['id']] = $this->renderer->searchAndRenderBlock($view, 'errors_content');
-        });
+        $this->walkErrors(
+            $form->getErrors(true, false),
+            $view,
+            function (FormView $view) use (&$errors) {
+                $errors[$view->vars['id']] = $this->renderer->searchAndRenderBlock($view, 'errors_content');
+            }
+        );
 
         $presenter->sendJson((object) ['errors' => $errors]);
     }
@@ -244,7 +258,7 @@ class FormComponent extends Component implements ISignalReceiver
             throw new BadRequestException('The render signal is only allowed in ajax mode.');
         }
 
-        $fields = $request->getPost($this->lookupPath('Nette\Application\UI\Presenter', true).'-fields');
+        $fields = $request->getPost($this->lookupPath('Nette\Application\UI\Presenter', true).self::NAME_SEPARATOR.'fields');
         if (!$fields) {
             throw new BadRequestException('No fields specified for rendering.');
         }
@@ -259,7 +273,9 @@ class FormComponent extends Component implements ISignalReceiver
         foreach ($fields as $field) {
             // Validate the field identifier for security reasons. A dot in the identifier would be particularly dangerous.
             if (!Strings::match($field, '~^(?:\[\w++\])++$~')) {
-                throw new BadRequestException("Field identifier '$field' contains unallowed characters.");
+                throw new BadRequestException(
+                    sprintf('Field identifier "%s" contains unallowed characters.', $field)
+                );
             }
 
             // Skip duplicates. The renderer would return an empty string on second try.
@@ -271,7 +287,11 @@ class FormComponent extends Component implements ISignalReceiver
             try {
                 $fieldView = $this->propertyAccessor->getValue($view, $field);
             } catch (ExceptionInterface $e) {
-                throw new BadRequestException("FormView not found for field identifier '$field'.", 0, $e);
+                throw new BadRequestException(
+                    sprintf('FormView not found for field identifier "%s".', $field),
+                    0,
+                    $e
+                );
             }
 
             // Render the field widget.

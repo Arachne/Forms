@@ -71,11 +71,14 @@ class FormsExtension extends CompilerExtension
 
         $builder->addDefinition($this->prefix('formRegistry'))
             ->setClass('Symfony\Component\Form\FormRegistryInterface')
-            ->setFactory('Symfony\Component\Form\FormRegistry', [
-                'extensions' => [
-                    $this->prefix('@extension.di'),
-                ],
-            ]);
+            ->setFactory(
+                'Symfony\Component\Form\FormRegistry',
+                [
+                    'extensions' => [
+                        $this->prefix('@extension.di'),
+                    ],
+                ]
+            );
 
         $builder->addDefinition($this->prefix('formFactory'))
             ->setClass('Symfony\Component\Form\FormFactoryInterface')
@@ -92,16 +95,22 @@ class FormsExtension extends CompilerExtension
 
         $builder->addDefinition($this->prefix('choiceList.propertyAccessDecorator'))
             ->setClass('Symfony\Component\Form\ChoiceList\Factory\ChoiceListFactoryInterface')
-            ->setFactory('Symfony\Component\Form\ChoiceList\Factory\PropertyAccessDecorator', [
-                'decoratedFactory' => $this->prefix('@choiceList.defaultChoiceListFactory'),
-            ])
+            ->setFactory(
+                'Symfony\Component\Form\ChoiceList\Factory\PropertyAccessDecorator',
+                [
+                    'decoratedFactory' => $this->prefix('@choiceList.defaultChoiceListFactory'),
+                ]
+            )
             ->setAutowired(false);
 
         $builder->addDefinition($this->prefix('choiceList.cachingFactoryDecorator'))
             ->setClass('Symfony\Component\Form\ChoiceList\Factory\ChoiceListFactoryInterface')
-            ->setFactory('Symfony\Component\Form\ChoiceList\Factory\CachingFactoryDecorator', [
-                'decoratedFactory' => $this->prefix('@choiceList.propertyAccessDecorator'),
-            ]);
+            ->setFactory(
+                'Symfony\Component\Form\ChoiceList\Factory\CachingFactoryDecorator',
+                [
+                    'decoratedFactory' => $this->prefix('@choiceList.propertyAccessDecorator'),
+                ]
+            );
 
         foreach ($this->types as $class) {
             $typeName = strtolower(substr($class, strrpos($class, '\\') + 1, -4));
@@ -149,9 +158,12 @@ class FormsExtension extends CompilerExtension
                 ->setAutowired(false);
 
             $builder->addDefinition($this->prefix('validationLoader'))
-                ->setFactory('Symfony\Component\Validator\Mapping\Loader\XmlFileLoader', [
-                    'file' => dirname((new ReflectionClass('Symfony\Component\Form\FormInterface'))->getFileName()).'/Resources/config/validation.xml',
-                ])
+                ->setFactory(
+                    'Symfony\Component\Validator\Mapping\Loader\XmlFileLoader',
+                    [
+                        'file' => dirname((new ReflectionClass('Symfony\Component\Form\FormInterface'))->getFileName()).'/Resources/config/validation.xml',
+                    ]
+                )
                 ->setAutowired(false)
                 ->addTag(ValidatorExtension::TAG_LOADER);
         }
@@ -171,9 +183,12 @@ class FormsExtension extends CompilerExtension
 
             $builder->addDefinition($this->prefix('twig.engine'))
                 ->setClass('Symfony\Bridge\Twig\Form\TwigRendererEngineInterface')
-                ->setFactory('Symfony\Bridge\Twig\Form\TwigRendererEngine', [
-                    'defaultThemes' => $this->config['defaultThemes'],
-                ]);
+                ->setFactory(
+                    'Symfony\Bridge\Twig\Form\TwigRendererEngine',
+                    [
+                        'defaultThemes' => $this->config['defaultThemes'],
+                    ]
+                );
 
             $builder->addDefinition($this->prefix('application.componentFactory'))
                 ->setImplement('Arachne\Forms\Application\FormComponentFactory');
@@ -184,22 +199,28 @@ class FormsExtension extends CompilerExtension
     {
         $twigExtension = $this->getExtension('Arachne\Twig\DI\TwigExtension', false);
         if ($twigExtension) {
-            $twigExtension->addPaths([
-                dirname((new ReflectionClass('Symfony\Bridge\Twig\AppVariable'))->getFileName()).'/Resources/views/Form',
-            ]);
+            $twigExtension->addPaths(
+                [
+                    dirname((new ReflectionClass('Symfony\Bridge\Twig\AppVariable'))->getFileName()).'/Resources/views/Form',
+                ]
+            );
         }
 
         $builder = $this->getContainerBuilder();
 
         $builder->getDefinition($this->prefix('extension.di'))
-            ->setArguments([
-                'typeResolver' => '@'.$this->getExtension('Arachne\DIHelpers\DI\ResolversExtension')->get(self::TAG_TYPE),
-                'typeExtensionResolver' => '@'.$this->getExtension('Arachne\DIHelpers\DI\IteratorResolversExtension')->get(self::TAG_TYPE_EXTENSION),
-            ]);
+            ->setArguments(
+                [
+                    'typeResolver' => '@'.$this->getExtension('Arachne\DIHelpers\DI\ResolversExtension')->get(self::TAG_TYPE),
+                    'typeExtensionResolver' => '@'.$this->getExtension('Arachne\DIHelpers\DI\IteratorResolversExtension')->get(self::TAG_TYPE_EXTENSION),
+                ]
+            );
 
         $builder->getDefinition($this->prefix('typeGuesser'))
-            ->setArguments([
-                'guessers' => '@'.$this->getExtension('Arachne\DIHelpers\DI\IteratorsExtension')->get(self::TAG_TYPE_GUESSER),
-            ]);
+            ->setArguments(
+                [
+                    'guessers' => '@'.$this->getExtension('Arachne\DIHelpers\DI\IteratorsExtension')->get(self::TAG_TYPE_GUESSER),
+                ]
+            );
     }
 }
