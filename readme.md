@@ -11,16 +11,13 @@ Arachne/Forms
 
 Integration of symfony/form to Nette framework.
 
-Installation
-----
-
-The best way to install Arachne/Forms is using [Composer](http://getcomposer.org/).
-
-```sh
-$ composer require arachne/forms
-```
-
 Documentation
 ----
 
-You can find the documentation [here](docs/index.md).
+- [Installation](docs/installation.md)
+- [Usage](docs/usage.md)
+- [Templates](docs/templates.md)
+- [Live Validation](docs/live-validation.md)
+- [Collections](docs/collections.md)
+- [Upload](docs/upload.md)
+- [FAQ](docs/faq.md)
