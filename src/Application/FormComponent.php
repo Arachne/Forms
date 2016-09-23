@@ -259,7 +259,7 @@ class FormComponent extends Component implements ISignalReceiver
         foreach ($fields as $field) {
             // Validate the field identifier for security reasons. A dot in the identifier would be particularly dangerous.
             if (!Strings::match($field, '~^(?:\[\w++\])++$~')) {
-                throw new BadRequestException("Field identifier '$field' containes unallowed characters.");
+                throw new BadRequestException("Field identifier '$field' contains unallowed characters.");
             }
 
             // Skip duplicates. The renderer would return an empty string on second try.
