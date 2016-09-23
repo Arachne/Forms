@@ -23,13 +23,13 @@ It is recommended to add all of the following extensions into your config.neon. 
 ```yml
 extensions:
     # Always required.
-    arachne.dihelpers.iteratorresolvers: Arachne\DIHelpers\DI\IteratorResolversExtension
-    arachne.dihelpers.iterators: Arachne\DIHelpers\DI\IteratorsExtension
-    arachne.dihelpers.resolvers: Arachne\DIHelpers\DI\ResolversExtension
+    - Arachne\DIHelpers\DI\IteratorResolversExtension
+    - Arachne\DIHelpers\DI\IteratorsExtension
+    - Arachne\DIHelpers\DI\ResolversExtension
     arachne.forms: Arachne\Forms\DI\FormsExtension
 
     # Technically optional but do you really want forms without CSRF protection, validation, files upload and a way to render them?
-    arachne.csrf: Arachne\Csrf\DI\CsrfExtension
+    - Arachne\Csrf\DI\CsrfExtension
     arachne.twig: Arachne\Twig\DI\TwigExtension(%tempDir%/cache/twig, %debugMode%)
     kdyby.annotations: Kdyby\Annotations\DI\AnnotationsExtension
     kdyby.translation: Kdyby\Translation\DI\TranslationExtension
@@ -81,5 +81,5 @@ composer require arachne/expression-language
 
 ```yml
 extensions:
-    arachne.expressionlanguage: Arachne\ExpressionLanguage\DI\ExpressionLanguageExtension
+    - Arachne\ExpressionLanguage\DI\ExpressionLanguageExtension
 ```
