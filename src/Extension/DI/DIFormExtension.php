@@ -10,7 +10,6 @@
 
 namespace Arachne\Forms\Extension\DI;
 
-use Arachne\DIHelpers\ResolverInterface;
 use Arachne\Forms\Exception\InvalidArgumentException;
 use Symfony\Component\Form\FormExtensionInterface;
 use Symfony\Component\Form\FormTypeGuesserInterface;
@@ -21,12 +20,12 @@ use Symfony\Component\Form\FormTypeGuesserInterface;
 class DIFormExtension implements FormExtensionInterface
 {
     /**
-     * @var ResolverInterface
+     * @var callable
      */
     private $typeResolver;
 
     /**
-     * @var ResolverInterface
+     * @var callable
      */
     private $typeExtensionResolver;
 
@@ -35,7 +34,7 @@ class DIFormExtension implements FormExtensionInterface
      */
     private $guesser;
 
-    public function __construct(ResolverInterface $typeResolver, ResolverInterface $typeExtensionResolver, FormTypeGuesserInterface $guesser)
+    public function __construct(callable $typeResolver, callable $typeExtensionResolver, FormTypeGuesserInterface $guesser)
     {
         $this->typeResolver = $typeResolver;
         $this->typeExtensionResolver = $typeExtensionResolver;
@@ -47,7 +46,7 @@ class DIFormExtension implements FormExtensionInterface
      */
     public function getType($name)
     {
-        $type = $this->typeResolver->resolve($name);
+        $type = call_user_func($this->typeResolver, $name);
 
         if (!$type) {
             throw new InvalidArgumentException(sprintf('The field type "%s" does not exist.', $name));
@@ -61,7 +60,7 @@ class DIFormExtension implements FormExtensionInterface
      */
     public function hasType($name)
     {
-        return (bool) $this->typeResolver->resolve($name);
+        return (bool) call_user_func($this->typeResolver, $name);
     }
 
     /**
@@ -69,7 +68,7 @@ class DIFormExtension implements FormExtensionInterface
      */
     public function getTypeExtensions($name)
     {
-        $iterator = $this->typeExtensionResolver->resolve($name);
+        $iterator = call_user_func($this->typeExtensionResolver, $name);
 
         if (!$iterator) {
             return [];
@@ -91,7 +90,7 @@ class DIFormExtension implements FormExtensionInterface
      */
     public function hasTypeExtensions($name)
     {
-        return (bool) $this->typeExtensionResolver->resolve($name);
+        return (bool) call_user_func($this->typeExtensionResolver, $name);
     }
 
     /**

@@ -1,7 +1,5 @@
 extensions:
-    arachne.dihelpers.iteratorresolvers: Arachne\DIHelpers\DI\IteratorResolversExtension
-    arachne.dihelpers.iterators: Arachne\DIHelpers\DI\IteratorsExtension
-    arachne.dihelpers.resolvers: Arachne\DIHelpers\DI\ResolversExtension
+    arachne.servicecollections: Arachne\ServiceCollections\DI\ServiceCollectionsExtension
     arachne.csrf: Arachne\Csrf\DI\CsrfExtension
     arachne.forms: Arachne\Forms\DI\FormsExtension
     arachne.propertyaccess: Arachne\PropertyAccess\DI\PropertyAccessExtension

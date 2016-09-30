@@ -10,9 +10,11 @@
 
 namespace Arachne\Forms\DI;
 
-use Arachne\DIHelpers\CompilerExtension;
+use Arachne\ServiceCollections\DI\ServiceCollectionsExtension;
 use Arachne\Twig\DI\TwigExtension;
 use Kdyby\Validator\DI\ValidatorExtension;
+use Nette\DI\CompilerExtension;
+use Nette\Utils\AssertionException;
 use ReflectionClass;
 
 /**
@@ -54,9 +56,26 @@ class FormsExtension extends CompilerExtension
     {
         $this->validateConfig($this->defaults);
 
-        $this->getExtension('Arachne\DIHelpers\DI\ResolversExtension')->add(self::TAG_TYPE, 'Symfony\Component\Form\FormTypeInterface');
-        $this->getExtension('Arachne\DIHelpers\DI\IteratorResolversExtension')->add(self::TAG_TYPE_EXTENSION, 'Symfony\Component\Form\FormTypeExtensionInterface');
-        $this->getExtension('Arachne\DIHelpers\DI\IteratorsExtension')->add(self::TAG_TYPE_GUESSER, 'Symfony\Component\Form\FormTypeGuesserInterface');
+        /* @var $serviceCollectionsExtension ServiceCollectionsExtension */
+        $serviceCollectionsExtension = $this->getExtension('Arachne\ServiceCollections\DI\ServiceCollectionsExtension');
+
+        $typeResolver = $serviceCollectionsExtension->getCollection(
+            ServiceCollectionsExtension::TYPE_RESOLVER,
+            self::TAG_TYPE,
+            'Symfony\Component\Form\FormTypeInterface'
+        );
+
+        $extensionIteratorResolver = $serviceCollectionsExtension->getCollection(
+            ServiceCollectionsExtension::TYPE_ITERATOR_RESOLVER,
+            self::TAG_TYPE_EXTENSION,
+            'Symfony\Component\Form\FormTypeExtensionInterface'
+        );
+
+        $guesserIterator = $serviceCollectionsExtension->getCollection(
+            ServiceCollectionsExtension::TYPE_ITERATOR,
+            self::TAG_TYPE_GUESSER,
+            'Symfony\Component\Form\FormTypeGuesserInterface'
+        );
 
         $builder = $this->getContainerBuilder();
 
@@ -67,6 +86,12 @@ class FormsExtension extends CompilerExtension
         $builder->addDefinition($this->prefix('extension.di'))
             ->setClass('Symfony\Component\Form\FormExtensionInterface')
             ->setFactory('Arachne\Forms\Extension\DI\DIFormExtension')
+            ->setArguments(
+                [
+                    'typeResolver' => '@'.$typeResolver,
+                    'typeExtensionResolver' => '@'.$extensionIteratorResolver,
+                ]
+            )
             ->setAutowired(false);
 
         $builder->addDefinition($this->prefix('formRegistry'))
@@ -86,7 +111,12 @@ class FormsExtension extends CompilerExtension
 
         $builder->addDefinition($this->prefix('typeGuesser'))
             ->setClass('Symfony\Component\Form\FormTypeGuesserInterface')
-            ->setFactory('Arachne\Forms\Extension\DI\FormTypeGuesserChain');
+            ->setFactory('Arachne\Forms\Extension\DI\FormTypeGuesserChain')
+            ->setArguments(
+                [
+                    'guessers' => '@'.$guesserIterator,
+                ]
+            );
 
         $builder->addDefinition($this->prefix('choiceList.defaultChoiceListFactory'))
             ->setClass('Symfony\Component\Form\ChoiceList\Factory\ChoiceListFactoryInterface')
@@ -205,22 +235,28 @@ class FormsExtension extends CompilerExtension
                 ]
             );
         }
+    }
 
-        $builder = $this->getContainerBuilder();
+    /**
+     * @param string $class
+     * @param bool   $need
+     *
+     * @return CompilerExtension|null
+     */
+    private function getExtension($class, $need = true)
+    {
+        $extensions = $this->compiler->getExtensions($class);
 
-        $builder->getDefinition($this->prefix('extension.di'))
-            ->setArguments(
-                [
-                    'typeResolver' => '@'.$this->getExtension('Arachne\DIHelpers\DI\ResolversExtension')->get(self::TAG_TYPE),
-                    'typeExtensionResolver' => '@'.$this->getExtension('Arachne\DIHelpers\DI\IteratorResolversExtension')->get(self::TAG_TYPE_EXTENSION),
-                ]
+        if (!$extensions) {
+            if (!$need) {
+                return null;
+            }
+
+            throw new AssertionException(
+                sprintf('Extension "%s" requires "%s" to be installed.', get_class($this), $class)
             );
+        }
 
-        $builder->getDefinition($this->prefix('typeGuesser'))
-            ->setArguments(
-                [
-                    'guessers' => '@'.$this->getExtension('Arachne\DIHelpers\DI\IteratorsExtension')->get(self::TAG_TYPE_GUESSER),
-                ]
-            );
+        return reset($extensions);
     }
 }
