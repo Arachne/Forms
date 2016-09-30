@@ -198,7 +198,14 @@ class FormsExtension extends CompilerExtension
                 ->addTag(ValidatorExtension::TAG_LOADER);
         }
 
-        if ($this->getExtension('Arachne\Twig\DI\TwigExtension', false)) {
+        $twigExtension = $this->getExtension('Arachne\Twig\DI\TwigExtension', false);
+        if ($twigExtension) {
+            $twigExtension->addPaths(
+                [
+                    dirname((new ReflectionClass('Symfony\Bridge\Twig\AppVariable'))->getFileName()).'/Resources/views/Form',
+                ]
+            );
+
             $builder->addDefinition($this->prefix('twig.extension.translation'))
                 ->setClass('Symfony\Bridge\Twig\Extension\TranslationExtension')
                 ->addTag(TwigExtension::TAG_EXTENSION);
@@ -222,18 +229,6 @@ class FormsExtension extends CompilerExtension
 
             $builder->addDefinition($this->prefix('application.componentFactory'))
                 ->setImplement('Arachne\Forms\Application\FormComponentFactory');
-        }
-    }
-
-    public function beforeCompile()
-    {
-        $twigExtension = $this->getExtension('Arachne\Twig\DI\TwigExtension', false);
-        if ($twigExtension) {
-            $twigExtension->addPaths(
-                [
-                    dirname((new ReflectionClass('Symfony\Bridge\Twig\AppVariable'))->getFileName()).'/Resources/views/Form',
-                ]
-            );
         }
     }
 
