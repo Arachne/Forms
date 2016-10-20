@@ -16,6 +16,8 @@ use Traversable;
 
 /**
  * @author Jáchym Toušek <enumag@gmail.com>
+ *
+ * @todo remove this class after upgrading to Symfony 3.2
  */
 class FormTypeGuesserChain implements FormTypeGuesserInterface
 {
