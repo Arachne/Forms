@@ -29,7 +29,7 @@
         "arachne/codeception": "^0.7.3",
         "arachne/csrf": "^0.1.0",
         "arachne/property-access": "^0.1.0",
-        "arachne/twig": "^0.1.0",
+        "arachne/twig": "^0.2.0",
         "codeception/codeception": "~2.2.0",
         "enumag/application": "^0.3.5",
         "kdyby/annotations": "^2.2.0",

@@ -214,9 +214,27 @@ class FormsExtension extends CompilerExtension
                 ->setClass('Symfony\Bridge\Twig\Extension\FormExtension')
                 ->addTag(TwigExtension::TAG_EXTENSION);
 
+            try {
+                $reflections = (new \ReflectionClass('Symfony\Bridge\Twig\Extension\FormExtension'))
+                    ->getMethod('__construct')
+                    ->getParameters();
+
+                foreach ($reflections as $reflection) {
+                    if ($reflection->getName() === 'renderer' && $reflection->allowsNull()) {
+                        $builder->getDefinition($this->prefix('twig.extension.form'))
+                            ->setArguments([
+                                'renderer' => null,
+                            ]);
+                        break;
+                    }
+                }
+            } catch (\ReflectionException $e) {
+            }
+
             $builder->addDefinition($this->prefix('twig.renderer'))
                 ->setClass('Symfony\Bridge\Twig\Form\TwigRendererInterface')
-                ->setFactory('Arachne\Forms\Twig\TwigRenderer');
+                ->setFactory('Arachne\Forms\Twig\TwigRenderer')
+                ->addTag(TwigExtension::TAG_RUNTIME, 'Symfony\Bridge\Twig\Form\TwigRenderer');
 
             $builder->addDefinition($this->prefix('twig.engine'))
                 ->setClass('Symfony\Bridge\Twig\Form\TwigRendererEngineInterface')
