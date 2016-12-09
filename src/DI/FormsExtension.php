@@ -16,6 +16,7 @@ use Kdyby\Validator\DI\ValidatorExtension;
 use Nette\DI\CompilerExtension;
 use Nette\Utils\AssertionException;
 use ReflectionClass;
+use ReflectionException;
 
 /**
  * @author Jáchym Toušek <enumag@gmail.com>
@@ -215,7 +216,7 @@ class FormsExtension extends CompilerExtension
                 ->addTag(TwigExtension::TAG_EXTENSION);
 
             try {
-                $reflections = (new \ReflectionClass('Symfony\Bridge\Twig\Extension\FormExtension'))
+                $reflections = (new ReflectionClass('Symfony\Bridge\Twig\Extension\FormExtension'))
                     ->getMethod('__construct')
                     ->getParameters();
 
@@ -228,7 +229,7 @@ class FormsExtension extends CompilerExtension
                         break;
                     }
                 }
-            } catch (\ReflectionException $e) {
+            } catch (ReflectionException $e) {
             }
 
             $builder->addDefinition($this->prefix('twig.renderer'))
