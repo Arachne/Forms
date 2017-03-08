@@ -16,7 +16,6 @@ use Kdyby\Validator\DI\ValidatorExtension;
 use Nette\DI\CompilerExtension;
 use Nette\Utils\AssertionException;
 use ReflectionClass;
-use ReflectionException;
 
 /**
  * @author Jáchym Toušek <enumag@gmail.com>
@@ -112,7 +111,7 @@ class FormsExtension extends CompilerExtension
 
         $builder->addDefinition($this->prefix('typeGuesser'))
             ->setClass('Symfony\Component\Form\FormTypeGuesserInterface')
-            ->setFactory('Arachne\Forms\Extension\DI\FormTypeGuesserChain')
+            ->setFactory('Symfony\Component\Form\FormTypeGuesserChain')
             ->setArguments(
                 [
                     'guessers' => '@'.$guesserIterator,
@@ -158,17 +157,19 @@ class FormsExtension extends CompilerExtension
 
         if ($this->getExtension('Arachne\Csrf\DI\CsrfExtension', false)) {
             $builder->addDefinition($this->prefix('csrf.typeExtension.form'))
-                ->setClass('Arachne\Forms\Extension\Csrf\Type\FormTypeCsrfExtension')
-                ->setArguments([
-                    'translationDomain' => $this->config['csrfTranslationDomain'],
-                ])
+                ->setClass('Symfony\Component\Form\Extension\Csrf\Type\FormTypeCsrfExtension')
+                ->setArguments(
+                    [
+                        'translationDomain' => $this->config['csrfTranslationDomain'],
+                    ]
+                )
                 ->addTag(self::TAG_TYPE_EXTENSION, 'Symfony\Component\Form\Extension\Core\Type\FormType')
                 ->setAutowired(false);
         }
 
         if ($this->getExtension('Kdyby\Validator\DI\ValidatorExtension', false)) {
             $builder->addDefinition($this->prefix('validator.typeExtension.form'))
-                ->setClass('Arachne\Forms\Extension\Validator\Type\FormTypeValidatorExtension')
+                ->setClass('Symfony\Component\Form\Extension\Validator\Type\FormTypeValidatorExtension')
                 ->addTag(self::TAG_TYPE_EXTENSION, 'Symfony\Component\Form\Extension\Core\Type\FormType')
                 ->setAutowired(false);
 
@@ -215,26 +216,9 @@ class FormsExtension extends CompilerExtension
                 ->setClass('Symfony\Bridge\Twig\Extension\FormExtension')
                 ->addTag(TwigExtension::TAG_EXTENSION);
 
-            try {
-                $reflections = (new ReflectionClass('Symfony\Bridge\Twig\Extension\FormExtension'))
-                    ->getMethod('__construct')
-                    ->getParameters();
-
-                foreach ($reflections as $reflection) {
-                    if ($reflection->getName() === 'renderer' && $reflection->allowsNull()) {
-                        $builder->getDefinition($this->prefix('twig.extension.form'))
-                            ->setArguments([
-                                'renderer' => null,
-                            ]);
-                        break;
-                    }
-                }
-            } catch (ReflectionException $e) {
-            }
-
             $builder->addDefinition($this->prefix('twig.renderer'))
                 ->setClass('Symfony\Bridge\Twig\Form\TwigRendererInterface')
-                ->setFactory('Arachne\Forms\Twig\TwigRenderer')
+                ->setFactory('Symfony\Bridge\Twig\Form\TwigRenderer')
                 ->addTag(TwigExtension::TAG_RUNTIME, 'Symfony\Bridge\Twig\Form\TwigRenderer');
 
             $builder->addDefinition($this->prefix('twig.engine'))
