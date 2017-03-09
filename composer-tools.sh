@@ -1,1 +1,1 @@
-COMPOSER=composer-tools.json composer install
+COMPOSER=composer-tools.json composer update
