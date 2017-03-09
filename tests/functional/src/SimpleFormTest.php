@@ -21,7 +21,7 @@ class SimpleFormTest extends Unit
         $this->tester->seeResponseCodeIs(200);
         $this->tester->see(null, 'form');
         $this->tester->see(null, 'input#form__token'); // CSRF protection
-        $this->tester->see(null, 'input[name="'.(property_exists('Nette\Application\UI\Component', 'onAnchor') ? '_' : '').'do"]'); // Signal for Nette/Application
+        $this->tester->see(null, 'input[name="_do"]'); // Signal for Nette/Application
         $this->tester->see(null, 'button');
     }
 
@@ -31,7 +31,7 @@ class SimpleFormTest extends Unit
         $this->tester->seeResponseCodeIs(200);
         $this->tester->fillField('#form_text', '');
         $this->tester->click('button');
-        $this->tester->see(null, 'input[name="'.(property_exists('Nette\Application\UI\Component', 'onAnchor') ? '_' : '').'do"]');
+        $this->tester->see(null, 'input[name="_do"]');
         $this->tester->see('error', '.state');
         $this->tester->see('This value should not be blank.');
     }
@@ -42,7 +42,7 @@ class SimpleFormTest extends Unit
         $this->tester->seeResponseCodeIs(200);
         $this->tester->fillField('#form_text', 'lorem ipsum');
         $this->tester->click('button');
-        $this->tester->see(null, 'input[name="'.(property_exists('Nette\Application\UI\Component', 'onAnchor') ? '_' : '').'do"]');
+        $this->tester->see(null, 'input[name="_do"]');
         $this->tester->see('success', '.state');
     }
 

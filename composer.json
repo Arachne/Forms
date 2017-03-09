@@ -14,8 +14,8 @@
     "require": {
         "php": "^5.5.0|^7.0.0",
         "arachne/service-collections": "^0.1.0",
-        "nette/application": "^2.3.0",
-        "nette/di": "^2.3.0|^3.0.0",
+        "nette/application": "^2.4.0",
+        "nette/di": "^2.4.0",
         "symfony/form": "^3.2.0"
     },
     "suggest": {
@@ -34,8 +34,8 @@
         "kdyby/annotations": "^2.2.0",
         "kdyby/translation": "^2.3.0",
         "kdyby/validator": "^0.4.0",
-        "latte/latte": "^2.3.0",
-        "nette/http": "^2.3.7",
+        "latte/latte": "^2.4.0",
+        "nette/http": "^2.4.0",
         "symfony/security-csrf": "^3.2.0",
         "symfony/twig-bridge": "^3.2.1",
         "tracy/tracy": "^2.3.0"
