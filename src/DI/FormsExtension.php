@@ -2,12 +2,49 @@
 
 namespace Arachne\Forms\DI;
 
+use Arachne\Csrf\DI\CsrfExtension;
+use Arachne\Forms\Application\FormComponentFactory;
+use Arachne\Forms\Extension\Application\Type\FormTypeApplicationExtension;
+use Arachne\Forms\Extension\DI\DIFormExtension;
 use Arachne\ServiceCollections\DI\ServiceCollectionsExtension;
 use Arachne\Twig\DI\TwigExtension;
 use Kdyby\Validator\DI\ValidatorExtension;
 use Nette\DI\CompilerExtension;
 use Nette\Utils\AssertionException;
 use ReflectionClass;
+use Symfony\Bridge\Twig\AppVariable;
+use Symfony\Bridge\Twig\Extension\FormExtension;
+use Symfony\Bridge\Twig\Extension\TranslationExtension;
+use Symfony\Bridge\Twig\Form\TwigRenderer;
+use Symfony\Bridge\Twig\Form\TwigRendererEngine;
+use Symfony\Bridge\Twig\Form\TwigRendererEngineInterface;
+use Symfony\Bridge\Twig\Form\TwigRendererInterface;
+use Symfony\Component\Form\ChoiceList\Factory\CachingFactoryDecorator;
+use Symfony\Component\Form\ChoiceList\Factory\ChoiceListFactoryInterface;
+use Symfony\Component\Form\ChoiceList\Factory\DefaultChoiceListFactory;
+use Symfony\Component\Form\ChoiceList\Factory\PropertyAccessDecorator;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Csrf\Type\FormTypeCsrfExtension;
+use Symfony\Component\Form\Extension\Validator\Type\FormTypeValidatorExtension;
+use Symfony\Component\Form\Extension\Validator\Type\RepeatedTypeValidatorExtension;
+use Symfony\Component\Form\Extension\Validator\Type\SubmitTypeValidatorExtension;
+use Symfony\Component\Form\Extension\Validator\ValidatorTypeGuesser;
+use Symfony\Component\Form\FormExtensionInterface;
+use Symfony\Component\Form\FormFactory;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormRegistry;
+use Symfony\Component\Form\FormRegistryInterface;
+use Symfony\Component\Form\FormTypeExtensionInterface;
+use Symfony\Component\Form\FormTypeGuesserChain;
+use Symfony\Component\Form\FormTypeGuesserInterface;
+use Symfony\Component\Form\FormTypeInterface;
+use Symfony\Component\Form\ResolvedFormTypeFactory;
+use Symfony\Component\Form\ResolvedFormTypeFactoryInterface;
+use Symfony\Component\Validator\Mapping\Loader\XmlFileLoader;
 
 /**
  * @author Jáchym Toušek <enumag@gmail.com>
@@ -40,8 +77,8 @@ class FormsExtension extends CompilerExtension
     ];
 
     private $types = [
-        'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
-        'Symfony\Component\Form\Extension\Core\Type\FormType',
+        ChoiceType::class,
+        FormType::class,
     ];
 
     public function loadConfiguration()
@@ -49,35 +86,35 @@ class FormsExtension extends CompilerExtension
         $this->validateConfig($this->defaults);
 
         /* @var $serviceCollectionsExtension ServiceCollectionsExtension */
-        $serviceCollectionsExtension = $this->getExtension('Arachne\ServiceCollections\DI\ServiceCollectionsExtension');
+        $serviceCollectionsExtension = $this->getExtension(ServiceCollectionsExtension::class);
 
         $typeResolver = $serviceCollectionsExtension->getCollection(
             ServiceCollectionsExtension::TYPE_RESOLVER,
             self::TAG_TYPE,
-            'Symfony\Component\Form\FormTypeInterface'
+            FormTypeInterface::class
         );
 
         $extensionIteratorResolver = $serviceCollectionsExtension->getCollection(
             ServiceCollectionsExtension::TYPE_ITERATOR_RESOLVER,
             self::TAG_TYPE_EXTENSION,
-            'Symfony\Component\Form\FormTypeExtensionInterface'
+            FormTypeExtensionInterface::class
         );
 
         $guesserIterator = $serviceCollectionsExtension->getCollection(
             ServiceCollectionsExtension::TYPE_ITERATOR,
             self::TAG_TYPE_GUESSER,
-            'Symfony\Component\Form\FormTypeGuesserInterface'
+            FormTypeGuesserInterface::class
         );
 
         $builder = $this->getContainerBuilder();
 
         $builder->addDefinition($this->prefix('resolvedTypeFactory'))
-            ->setClass('Symfony\Component\Form\ResolvedFormTypeFactoryInterface')
-            ->setFactory('Symfony\Component\Form\ResolvedFormTypeFactory');
+            ->setClass(ResolvedFormTypeFactoryInterface::class)
+            ->setFactory(ResolvedFormTypeFactory::class);
 
         $builder->addDefinition($this->prefix('extension.di'))
-            ->setClass('Symfony\Component\Form\FormExtensionInterface')
-            ->setFactory('Arachne\Forms\Extension\DI\DIFormExtension')
+            ->setClass(FormExtensionInterface::class)
+            ->setFactory(DIFormExtension::class)
             ->setArguments(
                 [
                     'typeResolver' => '@'.$typeResolver,
@@ -87,9 +124,9 @@ class FormsExtension extends CompilerExtension
             ->setAutowired(false);
 
         $builder->addDefinition($this->prefix('formRegistry'))
-            ->setClass('Symfony\Component\Form\FormRegistryInterface')
+            ->setClass(FormRegistryInterface::class)
             ->setFactory(
-                'Symfony\Component\Form\FormRegistry',
+                FormRegistry::class,
                 [
                     'extensions' => [
                         $this->prefix('@extension.di'),
@@ -98,12 +135,12 @@ class FormsExtension extends CompilerExtension
             );
 
         $builder->addDefinition($this->prefix('formFactory'))
-            ->setClass('Symfony\Component\Form\FormFactoryInterface')
-            ->setFactory('Symfony\Component\Form\FormFactory');
+            ->setClass(FormFactoryInterface::class)
+            ->setFactory(FormFactory::class);
 
         $builder->addDefinition($this->prefix('typeGuesser'))
-            ->setClass('Symfony\Component\Form\FormTypeGuesserInterface')
-            ->setFactory('Symfony\Component\Form\FormTypeGuesserChain')
+            ->setClass(FormTypeGuesserInterface::class)
+            ->setFactory(FormTypeGuesserChain::class)
             ->setArguments(
                 [
                     'guessers' => '@'.$guesserIterator,
@@ -111,14 +148,14 @@ class FormsExtension extends CompilerExtension
             );
 
         $builder->addDefinition($this->prefix('choiceList.defaultChoiceListFactory'))
-            ->setClass('Symfony\Component\Form\ChoiceList\Factory\ChoiceListFactoryInterface')
-            ->setFactory('Symfony\Component\Form\ChoiceList\Factory\DefaultChoiceListFactory')
+            ->setClass(ChoiceListFactoryInterface::class)
+            ->setFactory(DefaultChoiceListFactory::class)
             ->setAutowired(false);
 
         $builder->addDefinition($this->prefix('choiceList.propertyAccessDecorator'))
-            ->setClass('Symfony\Component\Form\ChoiceList\Factory\ChoiceListFactoryInterface')
+            ->setClass(ChoiceListFactoryInterface::class)
             ->setFactory(
-                'Symfony\Component\Form\ChoiceList\Factory\PropertyAccessDecorator',
+                PropertyAccessDecorator::class,
                 [
                     'decoratedFactory' => $this->prefix('@choiceList.defaultChoiceListFactory'),
                 ]
@@ -126,9 +163,9 @@ class FormsExtension extends CompilerExtension
             ->setAutowired(false);
 
         $builder->addDefinition($this->prefix('choiceList.cachingFactoryDecorator'))
-            ->setClass('Symfony\Component\Form\ChoiceList\Factory\ChoiceListFactoryInterface')
+            ->setClass(ChoiceListFactoryInterface::class)
             ->setFactory(
-                'Symfony\Component\Form\ChoiceList\Factory\CachingFactoryDecorator',
+                CachingFactoryDecorator::class,
                 [
                     'decoratedFactory' => $this->prefix('@choiceList.propertyAccessDecorator'),
                 ]
@@ -143,87 +180,87 @@ class FormsExtension extends CompilerExtension
         }
 
         $builder->addDefinition($this->prefix('application.typeExtension.form'))
-            ->setClass('Arachne\Forms\Extension\Application\Type\FormTypeApplicationExtension')
-            ->addTag(self::TAG_TYPE_EXTENSION, 'Symfony\Component\Form\Extension\Core\Type\FormType')
+            ->setClass(FormTypeApplicationExtension::class)
+            ->addTag(self::TAG_TYPE_EXTENSION, FormType::class)
             ->setAutowired(false);
 
-        if ($this->getExtension('Arachne\Csrf\DI\CsrfExtension', false)) {
+        if ($this->getExtension(CsrfExtension::class, false)) {
             $builder->addDefinition($this->prefix('csrf.typeExtension.form'))
-                ->setClass('Symfony\Component\Form\Extension\Csrf\Type\FormTypeCsrfExtension')
+                ->setClass(FormTypeCsrfExtension::class)
                 ->setArguments(
                     [
                         'translationDomain' => $this->config['csrfTranslationDomain'],
                     ]
                 )
-                ->addTag(self::TAG_TYPE_EXTENSION, 'Symfony\Component\Form\Extension\Core\Type\FormType')
+                ->addTag(self::TAG_TYPE_EXTENSION, FormType::class)
                 ->setAutowired(false);
         }
 
-        if ($this->getExtension('Kdyby\Validator\DI\ValidatorExtension', false)) {
+        if ($this->getExtension(ValidatorExtension::class, false)) {
             $builder->addDefinition($this->prefix('validator.typeExtension.form'))
-                ->setClass('Symfony\Component\Form\Extension\Validator\Type\FormTypeValidatorExtension')
-                ->addTag(self::TAG_TYPE_EXTENSION, 'Symfony\Component\Form\Extension\Core\Type\FormType')
+                ->setClass(FormTypeValidatorExtension::class)
+                ->addTag(self::TAG_TYPE_EXTENSION, FormType::class)
                 ->setAutowired(false);
 
             $builder->addDefinition($this->prefix('validator.typeExtension.repeated'))
-                ->setClass('Symfony\Component\Form\Extension\Validator\Type\RepeatedTypeValidatorExtension')
-                ->addTag(self::TAG_TYPE_EXTENSION, 'Symfony\Component\Form\Extension\Core\Type\RepeatedType')
+                ->setClass(RepeatedTypeValidatorExtension::class)
+                ->addTag(self::TAG_TYPE_EXTENSION, RepeatedType::class)
                 ->setAutowired(false);
 
             $builder->addDefinition($this->prefix('validator.typeExtension.submit'))
-                ->setClass('Symfony\Component\Form\Extension\Validator\Type\SubmitTypeValidatorExtension')
-                ->addTag(self::TAG_TYPE_EXTENSION, 'Symfony\Component\Form\Extension\Core\Type\SubmitType')
+                ->setClass(SubmitTypeValidatorExtension::class)
+                ->addTag(self::TAG_TYPE_EXTENSION, SubmitType::class)
                 ->setAutowired(false);
 
             $builder->addDefinition($this->prefix('validator.typeGuesser'))
-                ->setClass('Symfony\Component\Form\FormTypeGuesserInterface')
-                ->setFactory('Symfony\Component\Form\Extension\Validator\ValidatorTypeGuesser')
+                ->setClass(FormTypeGuesserInterface::class)
+                ->setFactory(ValidatorTypeGuesser::class)
                 ->addTag(self::TAG_TYPE_GUESSER)
                 ->setAutowired(false);
 
             $builder->addDefinition($this->prefix('validationLoader'))
                 ->setFactory(
-                    'Symfony\Component\Validator\Mapping\Loader\XmlFileLoader',
+                    XmlFileLoader::class,
                     [
-                        'file' => dirname((new ReflectionClass('Symfony\Component\Form\FormInterface'))->getFileName()).'/Resources/config/validation.xml',
+                        'file' => dirname((new ReflectionClass(FormInterface::class))->getFileName()).'/Resources/config/validation.xml',
                     ]
                 )
                 ->setAutowired(false)
                 ->addTag(ValidatorExtension::TAG_LOADER);
         }
 
-        $twigExtension = $this->getExtension('Arachne\Twig\DI\TwigExtension', false);
+        $twigExtension = $this->getExtension(TwigExtension::class, false);
         if ($twigExtension) {
             $twigExtension->addPaths(
                 [
-                    dirname((new ReflectionClass('Symfony\Bridge\Twig\AppVariable'))->getFileName()).'/Resources/views/Form',
+                    dirname((new ReflectionClass(AppVariable::class))->getFileName()).'/Resources/views/Form',
                 ]
             );
 
             $builder->addDefinition($this->prefix('twig.extension.translation'))
-                ->setClass('Symfony\Bridge\Twig\Extension\TranslationExtension')
+                ->setClass(TranslationExtension::class)
                 ->addTag(TwigExtension::TAG_EXTENSION);
 
             $builder->addDefinition($this->prefix('twig.extension.form'))
-                ->setClass('Symfony\Bridge\Twig\Extension\FormExtension')
+                ->setClass(FormExtension::class)
                 ->addTag(TwigExtension::TAG_EXTENSION);
 
             $builder->addDefinition($this->prefix('twig.renderer'))
-                ->setClass('Symfony\Bridge\Twig\Form\TwigRendererInterface')
-                ->setFactory('Symfony\Bridge\Twig\Form\TwigRenderer')
-                ->addTag(TwigExtension::TAG_RUNTIME, 'Symfony\Bridge\Twig\Form\TwigRenderer');
+                ->setClass(TwigRendererInterface::class)
+                ->setFactory(TwigRenderer::class)
+                ->addTag(TwigExtension::TAG_RUNTIME, TwigRenderer::class);
 
             $builder->addDefinition($this->prefix('twig.engine'))
-                ->setClass('Symfony\Bridge\Twig\Form\TwigRendererEngineInterface')
+                ->setClass(TwigRendererEngineInterface::class)
                 ->setFactory(
-                    'Symfony\Bridge\Twig\Form\TwigRendererEngine',
+                    TwigRendererEngine::class,
                     [
                         'defaultThemes' => $this->config['defaultThemes'],
                     ]
                 );
 
             $builder->addDefinition($this->prefix('application.componentFactory'))
-                ->setImplement('Arachne\Forms\Application\FormComponentFactory');
+                ->setImplement(FormComponentFactory::class);
         }
     }
 

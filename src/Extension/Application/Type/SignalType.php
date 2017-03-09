@@ -2,8 +2,10 @@
 
 namespace Arachne\Forms\Extension\Application\Type;
 
+use Nette\Application\UI\Component;
 use Nette\Application\UI\Presenter;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 
@@ -20,7 +22,7 @@ class SignalType extends AbstractType
         parent::buildView($view, $form, $options);
 
         // Detect nette/application v2.4+.
-        $prefix = property_exists('Nette\Application\UI\Component', 'onAnchor') && $form->getRoot()->getConfig()->getMethod() === 'POST';
+        $prefix = property_exists(Component::class, 'onAnchor') && $form->getRoot()->getConfig()->getMethod() === 'POST';
         $view->vars['full_name'] = ($prefix ? '_' : '').Presenter::SIGNAL_KEY;
         $view->vars['value'] = $options['data'];
     }
@@ -38,6 +40,6 @@ class SignalType extends AbstractType
      */
     public function getParent()
     {
-        return 'Symfony\Component\Form\Extension\Core\Type\HiddenType';
+        return HiddenType::class;
     }
 }

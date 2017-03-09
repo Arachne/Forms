@@ -20,7 +20,7 @@ class ApplicationRequestHandler implements RequestHandlerInterface
     public function handleRequest(FormInterface $form, $request = null)
     {
         if (!$request instanceof Request) {
-            throw new UnexpectedTypeException($request, 'Nette\Application\Request');
+            throw new UnexpectedTypeException($request, Request::class);
         }
 
         $name = $form->getName();

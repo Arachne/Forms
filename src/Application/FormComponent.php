@@ -2,6 +2,7 @@
 
 namespace Arachne\Forms\Application;
 
+use Arachne\Forms\Extension\Application\Type\SignalType;
 use Nette\Application\BadRequestException;
 use Nette\Application\Request;
 use Nette\Application\UI\BadSignalException;
@@ -10,9 +11,9 @@ use Nette\Application\UI\Presenter;
 use Nette\ComponentModel\Component;
 use Nette\ComponentModel\IContainer;
 use Nette\Utils\Strings;
-use Symfony\Bridge\Twig\Form\TwigRendererInterface;
 use Symfony\Component\Form\FormErrorIterator;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormRendererInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\PropertyAccess\Exception\ExceptionInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
@@ -63,7 +64,7 @@ class FormComponent extends Component implements ISignalReceiver
     protected $view;
 
     /**
-     * @var TwigRendererInterface
+     * @var FormRendererInterface
      */
     protected $renderer;
 
@@ -72,16 +73,15 @@ class FormComponent extends Component implements ISignalReceiver
      */
     protected $propertyAccessor;
 
-    public function __construct(TwigRendererInterface $renderer, Twig_Environment $twig, FormInterface $form, PropertyAccessorInterface $propertyAccessor = null)
+    public function __construct(FormRendererInterface $renderer, Twig_Environment $twig, FormInterface $form, PropertyAccessorInterface $propertyAccessor = null)
     {
         $this->renderer = $renderer;
-        $renderer->setEnvironment($twig); // Cannot be in DIC setup because of cyclic reference.
         $this->form = $form;
         $this->propertyAccessor = $propertyAccessor ?: PropertyAccess::createPropertyAccessor();
     }
 
     /**
-     * @return TwigRendererInterface
+     * @return FormRendererInterface
      */
     public function getRenderer()
     {
@@ -112,7 +112,7 @@ class FormComponent extends Component implements ISignalReceiver
     protected function validateParent(IContainer $parent)
     {
         parent::validateParent($parent);
-        $this->monitor('Nette\Application\UI\Presenter');
+        $this->monitor(Presenter::class);
     }
 
     protected function attached($presenter)
@@ -120,10 +120,10 @@ class FormComponent extends Component implements ISignalReceiver
         if ($presenter instanceof Presenter) {
             $this->form->add(
                 '_signal',
-                'Arachne\Forms\Extension\Application\Type\SignalType',
+                SignalType::class,
                 [
                     'mapped' => false,
-                    'data' => $this->lookupPath('Nette\Application\UI\Presenter').self::NAME_SEPARATOR.'submit',
+                    'data' => $this->lookupPath(Presenter::class).self::NAME_SEPARATOR.'submit',
                 ]
             );
         }
@@ -145,7 +145,7 @@ class FormComponent extends Component implements ISignalReceiver
      */
     public function getPresenter($need = true)
     {
-        return $this->lookup('Nette\Application\UI\Presenter', $need);
+        return $this->lookup(Presenter::class, $need);
     }
 
     /**
@@ -250,7 +250,7 @@ class FormComponent extends Component implements ISignalReceiver
             throw new BadRequestException('The render signal is only allowed in ajax mode.');
         }
 
-        $fields = $request->getPost($this->lookupPath('Nette\Application\UI\Presenter', true).self::NAME_SEPARATOR.'fields');
+        $fields = $request->getPost($this->lookupPath(Presenter::class, true).self::NAME_SEPARATOR.'fields');
         if (!$fields) {
             throw new BadRequestException('No fields specified for rendering.');
         }
@@ -290,6 +290,6 @@ class FormComponent extends Component implements ISignalReceiver
             $widgets[$field] = $this->renderer->searchAndRenderBlock($fieldView, 'widget');
         }
 
-        $this->getPresenter()->sendJson((object) ['widgets' => $widgets]);
+        $presenter->sendJson((object) ['widgets' => $widgets]);
     }
 }

@@ -4,6 +4,7 @@ namespace Arachne\Forms\Extension\Application\Type;
 
 use Arachne\Forms\Extension\Application\ApplicationRequestHandler;
 use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
@@ -34,6 +35,6 @@ class FormTypeApplicationExtension extends AbstractTypeExtension
      */
     public function getExtendedType()
     {
-        return 'Symfony\Component\Form\Extension\Core\Type\FormType';
+        return FormType::class;
     }
 }
