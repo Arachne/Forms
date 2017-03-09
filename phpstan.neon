@@ -6,3 +6,4 @@ parameters:
     ignoreErrors:
         - '#^[a-zA-Z\\]++::__construct\(\) does not call parent constructor from Nette\\ComponentModel\\Component#'
         - '#Method Arachne\\Forms\\Application\\FormComponent::getPresenter\(\) should return Nette\\Application\\UI\\Presenter|null but returns Nette\\ComponentModel\\IComponent#'
+        - '#Parameter \#3 \$previous of class Nette\\Application\\BadRequestException constructor expects Exception|null, Symfony\\Component\\PropertyAccess\\Exception\\ExceptionInterface given#'

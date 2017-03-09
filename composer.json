@@ -58,7 +58,7 @@
         ],
         "tools": "sh composer-tools.sh",
         "fix": "\"vendor-tools/bin/php-cs-fixer\" fix",
-        "analyse": "\"vendor-tools/bin/phpstan\" analyse --no-progress --level=4 --configuration=phpstan.neon src tests",
+        "analyse": "\"vendor-tools/bin/phpstan\" analyse --no-progress --level=5 --configuration=phpstan.neon src tests",
         "test": [
             "\"vendor/bin/codecept\" build",
             "\"vendor/bin/codecept\" run"

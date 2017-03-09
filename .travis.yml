@@ -28,7 +28,7 @@ before_script:
 
 script:
     - if php -v | grep -q 'PHP 7'; then vendor-tools/bin/php-cs-fixer fix --dry-run; fi
-    - if php -v | grep -q 'PHP 7'; then vendor-tools/bin/phpstan analyse --level=4 --configuration=phpstan.neon src tests; fi
+    - if php -v | grep -q 'PHP 7'; then vendor-tools/bin/phpstan analyse --level=5 --configuration=phpstan.neon src tests; fi
     - vendor/bin/codecept run $coverage
 
 after_success:
