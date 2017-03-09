@@ -1,10 +1,9 @@
 extensions:
     codeception.http: Arachne\Codeception\DI\HttpExtension
-    enumag.application: Enumag\Application\DI\ApplicationExtension
-    arachne.servicecollections: Arachne\ServiceCollections\DI\ServiceCollectionsExtension
+    arachne.serviceCollections: Arachne\ServiceCollections\DI\ServiceCollectionsExtension
     arachne.csrf: Arachne\Csrf\DI\CsrfExtension
     arachne.forms: Arachne\Forms\DI\FormsExtension
-    arachne.propertyaccess: Arachne\PropertyAccess\DI\PropertyAccessExtension
+    arachne.propertyAccess: Arachne\PropertyAccess\DI\PropertyAccessExtension
     arachne.twig: Arachne\Twig\DI\TwigExtension(%tempDir%/cache/twig, %debugMode%)
     nette.application: Nette\Bridges\ApplicationDI\ApplicationExtension(%debugMode%, null, %tempDir%)
     nette.cache: Nette\Bridges\CacheDI\CacheExtension(%tempDir%)
@@ -24,7 +23,7 @@ kdyby.validator:
     cache: array
 
 nette.application:
-    catchExceptions: null
+    catchExceptions: true
     mapping:
         *: Tests\Functional\Fixtures\*Presenter
 

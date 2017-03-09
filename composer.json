@@ -29,17 +29,16 @@
         "arachne/csrf": "^0.1.0",
         "arachne/property-access": "^0.1.0",
         "arachne/twig": "^0.2.0",
-        "codeception/codeception": "~2.2.0",
-        "enumag/application": "^0.3.5",
+        "codeception/codeception": "^2.2.0",
         "kdyby/annotations": "^2.2.0",
         "kdyby/translation": "^2.3.0",
         "kdyby/validator": "^0.4.0",
         "latte/latte": "^2.4.0",
         "nette/http": "^2.4.0",
         "symfony/security-csrf": "^3.2.0",
-        "symfony/twig-bridge": "^3.2.1",
-        "tracy/tracy": "^2.3.0"
+        "symfony/twig-bridge": "^3.2.1"
     },
+    "minimum-stability": "alpha",
     "autoload": {
         "psr-4": {
             "Arachne\\Forms\\": "src"
@@ -50,5 +49,19 @@
             "Tests\\Integration\\": "tests/integration/src",
             "Tests\\Functional\\": "tests/functional/src"
         }
+    },
+    "scripts": {
+        "all": [
+            "@fix",
+            "@analyse",
+            "@test"
+        ],
+        "tools": "sh composer-tools.sh",
+        "fix": "\"vendor-tools/bin/php-cs-fixer\" fix",
+        "analyse": "\"vendor-tools/bin/phpstan\" analyse --no-progress --level=4 --configuration=phpstan.neon src tests",
+        "test": [
+            "\"vendor/bin/codecept\" build",
+            "\"vendor/bin/codecept\" run"
+        ]
     }
 }
