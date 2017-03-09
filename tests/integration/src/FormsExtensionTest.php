@@ -2,6 +2,7 @@
 
 namespace Tests\Integration;
 
+use Arachne\Codeception\Module\NetteDIModule;
 use Codeception\Test\Unit;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
@@ -40,6 +41,11 @@ use Symfony\Component\Form\FormRegistryInterface;
  */
 class FormsExtensionTest extends Unit
 {
+    /**
+     * @var NetteDIModule
+     */
+    protected $tester;
+
     public function testFormTypes()
     {
         $types = [
