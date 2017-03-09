@@ -231,6 +231,7 @@ class FormsExtension extends CompilerExtension
                 ->addTag(ValidatorExtension::TAG_LOADER);
         }
 
+        /* @var $twigExtension TwigExtension */
         $twigExtension = $this->getExtension(TwigExtension::class, false);
         if ($twigExtension) {
             $twigExtension->addPaths(

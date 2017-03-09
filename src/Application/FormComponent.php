@@ -18,7 +18,6 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\PropertyAccess\Exception\ExceptionInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
-use Twig_Environment;
 
 /**
  * @author Jáchym Toušek <enumag@gmail.com>
@@ -73,7 +72,7 @@ class FormComponent extends Component implements ISignalReceiver
      */
     protected $propertyAccessor;
 
-    public function __construct(FormRendererInterface $renderer, Twig_Environment $twig, FormInterface $form, PropertyAccessorInterface $propertyAccessor = null)
+    public function __construct(FormRendererInterface $renderer, FormInterface $form, PropertyAccessorInterface $propertyAccessor = null)
     {
         $this->renderer = $renderer;
         $this->form = $form;
