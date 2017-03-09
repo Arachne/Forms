@@ -38,6 +38,8 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormRegistry;
 use Symfony\Component\Form\FormRegistryInterface;
+use Symfony\Component\Form\FormRendererEngineInterface;
+use Symfony\Component\Form\FormRendererInterface;
 use Symfony\Component\Form\FormTypeExtensionInterface;
 use Symfony\Component\Form\FormTypeGuesserChain;
 use Symfony\Component\Form\FormTypeGuesserInterface;
@@ -246,12 +248,12 @@ class FormsExtension extends CompilerExtension
                 ->addTag(TwigExtension::TAG_EXTENSION);
 
             $builder->addDefinition($this->prefix('twig.renderer'))
-                ->setClass(TwigRendererInterface::class)
+                ->setClass(interface_exists(TwigRendererInterface::class) ? TwigRendererInterface::class : FormRendererInterface::class)
                 ->setFactory(TwigRenderer::class)
                 ->addTag(TwigExtension::TAG_RUNTIME, TwigRenderer::class);
 
             $builder->addDefinition($this->prefix('twig.engine'))
-                ->setClass(TwigRendererEngineInterface::class)
+                ->setClass(interface_exists(TwigRendererEngineInterface::class) ? TwigRendererEngineInterface::class : FormRendererEngineInterface::class)
                 ->setFactory(
                     TwigRendererEngine::class,
                     [
