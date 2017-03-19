@@ -38,7 +38,6 @@
         "symfony/security-csrf": "^3.2.0",
         "symfony/twig-bridge": "^3.2.1"
     },
-    "minimum-stability": "alpha",
     "autoload": {
         "psr-4": {
             "Arachne\\Forms\\": "src"
