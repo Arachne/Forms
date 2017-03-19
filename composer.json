@@ -50,12 +50,12 @@
         }
     },
     "scripts": {
-        "all": [
+        "tools": "sh composer-tools.sh",
+        "ci": [
             "@fix",
             "@analyse",
             "@test"
         ],
-        "tools": "sh composer-tools.sh",
         "fix": "\"vendor-tools/bin/php-cs-fixer\" fix",
         "analyse": "\"vendor-tools/bin/phpstan\" analyse --no-progress --level=5 --configuration=phpstan.neon src tests",
         "test": [
