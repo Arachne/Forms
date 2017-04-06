@@ -1,4 +1,5 @@
 extensions:
+    tracy: Tracy\Bridges\Nette\TracyExtension(%debugMode%, %consoleMode%)
     arachne.serviceCollections: Arachne\ServiceCollections\DI\ServiceCollectionsExtension
     arachne.csrf: Arachne\Csrf\DI\CsrfExtension
     arachne.forms: Arachne\Forms\DI\FormsExtension
