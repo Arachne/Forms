@@ -1,7 +1,7 @@
 Usage
 ====
 
-To use arachne/forms in your Nette application you need to create a component of class `Arachne\Forms\Application\FormComponent`. It is a simple component which connects a Symfony form with Nette application using a signal to submit the form. 
+To use arachne/forms in your Nette application you need to create a component of class `Arachne\Forms\Application\FormComponent`. It is a simple component which connects a Symfony form with Nette application using a signal to submit the form.
 
 The following code shows the most simple way to create a form and attach it to FormComponent. It is a bit too long to copy everywhere so it is recommended to write something more generic and reuse it.
 
@@ -10,16 +10,20 @@ namespace App\FrontModule\Component;
 
 use Arachne\Forms\Application\FormComponent;
 use Arachne\Forms\Application\FormComponentFactory;
+use Nette\Application\UI\Presenter;
 use Nette\Application\UI\PresenterComponent;
 use Symfony\Component\Form\FormFactoryInterface;
 
 class CustomForm extends PresenterComponent
 {
-
-    /** @var FormComponentFactory */
+    /**
+     * @var FormComponentFactory
+     */
     private $formComponentFactory;
 
-    /** @var FormFactoryInterface */
+    /**
+     * @var FormFactoryInterface
+     */
     private $formFactory;
 
     public function __construct(FormComponentFactory $formComponentFactory, FormFactoryInterface $formFactory)
@@ -34,7 +38,7 @@ class CustomForm extends PresenterComponent
     protected function createComponentForm()
     {
         // Create a symfony form using the FormFactory from symfony. There are several ways to do that. Look into symfony documentation for details.
-        $builder = $this->formFactory->createNamedBuilder($this->lookupPath('Nette\Application\UI\Presenter'), 'form', null, []);
+        $builder = $this->formFactory->createNamedBuilder($this->lookupPath(Presenter::class), 'form', null, []);
 
         $builder->add('firstname');
         $builder->add('lastname');
@@ -43,7 +47,7 @@ class CustomForm extends PresenterComponent
 
         // Then you need to attach the form to a newly created FormComponent.
         $component = $this->formComponentFactory->create($builder->getForm());
-        
+
         // FormComponent provides some events which you can use as you need.
         $component->onSuccess[] = function (array $data) {
             $this->redirect('this');
@@ -51,7 +55,6 @@ class CustomForm extends PresenterComponent
 
         return $component;
     }
-
 }
 ```
 

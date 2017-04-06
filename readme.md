@@ -16,7 +16,7 @@ Documentation
 
 - [Installation](docs/installation.md)
 - [Usage](docs/usage.md)
-- [Templates](docs/templates.md)
+- [Rendering](docs/rendering.md)
 - [Live Validation](docs/live-validation.md)
 - [Collections](docs/collections.md)
 - [Upload](docs/upload.md)
