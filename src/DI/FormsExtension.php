@@ -9,6 +9,7 @@ use Arachne\Forms\Extension\DI\DIFormExtension;
 use Arachne\ServiceCollections\DI\ServiceCollectionsExtension;
 use Arachne\Twig\DI\TwigExtension;
 use Kdyby\Validator\DI\ValidatorExtension;
+use Nette\Bridges\ApplicationLatte\ILatteFactory;
 use Nette\DI\CompilerExtension;
 use Nette\Utils\AssertionException;
 use ReflectionClass;
@@ -264,6 +265,24 @@ class FormsExtension extends CompilerExtension
 
             $builder->addDefinition($this->prefix('application.componentFactory'))
                 ->setImplement(FormComponentFactory::class);
+        }
+    }
+
+    public function beforeCompile()
+    {
+        $builder = $this->getContainerBuilder();
+
+        $latteFactory = $builder->getByType(ILatteFactory::class);
+        if ($builder->hasDefinition($latteFactory)) {
+            $builder->getDefinition($latteFactory)
+                ->addSetup(
+                    '?->addProvider(\'formRenderer\', function () { return ?->getByType(\\Symfony\\Component\\Form\\FormRendererInterface::class); })',
+                    ['@self', '@container']
+                )
+                ->addSetup(
+                    '?->onCompile[] = function ($engine) { \\Arachne\\Forms\\Latte\\FormMacros::install($engine->getCompiler()); }',
+                    ['@self']
+                );
         }
     }
 

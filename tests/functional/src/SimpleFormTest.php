@@ -22,6 +22,8 @@ class SimpleFormTest extends Unit
         $this->tester->see(null, 'form');
         $this->tester->see(null, 'input#form__token'); // CSRF protection
         $this->tester->see(null, 'input[name="_do"]'); // Signal for Nette/Application
+        $this->tester->see(null, 'label.text-field-label');
+        $this->tester->see(null, 'input.text-field-widget');
         $this->tester->see(null, 'button');
     }
 

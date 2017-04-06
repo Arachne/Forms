@@ -30,6 +30,11 @@ class ArticlePresenter extends Presenter
     {
     }
 
+    public function renderDefault()
+    {
+        $this->getTemplate()->form = $this->getComponent('form')->getView();
+    }
+
     protected function createComponentForm()
     {
         $builder = $this->formFactory->createBuilder(FormType::class, new Task());

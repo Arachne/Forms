@@ -1,5 +1,12 @@
 {ifset $state}
-	<div class="state">{$state}</div>
+    <div class="state">{$state}</div>
 {/ifset}
 
-{control form}
+{formStart $form}
+    {formLabel $form[text] label_attr => [class => text-field-label]}
+    {formWidget $form[text] attr => [class => text-field-widget]}
+    {formErrors $form[text]}
+    {formLabel $form[save]}
+    {formWidget $form[save]}
+    {formRest $form}
+{formEnd $form render_rest => false}
