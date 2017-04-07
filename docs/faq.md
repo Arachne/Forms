@@ -9,7 +9,7 @@ First not all of them are exactly required. The installation shows the recommend
 
 
 Why is Twig used internally?
-----------------------------
+----
 
 This package provides some Latte macros which you can use, but of course they are using Twig internally. Recreating the form themes using Latte would be very complicated and is not among the goals of this package. Feel free to ask me for more details if you want to implement it yourself.
 
