@@ -18,7 +18,7 @@ It is recommended to add all of the following extensions into your config.neon. 
 ```yml
 extensions:
     # Always required.
-    arachne.servicecollections: Arachne\ServiceCollections\DI\ServiceCollectionsExtension
+    arachne.serviceCollections: Arachne\ServiceCollections\DI\ServiceCollectionsExtension
     arachne.forms: Arachne\Forms\DI\FormsExtension
 
     # Technically optional but do you really want forms without CSRF protection, validation, files upload and a way to render them?
@@ -60,7 +60,7 @@ composer require arachne/property-access
 
 ```yml
 extensions:
-    arachne.propertyaccess: Arachne\PropertyAccess\DI\PropertyAccessExtension
+    arachne.propertyAccess: Arachne\PropertyAccess\DI\PropertyAccessExtension
 ```
 
 
@@ -75,5 +75,5 @@ composer require arachne/expression-language
 
 ```yml
 extensions:
-    arachne.expressionlanguage: Arachne\ExpressionLanguage\DI\ExpressionLanguageExtension
+    arachne.expressionLanguage: Arachne\ExpressionLanguage\DI\ExpressionLanguageExtension
 ```
