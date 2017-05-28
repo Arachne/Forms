@@ -3,19 +3,14 @@ Installation
 
 The best way to install Arachne/Forms is using [Composer](http://getcomposer.org/).
 
+
 Recommended
 ----
 
 The commands below will install all the libraries recommended to use Arachne/Forms. They are intentionally not direct dependencies so that advanced users may skip or replace some of them.
 
 ```sh
-composer require arachne/csrf
-composer require arachne/forms
-composer require arachne/twig
-composer require arachne/upload
-composer require kdyby/annotations
-composer require kdyby/translation
-composer require kdyby/validator
+composer require arachne/csrf arachne/forms arachne/twig arachne/upload kdyby/annotations kdyby/translation kdyby/validator
 ```
 
 It is recommended to add all of the following extensions into your config.neon. Again advanced users might want to skip or replace some of them.
@@ -34,15 +29,14 @@ extensions:
     kdyby.validator: Kdyby\Validator\DI\ValidatorExtension
 ```
 
+
 Usage with Doctrine ORM
 ----
 
 If you want to use Doctrine ORM it is recommended to add some more libraries.
 
 ```sh
-composer require arachne/doctrine
-composer require kdyby/doctrine
-composer require symfony/doctrine-bridge
+composer require arachne/doctrine kdyby/doctrine symfony/doctrine-bridge
 ```
 
 And also some additional extensions in config.neon.
@@ -53,6 +47,7 @@ extensions:
     kdyby.console: Kdyby\Console\DI\ConsoleExtension
     kdyby.doctrine: Kdyby\Doctrine\DI\OrmExtension
 ```
+
 
 PropertyAccess configuration
 ----
@@ -67,6 +62,7 @@ composer require arachne/property-access
 extensions:
     arachne.propertyaccess: Arachne\PropertyAccess\DI\PropertyAccessExtension
 ```
+
 
 Usage of ExpressionLanguage
 ----
