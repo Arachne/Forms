@@ -28,7 +28,7 @@
         "arachne/codeception": "^0.7.3",
         "arachne/csrf": "^0.2.0",
         "arachne/property-access": "^0.2.0",
-        "arachne/twig": "^0.3.0",
+        "arachne/twig": "^0.2.0|^0.3.0",
         "codeception/codeception": "^2.3.2",
         "kdyby/annotations": "^2.2.0",
         "kdyby/translation": "^2.3.0",
