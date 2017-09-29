@@ -112,11 +112,11 @@ class FormsExtension extends CompilerExtension
         $builder = $this->getContainerBuilder();
 
         $builder->addDefinition($this->prefix('resolvedTypeFactory'))
-            ->setClass(ResolvedFormTypeFactoryInterface::class)
+            ->setType(ResolvedFormTypeFactoryInterface::class)
             ->setFactory(ResolvedFormTypeFactory::class);
 
         $builder->addDefinition($this->prefix('extension.di'))
-            ->setClass(FormExtensionInterface::class)
+            ->setType(FormExtensionInterface::class)
             ->setFactory(DIFormExtension::class)
             ->setArguments(
                 [
@@ -127,7 +127,7 @@ class FormsExtension extends CompilerExtension
             ->setAutowired(false);
 
         $builder->addDefinition($this->prefix('formRegistry'))
-            ->setClass(FormRegistryInterface::class)
+            ->setType(FormRegistryInterface::class)
             ->setFactory(
                 FormRegistry::class,
                 [
@@ -138,11 +138,11 @@ class FormsExtension extends CompilerExtension
             );
 
         $builder->addDefinition($this->prefix('formFactory'))
-            ->setClass(FormFactoryInterface::class)
+            ->setType(FormFactoryInterface::class)
             ->setFactory(FormFactory::class);
 
         $builder->addDefinition($this->prefix('typeGuesser'))
-            ->setClass(FormTypeGuesserInterface::class)
+            ->setType(FormTypeGuesserInterface::class)
             ->setFactory(FormTypeGuesserChain::class)
             ->setArguments(
                 [
@@ -151,12 +151,12 @@ class FormsExtension extends CompilerExtension
             );
 
         $builder->addDefinition($this->prefix('choiceList.defaultChoiceListFactory'))
-            ->setClass(ChoiceListFactoryInterface::class)
+            ->setType(ChoiceListFactoryInterface::class)
             ->setFactory(DefaultChoiceListFactory::class)
             ->setAutowired(false);
 
         $builder->addDefinition($this->prefix('choiceList.propertyAccessDecorator'))
-            ->setClass(ChoiceListFactoryInterface::class)
+            ->setType(ChoiceListFactoryInterface::class)
             ->setFactory(
                 PropertyAccessDecorator::class,
                 [
@@ -166,7 +166,7 @@ class FormsExtension extends CompilerExtension
             ->setAutowired(false);
 
         $builder->addDefinition($this->prefix('choiceList.cachingFactoryDecorator'))
-            ->setClass(ChoiceListFactoryInterface::class)
+            ->setType(ChoiceListFactoryInterface::class)
             ->setFactory(
                 CachingFactoryDecorator::class,
                 [
@@ -177,19 +177,19 @@ class FormsExtension extends CompilerExtension
         foreach ($this->types as $class) {
             $typeName = strtolower(substr($class, strrpos($class, '\\') + 1, -4));
             $builder->addDefinition($this->prefix('type.'.$typeName))
-                ->setClass($class)
+                ->setType($class)
                 ->addTag(self::TAG_TYPE, [$class])
                 ->setAutowired(false);
         }
 
         $builder->addDefinition($this->prefix('application.typeExtension.form'))
-            ->setClass(FormTypeApplicationExtension::class)
+            ->setType(FormTypeApplicationExtension::class)
             ->addTag(self::TAG_TYPE_EXTENSION, FormType::class)
             ->setAutowired(false);
 
         if ($this->getExtension(CsrfExtension::class, false)) {
             $builder->addDefinition($this->prefix('csrf.typeExtension.form'))
-                ->setClass(FormTypeCsrfExtension::class)
+                ->setType(FormTypeCsrfExtension::class)
                 ->setArguments(
                     [
                         'translationDomain' => $this->config['csrfTranslationDomain'],
@@ -201,22 +201,22 @@ class FormsExtension extends CompilerExtension
 
         if ($this->getExtension(ValidatorExtension::class, false)) {
             $builder->addDefinition($this->prefix('validator.typeExtension.form'))
-                ->setClass(FormTypeValidatorExtension::class)
+                ->setType(FormTypeValidatorExtension::class)
                 ->addTag(self::TAG_TYPE_EXTENSION, FormType::class)
                 ->setAutowired(false);
 
             $builder->addDefinition($this->prefix('validator.typeExtension.repeated'))
-                ->setClass(RepeatedTypeValidatorExtension::class)
+                ->setType(RepeatedTypeValidatorExtension::class)
                 ->addTag(self::TAG_TYPE_EXTENSION, RepeatedType::class)
                 ->setAutowired(false);
 
             $builder->addDefinition($this->prefix('validator.typeExtension.submit'))
-                ->setClass(SubmitTypeValidatorExtension::class)
+                ->setType(SubmitTypeValidatorExtension::class)
                 ->addTag(self::TAG_TYPE_EXTENSION, SubmitType::class)
                 ->setAutowired(false);
 
             $builder->addDefinition($this->prefix('validator.typeGuesser'))
-                ->setClass(FormTypeGuesserInterface::class)
+                ->setType(FormTypeGuesserInterface::class)
                 ->setFactory(ValidatorTypeGuesser::class)
                 ->addTag(self::TAG_TYPE_GUESSER)
                 ->setAutowired(false);
@@ -242,20 +242,20 @@ class FormsExtension extends CompilerExtension
             );
 
             $builder->addDefinition($this->prefix('twig.extension.translation'))
-                ->setClass(TranslationExtension::class)
+                ->setType(TranslationExtension::class)
                 ->addTag(TwigExtension::TAG_EXTENSION);
 
             $builder->addDefinition($this->prefix('twig.extension.form'))
-                ->setClass(FormExtension::class)
+                ->setType(FormExtension::class)
                 ->addTag(TwigExtension::TAG_EXTENSION);
 
             $builder->addDefinition($this->prefix('twig.renderer'))
-                ->setClass(interface_exists(TwigRendererInterface::class) ? TwigRendererInterface::class : FormRendererInterface::class)
+                ->setType(interface_exists(TwigRendererInterface::class) ? TwigRendererInterface::class : FormRendererInterface::class)
                 ->setFactory(TwigRenderer::class)
                 ->addTag(TwigExtension::TAG_RUNTIME, TwigRenderer::class);
 
             $builder->addDefinition($this->prefix('twig.engine'))
-                ->setClass(interface_exists(TwigRendererEngineInterface::class) ? TwigRendererEngineInterface::class : FormRendererEngineInterface::class)
+                ->setType(interface_exists(TwigRendererEngineInterface::class) ? TwigRendererEngineInterface::class : FormRendererEngineInterface::class)
                 ->setFactory(
                     TwigRendererEngine::class,
                     [
