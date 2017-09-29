@@ -31,6 +31,7 @@
         "arachne/twig": "^0.2.0|^0.3.0",
         "codeception/codeception": "^2.3.2",
         "kdyby/annotations": "^2.2.0",
+        "kdyby/doctrine-cache": "^2.6.1@dev",
         "kdyby/translation": "^2.3.0",
         "kdyby/validator": "^0.4.0",
         "latte/latte": "^2.4.0",
