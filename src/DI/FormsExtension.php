@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Arachne\Forms\DI;
 
 use Arachne\Csrf\DI\CsrfExtension;

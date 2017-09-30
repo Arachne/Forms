@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Arachne\Forms\Latte;
 
 use Latte\Compiler;

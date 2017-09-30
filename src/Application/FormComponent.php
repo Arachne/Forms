@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Arachne\Forms\Application;
 
 use Arachne\Forms\Extension\Application\Type\SignalType;

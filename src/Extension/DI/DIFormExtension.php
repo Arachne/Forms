@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Arachne\Forms\Extension\DI;
 
 use Arachne\Forms\Exception\InvalidArgumentException;

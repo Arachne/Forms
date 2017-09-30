@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Arachne\Forms\Extension\Application\Type;
 
 use Nette\Application\UI\Presenter;
