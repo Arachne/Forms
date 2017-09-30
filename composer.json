@@ -12,7 +12,7 @@
         }
     ],
     "require": {
-        "php": "^5.6.0|^7.0.0",
+        "php": "^7.1.0",
         "arachne/service-collections": "^0.1.0",
         "nette/application": "^2.4.0",
         "nette/di": "^2.4.10",
@@ -28,14 +28,17 @@
         "arachne/codeception": "^0.7.3",
         "arachne/csrf": "^0.2.0",
         "arachne/property-access": "^0.2.0",
-        "arachne/twig": "^0.2.0|^0.3.0",
+        "arachne/twig": "^0.3.0",
         "codeception/codeception": "^2.3.2",
+        "friendsofphp/php-cs-fixer": "^2.7.0@dev",
         "kdyby/annotations": "^2.2.0",
         "kdyby/doctrine-cache": "^2.6.1@dev",
-        "kdyby/translation": "^2.3.0",
-        "kdyby/validator": "^0.4.0",
+        "kdyby/translation": "^2.4.1@dev",
+        "kdyby/validator": "^0.5.0@dev",
         "latte/latte": "^2.4.0",
         "nette/http": "^2.4.0",
+        "phpstan/phpstan": "^0.8.5",
+        "phpstan/phpstan-nette": "^0.8.3",
         "symfony/security-csrf": "^3.2.0",
         "symfony/twig-bridge": "^3.2.1",
         "tracy/tracy": "^2.4.0"
@@ -55,14 +58,13 @@
         ]
     },
     "scripts": {
-        "tools": "sh composer-tools.sh",
         "ci": [
             "@fix",
             "@analyse",
             "@test"
         ],
-        "fix": "\"vendor-tools/bin/php-cs-fixer\" fix",
-        "analyse": "\"vendor-tools/bin/phpstan\" analyse --no-progress --level=7 --configuration=phpstan.neon src tests",
+        "fix": "\"vendor/bin/php-cs-fixer\" fix",
+        "analyse": "\"vendor/bin/phpstan\" analyse --no-progress --level=max --configuration=phpstan.neon src tests",
         "test": [
             "\"vendor/bin/codecept\" build",
             "\"vendor/bin/codecept\" run --debug"
@@ -70,7 +72,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.4-dev"
+            "dev-master": "1.0-dev"
         }
     }
 }
