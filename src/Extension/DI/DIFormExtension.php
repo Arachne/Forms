@@ -5,6 +5,7 @@ namespace Arachne\Forms\Extension\DI;
 use Arachne\Forms\Exception\InvalidArgumentException;
 use Symfony\Component\Form\FormExtensionInterface;
 use Symfony\Component\Form\FormTypeGuesserInterface;
+use Symfony\Component\Form\FormTypeInterface;
 
 /**
  * @author Jáchym Toušek <enumag@gmail.com>
@@ -36,7 +37,7 @@ class DIFormExtension implements FormExtensionInterface
     /**
      * {@inheritdoc}
      */
-    public function getType($name)
+    public function getType($name): FormTypeInterface
     {
         $type = call_user_func($this->typeResolver, $name);
 
@@ -50,7 +51,7 @@ class DIFormExtension implements FormExtensionInterface
     /**
      * {@inheritdoc}
      */
-    public function hasType($name)
+    public function hasType($name): bool
     {
         return (bool) call_user_func($this->typeResolver, $name);
     }
@@ -58,7 +59,7 @@ class DIFormExtension implements FormExtensionInterface
     /**
      * {@inheritdoc}
      */
-    public function getTypeExtensions($name)
+    public function getTypeExtensions($name): array
     {
         $iterator = call_user_func($this->typeExtensionResolver, $name);
 
@@ -80,7 +81,7 @@ class DIFormExtension implements FormExtensionInterface
     /**
      * {@inheritdoc}
      */
-    public function hasTypeExtensions($name)
+    public function hasTypeExtensions($name): bool
     {
         return (bool) call_user_func($this->typeExtensionResolver, $name);
     }
@@ -88,7 +89,7 @@ class DIFormExtension implements FormExtensionInterface
     /**
      * {@inheritdoc}
      */
-    public function getTypeGuesser()
+    public function getTypeGuesser(): ?FormTypeGuesserInterface
     {
         return $this->guesser;
     }

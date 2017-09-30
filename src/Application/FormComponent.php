@@ -72,33 +72,24 @@ class FormComponent extends Component implements ISignalReceiver
      */
     protected $propertyAccessor;
 
-    public function __construct(FormRendererInterface $renderer, FormInterface $form, PropertyAccessorInterface $propertyAccessor = null)
+    public function __construct(FormRendererInterface $renderer, FormInterface $form, ?PropertyAccessorInterface $propertyAccessor = null)
     {
         $this->renderer = $renderer;
         $this->form = $form;
         $this->propertyAccessor = $propertyAccessor ?: PropertyAccess::createPropertyAccessor();
     }
 
-    /**
-     * @return FormRendererInterface
-     */
-    public function getRenderer()
+    public function getRenderer(): FormRendererInterface
     {
         return $this->renderer;
     }
 
-    /**
-     * @return FormInterface
-     */
-    public function getForm()
+    public function getForm(): FormInterface
     {
         return $this->form;
     }
 
-    /**
-     * @return FormView
-     */
-    public function getView()
+    public function getView(): FormView
     {
         if (!$this->view) {
             $this->view = $this->form->createView();
@@ -108,13 +99,13 @@ class FormComponent extends Component implements ISignalReceiver
         return $this->view;
     }
 
-    protected function validateParent(IContainer $parent)
+    protected function validateParent(IContainer $parent): void
     {
         parent::validateParent($parent);
         $this->monitor(Presenter::class);
     }
 
-    protected function attached($presenter)
+    protected function attached($presenter): void
     {
         if ($presenter instanceof Presenter) {
             $this->form->add(
@@ -130,19 +121,15 @@ class FormComponent extends Component implements ISignalReceiver
         parent::attached($presenter);
     }
 
-    public function render(array $variables = [])
+    public function render(array $variables = []): void
     {
         echo $this->renderer->renderBlock($this->getView(), 'form', $variables);
     }
 
     /**
      * Returns the presenter where this component belongs to.
-     *
-     * @param bool $need
-     *
-     * @return Presenter|null
      */
-    public function getPresenter($need = true)
+    public function getPresenter(bool $need = true): ?Presenter
     {
         return $this->lookup(Presenter::class, $need);
     }
@@ -152,7 +139,7 @@ class FormComponent extends Component implements ISignalReceiver
      *
      * @throws BadSignalException
      */
-    public function signalReceived($signal)
+    public function signalReceived($signal): void
     {
         $form = $this->getForm();
         $request = $this->getPresenter()->getRequest();
@@ -177,7 +164,7 @@ class FormComponent extends Component implements ISignalReceiver
     /**
      * Submits the form.
      */
-    protected function processSubmit(FormInterface $form, Request $request)
+    protected function processSubmit(FormInterface $form, Request $request): void
     {
         // Restored request should only render the form, not immediately submit it.
         if ($request->hasFlag(Request::RESTORED)) {
@@ -201,7 +188,7 @@ class FormComponent extends Component implements ISignalReceiver
     /**
      * Provides ajax validation.
      */
-    protected function processValidate(FormInterface $form, Request $request)
+    protected function processValidate(FormInterface $form, Request $request): void
     {
         $presenter = $this->getPresenter();
         if (!$presenter->isAjax()) {
@@ -226,7 +213,7 @@ class FormComponent extends Component implements ISignalReceiver
         $presenter->sendJson((object) ['errors' => $errors]);
     }
 
-    private function walkErrors(FormErrorIterator $iterator, FormView $view, callable $callback)
+    private function walkErrors(FormErrorIterator $iterator, FormView $view, callable $callback): void
     {
         $new = true;
         foreach ($iterator as $error) {
@@ -242,7 +229,7 @@ class FormComponent extends Component implements ISignalReceiver
     /**
      * Renders only specified fields. Useful for dynamic ajax forms.
      */
-    protected function processRender(FormInterface $form, Request $request)
+    protected function processRender(FormInterface $form, Request $request): void
     {
         $presenter = $this->getPresenter();
         if (!$presenter->isAjax()) {

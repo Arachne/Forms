@@ -12,16 +12,16 @@ class Task
     /**
      * @NotBlank()
      *
-     * @var string
+     * @var string|null
      */
     private $text;
 
-    public function getText()
+    public function getText(): ?string
     {
         return $this->text;
     }
 
-    public function setText($text)
+    public function setText(?string $text): void
     {
         $this->text = $text;
     }

@@ -46,7 +46,7 @@ class FormsExtensionTest extends Unit
      */
     protected $tester;
 
-    public function testFormTypes()
+    public function testFormTypes(): void
     {
         $types = [
             'birthday' => BirthdayType::class,

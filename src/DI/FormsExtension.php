@@ -84,7 +84,7 @@ class FormsExtension extends CompilerExtension
         FormType::class,
     ];
 
-    public function loadConfiguration()
+    public function loadConfiguration(): void
     {
         $this->validateConfig($this->defaults);
 
@@ -268,7 +268,7 @@ class FormsExtension extends CompilerExtension
         }
     }
 
-    public function beforeCompile()
+    public function beforeCompile(): void
     {
         $builder = $this->getContainerBuilder();
 
@@ -286,13 +286,7 @@ class FormsExtension extends CompilerExtension
         }
     }
 
-    /**
-     * @param string $class
-     * @param bool   $need
-     *
-     * @return CompilerExtension|null
-     */
-    private function getExtension($class, $need = true)
+    private function getExtension(string $class, bool $need = true): ?CompilerExtension
     {
         $extensions = $this->compiler->getExtensions($class);
 

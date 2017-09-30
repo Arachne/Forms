@@ -2,6 +2,7 @@
 
 namespace Tests\Functional\Fixtures;
 
+use Arachne\Forms\Application\FormComponent;
 use Arachne\Forms\Application\FormComponentFactory;
 use Nette\Application\UI\Presenter;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -26,16 +27,16 @@ class ArticlePresenter extends Presenter
      */
     public $formFactory;
 
-    public function actionDefault()
+    public function actionDefault(): void
     {
     }
 
-    public function renderDefault()
+    public function renderDefault(): void
     {
         $this->getTemplate()->form = $this->getComponent('form')->getView();
     }
 
-    protected function createComponentForm()
+    protected function createComponentForm(): FormComponent
     {
         $builder = $this->formFactory->createBuilder(FormType::class, new Task());
         if ($this->getRequest()->getParameter('useget')) {
@@ -55,7 +56,7 @@ class ArticlePresenter extends Presenter
         return $component;
     }
 
-    public function formatTemplateFiles()
+    public function formatTemplateFiles(): array
     {
         $name = $this->getName();
         $presenter = substr($name, strrpos(':'.$name, ':'));

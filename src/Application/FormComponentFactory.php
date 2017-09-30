@@ -9,8 +9,5 @@ use Symfony\Component\Form\FormInterface;
  */
 interface FormComponentFactory
 {
-    /**
-     * @return FormComponent
-     */
-    public function create(FormInterface $form);
+    public function create(FormInterface $form): FormComponent;
 }

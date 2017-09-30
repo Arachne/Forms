@@ -11,10 +11,7 @@ use Nette\Application\Routers\RouteList;
  */
 class RouterFactory
 {
-    /**
-     * @return IRouter
-     */
-    public function create()
+    public function create(): IRouter
     {
         $router = new RouteList();
         $router[] = new Route('<presenter>[/useget/<useget>]', 'Homepage:default');

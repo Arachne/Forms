@@ -14,10 +14,9 @@ use Symfony\Component\Form\RequestHandlerInterface;
 class ApplicationRequestHandler implements RequestHandlerInterface
 {
     /**
-     * @param FormInterface $form
-     * @param Request       $request
+     * @param Request $request
      */
-    public function handleRequest(FormInterface $form, $request = null)
+    public function handleRequest(FormInterface $form, $request = null): void
     {
         if (!$request instanceof Request) {
             throw new UnexpectedTypeException($request, Request::class);

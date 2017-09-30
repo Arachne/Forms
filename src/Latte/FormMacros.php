@@ -10,10 +10,7 @@ use Latte\Macros\MacroSet;
  */
 class FormMacros extends MacroSet
 {
-    /**
-     * @param Compiler $compiler
-     */
-    public static function install(Compiler $compiler)
+    public static function install(Compiler $compiler): void
     {
         $me = new static($compiler);
         $me->addMacro('formComplete', '$_formRenderer = $this->global->formRenderer; echo $_formRenderer()->renderBlock(%node.word, \'form\', %node.array?)');

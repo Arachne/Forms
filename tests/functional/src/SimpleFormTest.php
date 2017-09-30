@@ -15,7 +15,7 @@ class SimpleFormTest extends Unit
      */
     protected $tester;
 
-    public function testPostMethodRendering()
+    public function testPostMethodRendering(): void
     {
         $this->tester->amOnPage('/article/');
         $this->tester->seeResponseCodeIs(200);
@@ -27,7 +27,7 @@ class SimpleFormTest extends Unit
         $this->tester->see(null, 'button');
     }
 
-    public function testPostMethodValidation()
+    public function testPostMethodValidation(): void
     {
         $this->tester->amOnPage('/article/');
         $this->tester->seeResponseCodeIs(200);
@@ -38,7 +38,7 @@ class SimpleFormTest extends Unit
         $this->tester->see('This value should not be blank.');
     }
 
-    public function testPostMethodSuccess()
+    public function testPostMethodSuccess(): void
     {
         $this->tester->amOnPage('/article/');
         $this->tester->seeResponseCodeIs(200);
@@ -48,7 +48,7 @@ class SimpleFormTest extends Unit
         $this->tester->see('success', '.state');
     }
 
-    public function testGetMethodRendering()
+    public function testGetMethodRendering(): void
     {
         $this->tester->amOnPage('/article/useget/1');
         $this->tester->seeResponseCodeIs(200);
@@ -58,7 +58,7 @@ class SimpleFormTest extends Unit
         $this->tester->see(null, 'button');
     }
 
-    public function testGetMethodValidation()
+    public function testGetMethodValidation(): void
     {
         $this->tester->amOnPage('/article/useget/1');
         $this->tester->seeResponseCodeIs(200);
@@ -69,7 +69,7 @@ class SimpleFormTest extends Unit
         $this->tester->see('This value should not be blank.');
     }
 
-    public function testGetMethodSuccess()
+    public function testGetMethodSuccess(): void
     {
         $this->tester->amOnPage('/article/useget/1');
         $this->tester->seeResponseCodeIs(200);
