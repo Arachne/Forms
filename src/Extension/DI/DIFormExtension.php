@@ -41,7 +41,7 @@ class DIFormExtension implements FormExtensionInterface
      */
     public function getType($name): FormTypeInterface
     {
-        $type = call_user_func($this->typeResolver, $name);
+        $type = ($this->typeResolver)($name);
 
         if (!$type) {
             throw new InvalidArgumentException(sprintf('The field type "%s" does not exist.', $name));
@@ -55,7 +55,7 @@ class DIFormExtension implements FormExtensionInterface
      */
     public function hasType($name): bool
     {
-        return (bool) call_user_func($this->typeResolver, $name);
+        return (bool) ($this->typeResolver)($name);
     }
 
     /**
@@ -63,7 +63,7 @@ class DIFormExtension implements FormExtensionInterface
      */
     public function getTypeExtensions($name): array
     {
-        $iterator = call_user_func($this->typeExtensionResolver, $name);
+        $iterator = ($this->typeExtensionResolver)($name);
 
         if (!$iterator) {
             return [];
@@ -85,7 +85,7 @@ class DIFormExtension implements FormExtensionInterface
      */
     public function hasTypeExtensions($name): bool
     {
-        return (bool) call_user_func($this->typeExtensionResolver, $name);
+        return (bool) ($this->typeExtensionResolver)($name);
     }
 
     /**
