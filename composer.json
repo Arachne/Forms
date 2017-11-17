@@ -34,7 +34,7 @@
         "kdyby/annotations": "^2.2.0",
         "kdyby/doctrine-cache": "^2.6.1@dev",
         "kdyby/translation": "^2.4.1@dev",
-        "kdyby/validator": "^0.5.0@dev",
+        "kdyby/validator": "^0.5.0",
         "latte/latte": "^2.4.0",
         "nette/http": "^2.4.0",
         "phpstan/phpstan": "^0.8.5",

@@ -6,6 +6,7 @@ namespace Arachne\Forms\Extension\Application;
 
 use Arachne\Forms\Exception\InvalidArgumentException;
 use Nette\Application\Request;
+use Nette\Http\FileUpload;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\RequestHandlerInterface;
@@ -66,5 +67,10 @@ class ApplicationRequestHandler implements RequestHandlerInterface
         }
 
         $form->submit($data, $method !== 'PATCH');
+    }
+
+    public function isFileUpload($data)
+    {
+        return $data instanceof FileUpload;
     }
 }
