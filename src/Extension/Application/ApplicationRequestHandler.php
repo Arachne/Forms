@@ -69,7 +69,7 @@ class ApplicationRequestHandler implements RequestHandlerInterface
         $form->submit($data, $method !== 'PATCH');
     }
 
-    public function isFileUpload($data)
+    public function isFileUpload($data): bool
     {
         return $data instanceof FileUpload;
     }
