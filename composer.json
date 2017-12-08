@@ -13,10 +13,10 @@
     ],
     "require": {
         "php": "^7.1.0",
-        "arachne/service-collections": "^0.1.0",
+        "arachne/service-collections": "^0.1.0 || ^0.2.0",
         "nette/application": "^2.4.0",
         "nette/di": "^2.4.10",
-        "symfony/form": "^3.2.0"
+        "symfony/form": "^3.4.0 || ^4.0.0"
     },
     "suggest": {
         "arachne/csrf": "Adds CSRF protection to forms.",
@@ -25,22 +25,22 @@
         "kdyby/validator": "Enables forms validation using symfony/form."
     },
     "require-dev": {
-        "arachne/codeception": "^0.7.3",
-        "arachne/csrf": "^0.2.0",
-        "arachne/property-access": "^0.2.0",
-        "arachne/twig": "^0.3.0",
+        "arachne/codeception": "^0.8.0",
+        "arachne/csrf": "^0.3.0",
+        "arachne/property-access": "^0.3.0",
+        "arachne/twig": "^0.4.0",
         "codeception/codeception": "^2.3.2",
-        "friendsofphp/php-cs-fixer": "^2.7.0@dev",
+        "friendsofphp/php-cs-fixer": "^2.8.0",
         "kdyby/annotations": "^2.2.0",
-        "kdyby/doctrine-cache": "^2.6.1@dev",
-        "kdyby/translation": "^2.4.1@dev",
+        "kdyby/doctrine-cache": "^2.6.1",
+        "kdyby/translation": "^2.5.0",
         "kdyby/validator": "^0.5.0",
         "latte/latte": "^2.4.0",
         "nette/http": "^2.4.0",
-        "phpstan/phpstan": "^0.8.5",
-        "phpstan/phpstan-nette": "^0.8.3",
-        "symfony/security-csrf": "^3.2.0",
-        "symfony/twig-bridge": "^3.2.1",
+        "phpstan/phpstan": "^0.9.0",
+        "phpstan/phpstan-nette": "^0.9.0",
+        "symfony/security-csrf": "^4.0.0",
+        "symfony/twig-bridge": "^4.0.0",
         "tracy/tracy": "^2.4.0"
     },
     "autoload": {
@@ -72,7 +72,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0-dev"
+            "dev-master": "0.5-dev"
         }
     }
 }

@@ -18,10 +18,7 @@ use ReflectionClass;
 use Symfony\Bridge\Twig\AppVariable;
 use Symfony\Bridge\Twig\Extension\FormExtension;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;
-use Symfony\Bridge\Twig\Form\TwigRenderer;
 use Symfony\Bridge\Twig\Form\TwigRendererEngine;
-use Symfony\Bridge\Twig\Form\TwigRendererEngineInterface;
-use Symfony\Bridge\Twig\Form\TwigRendererInterface;
 use Symfony\Component\Form\ChoiceList\Factory\CachingFactoryDecorator;
 use Symfony\Component\Form\ChoiceList\Factory\ChoiceListFactoryInterface;
 use Symfony\Component\Form\ChoiceList\Factory\DefaultChoiceListFactory;
@@ -41,6 +38,7 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormRegistry;
 use Symfony\Component\Form\FormRegistryInterface;
+use Symfony\Component\Form\FormRenderer;
 use Symfony\Component\Form\FormRendererEngineInterface;
 use Symfony\Component\Form\FormRendererInterface;
 use Symfony\Component\Form\FormTypeExtensionInterface;
@@ -90,7 +88,7 @@ class FormsExtension extends CompilerExtension
     {
         $this->validateConfig($this->defaults);
 
-        /* @var $serviceCollectionsExtension ServiceCollectionsExtension */
+        /** @var ServiceCollectionsExtension $serviceCollectionsExtension */
         $serviceCollectionsExtension = $this->getExtension(ServiceCollectionsExtension::class);
 
         $typeResolver = $serviceCollectionsExtension->getCollection(
@@ -234,7 +232,7 @@ class FormsExtension extends CompilerExtension
                 ->addTag(ValidatorExtension::TAG_LOADER);
         }
 
-        /* @var $twigExtension TwigExtension */
+        /** @var TwigExtension $twigExtension */
         $twigExtension = $this->getExtension(TwigExtension::class, false);
         if ($twigExtension) {
             $twigExtension->addPaths(
@@ -252,12 +250,12 @@ class FormsExtension extends CompilerExtension
                 ->addTag(TwigExtension::TAG_EXTENSION);
 
             $builder->addDefinition($this->prefix('twig.renderer'))
-                ->setType(interface_exists(TwigRendererInterface::class) ? TwigRendererInterface::class : FormRendererInterface::class)
-                ->setFactory(TwigRenderer::class)
-                ->addTag(TwigExtension::TAG_RUNTIME, TwigRenderer::class);
+                ->setType(FormRendererInterface::class)
+                ->setFactory(FormRenderer::class)
+                ->addTag(TwigExtension::TAG_RUNTIME, FormRenderer::class);
 
             $builder->addDefinition($this->prefix('twig.engine'))
-                ->setType(interface_exists(TwigRendererEngineInterface::class) ? TwigRendererEngineInterface::class : FormRendererEngineInterface::class)
+                ->setType(FormRendererEngineInterface::class)
                 ->setFactory(
                     TwigRendererEngine::class,
                     [
