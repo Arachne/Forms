@@ -10,7 +10,7 @@ Recommended
 The commands below will install all the libraries recommended to use Arachne/Forms. They are intentionally not direct dependencies so that advanced users may skip or replace some of them.
 
 ```sh
-composer require arachne/csrf arachne/forms arachne/twig arachne/upload kdyby/annotations kdyby/translation kdyby/validator
+composer require arachne/csrf arachne/forms arachne/twig arachne/upload kdyby/annotations kdyby/translation kdyby/validator symfony/twig-bridge
 ```
 
 It is recommended to add all of the following extensions into your config.neon. Again advanced users might want to skip or replace some of them.
