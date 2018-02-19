@@ -19,7 +19,7 @@ extenstions:
 arachne.forms:
     defaultThemes:
         - form.twig
-        - bootstrap_3_horizontal_layout.html.twig,
+        - bootstrap_3_horizontal_layout.html.twig
 
 arachne.twig:
     paths:
