@@ -60,7 +60,7 @@ class FormComponent extends Component implements ISignalReceiver
     protected $form;
 
     /**
-     * @var FormView
+     * @var FormView|null
      */
     protected $view;
 
@@ -93,7 +93,7 @@ class FormComponent extends Component implements ISignalReceiver
 
     public function getView(): FormView
     {
-        if (!$this->view) {
+        if ($this->view === null) {
             $this->view = $this->form->createView();
             $this->onCreateView($this->view, $this);
         }
@@ -144,7 +144,9 @@ class FormComponent extends Component implements ISignalReceiver
     public function signalReceived($signal): void
     {
         $form = $this->getForm();
-        $request = $this->getPresenter()->getRequest();
+        /** @var Presenter $presenter */
+        $presenter = $this->getPresenter();
+        $request = $presenter->getRequest();
 
         switch ($signal) {
             case 'submit':
@@ -192,6 +194,7 @@ class FormComponent extends Component implements ISignalReceiver
      */
     protected function processValidate(FormInterface $form, Request $request): void
     {
+        /** @var Presenter $presenter */
         $presenter = $this->getPresenter();
         if (!$presenter->isAjax()) {
             throw new BadRequestException('The validate signal is only allowed in ajax mode.');
@@ -233,6 +236,7 @@ class FormComponent extends Component implements ISignalReceiver
      */
     protected function processRender(FormInterface $form, Request $request): void
     {
+        /** @var Presenter $presenter */
         $presenter = $this->getPresenter();
         if (!$presenter->isAjax()) {
             throw new BadRequestException('The render signal is only allowed in ajax mode.');

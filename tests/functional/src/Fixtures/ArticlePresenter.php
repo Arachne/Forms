@@ -6,6 +6,7 @@ namespace Tests\Functional\Fixtures;
 
 use Arachne\Forms\Application\FormComponent;
 use Arachne\Forms\Application\FormComponentFactory;
+use Nette\Application\Request;
 use Nette\Application\UI\Presenter;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -41,7 +42,9 @@ class ArticlePresenter extends Presenter
     protected function createComponentForm(): FormComponent
     {
         $builder = $this->formFactory->createBuilder(FormType::class, new Task());
-        if ($this->getRequest()->getParameter('useget')) {
+        /** @var Request $request */
+        $request = $this->getRequest();
+        if ($request->getParameter('useget')) {
             $builder->setMethod('GET');
         }
         $builder->add('text', TextType::class);
@@ -60,8 +63,9 @@ class ArticlePresenter extends Presenter
 
     public function formatTemplateFiles(): array
     {
+        /** @var string $name */
         $name = $this->getName();
-        $presenter = substr($name, strrpos(':'.$name, ':'));
+        $presenter = substr($name, (int) strrpos(':'.$name, ':'));
 
         return [
             __DIR__."/../../templates/$presenter.$this->view.latte",

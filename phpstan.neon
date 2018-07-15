@@ -11,6 +11,4 @@ parameters:
         - '#^[a-zA-Z\\]++::__construct\(\) does not call parent constructor from Nette\\ComponentModel\\Component#'
         - '#^Method Arachne\\Forms\\Application\\FormComponent::getPresenter\(\) should return Nette\\Application\\UI\\Presenter|null but returns Nette\\ComponentModel\\IComponent#'
         - '#^Parameter \#3 \$previous of class Nette\\Application\\BadRequestException constructor expects Exception|null, Symfony\\Component\\PropertyAccess\\Exception\\ExceptionInterface given#'
-        - '#^Calling method getParameter\(\) on possibly null value of type Nette\\Application\\Request\|null#'
-        - '#^Calling method [a-zA-Z]++\(\) on possibly null value of type Nette\\Application\\UI\\Presenter\|null#'
         - '#^Parameter \#2 \$request of method Arachne\\Forms\\Application\\FormComponent::process[a-zA-Z]++\(\) expects Nette\\Application\\Request, Nette\\Application\\Request\|null given#'

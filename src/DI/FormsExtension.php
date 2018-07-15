@@ -225,19 +225,19 @@ class FormsExtension extends CompilerExtension
                 ->setFactory(
                     XmlFileLoader::class,
                     [
-                        'file' => dirname((new ReflectionClass(FormInterface::class))->getFileName()).'/Resources/config/validation.xml',
+                        'file' => dirname((string) (new ReflectionClass(FormInterface::class))->getFileName()).'/Resources/config/validation.xml',
                     ]
                 )
                 ->setAutowired(false)
                 ->addTag(ValidatorExtension::TAG_LOADER);
         }
 
-        /** @var TwigExtension $twigExtension */
+        /** @var TwigExtension|null $twigExtension */
         $twigExtension = $this->getExtension(TwigExtension::class, false);
-        if ($twigExtension) {
+        if ($twigExtension !== null) {
             $twigExtension->addPaths(
                 [
-                    dirname((new ReflectionClass(AppVariable::class))->getFileName()).'/Resources/views/Form',
+                    dirname((string) (new ReflectionClass(AppVariable::class))->getFileName()).'/Resources/views/Form',
                 ]
             );
 
