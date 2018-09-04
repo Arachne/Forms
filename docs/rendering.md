@@ -70,12 +70,13 @@ class CustomForm extends Control
     }
 }
 ```
+
 Full manual rendering of forms with form-specific themes
 ----
 
 If you want to have full control of form rendering (e.g. render only some form fields) using custom themes you should do it in blocks. Block for the 1st level form is named 'form'. This differs a bit from original Symfony documentation, because everything outside of block structure will NOT be rendered.
 
-Example of form-specific-template.twig
+Example of `form-specific-template.twig`:
 ```
 {% use 'bootstrap_4_horizontal_layout.html.twig' %}
 {% block form %}
