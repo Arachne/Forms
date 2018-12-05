@@ -35,6 +35,14 @@ class FormTypeApplicationExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
+    public static function getExtendedTypes(): iterable
+    {
+        yield FormType::class;
+    }
+
+    /**
+     * @deprecated to be removed when Symfony 4.1 and older are no longer supported
+     */
     public function getExtendedType(): string
     {
         return FormType::class;
