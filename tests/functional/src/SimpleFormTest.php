@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Functional;
 
-use Arachne\Codeception\Module\NetteApplicationModule;
 use Codeception\Test\Unit;
+use Contributte\Codeception\Module\NetteApplicationModule;
 
 /**
  * @author Jáchym Toušek <enumag@gmail.com>

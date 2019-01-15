@@ -25,11 +25,11 @@
         "kdyby/validator": "Enables forms validation using symfony/form."
     },
     "require-dev": {
-        "arachne/codeception": "^0.8.0",
         "arachne/csrf": "^0.3.0",
         "arachne/property-access": "^0.3.0",
         "arachne/twig": "^0.4.0",
         "codeception/codeception": "^2.4.3",
+        "contributte/codeception": "^1.0.1",
         "friendsofphp/php-cs-fixer": "^2.8.0",
         "kdyby/annotations": "^2.2.0",
         "kdyby/doctrine-cache": "^2.6.1",
