@@ -8,7 +8,7 @@ parameters:
         - %rootDir%/../../../tests/_*
 
     ignoreErrors:
-        - '#^[a-zA-Z\\]++::__construct\(\) does not call parent constructor from Nette\\ComponentModel\\Component#'
-        - '#^Method Arachne\\Forms\\Application\\FormComponent::getPresenter\(\) should return Nette\\Application\\UI\\Presenter|null but returns Nette\\ComponentModel\\IComponent#'
-        - '#^Parameter \#3 \$previous of class Nette\\Application\\BadRequestException constructor expects Exception|null, Symfony\\Component\\PropertyAccess\\Exception\\ExceptionInterface given#'
-        - '#^Parameter \#2 \$request of method Arachne\\Forms\\Application\\FormComponent::process[a-zA-Z]++\(\) expects Nette\\Application\\Request, Nette\\Application\\Request\|null given#'
+        - '~^[a-zA-Z\\]++::__construct\(\) does not call parent constructor from Nette\\ComponentModel\\Component~'
+        - '~^Method Arachne\\Forms\\Application\\FormComponent::getPresenter\(\) should return Nette\\Application\\UI\\Presenter|null but returns Nette\\ComponentModel\\IComponent~'
+        - '~^Parameter #3 \$previous of class Nette\\Application\\BadRequestException constructor expects Exception|null, Symfony\\Component\\PropertyAccess\\Exception\\ExceptionInterface given~'
+        - '~^Parameter #2 \$request of method Arachne\\Forms\\Application\\FormComponent::process[a-zA-Z]++\(\) expects Nette\\Application\\Request, Nette\\Application\\Request\|null given~'
